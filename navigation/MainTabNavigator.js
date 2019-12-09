@@ -4,7 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import GroupeScreen from '../screens/GroupeScreen';
+import InformationsScreen from '../screens/InformationsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const config = Platform.select({
@@ -12,44 +13,81 @@ const config = Platform.select({
   default: {},
 });
 
-const HomeStack = createStackNavigator(
+/**
+ * Actualité navigator
+ * @type {NavigationContainer}
+ */
+const ActualityNavigator = createStackNavigator(
   {
     Home: HomeScreen,
   },
   config
 );
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+ActualityNavigator.navigationOptions = {
+  tabBarLabel: 'Actualités',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-notifications${focused ? '' : '-outline'}`
+          : 'md-notifications'
       }
     />
   ),
 };
 
-HomeStack.path = '';
+ActualityNavigator.path = '';
 
-const LinksStack = createStackNavigator(
+/**
+ *
+ * Information navigator
+ * @type {NavigationContainer}
+ */
+const InformationNavigator = createStackNavigator(
+    {
+        Home: InformationsScreen,
+    },
+    config
+);
+
+InformationNavigator.navigationOptions = {
+    tabBarLabel: 'Informations',
+    tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+            focused={focused}
+            name={
+                Platform.OS === 'ios'
+                    ? `ios-information-circle${focused ? '' : '-outline'}`
+                    : 'md-information-circle'
+            }
+        />
+    ),
+};
+
+InformationNavigator.path = '';
+
+/**
+ *
+ * Groupe Navigator
+ * @type {NavigationContainer}
+ */
+const GroupNavigator = createStackNavigator(
   {
-    Links: LinksScreen,
+    Links: GroupeScreen,
   },
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+GroupNavigator.navigationOptions = {
+  tabBarLabel: 'Groupe',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-beer' : 'md-beer'} />
   ),
 };
 
-LinksStack.path = '';
+GroupNavigator.path = '';
 
 const SettingsStack = createStackNavigator(
   {
@@ -68,8 +106,9 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
+  HomeStack: ActualityNavigator,
+  InformationNavigator,
+  GroupNavigator,
   SettingsStack,
 });
 
