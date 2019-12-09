@@ -1,21 +1,31 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-export default function LinksScreen() {
+export default function GroupeScreen() {
   return (
     <ScrollView style={styles.container}>
       {/**
        * Go ahead and delete ExpoLinksView and replace it with your content;
        * we just wanted to provide you with some helpful links.
        */}
-      <ExpoLinksView />
+      <View>
+        <Text> Mon Groupe </Text>
+
+      </View>
     </ScrollView>
   );
 }
 
-LinksScreen.navigationOptions = {
-  title: 'Links',
+GroupeScreen.navigationOptions = {
+  title: 'Mon Groupe',
 };
 
 const styles = StyleSheet.create({
