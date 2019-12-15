@@ -1,24 +1,21 @@
 import { BaseModel } from "./utils";
-import { URLScheme } from './urls';
-
-import {
+import { URLScheme } from "./urls";
+import{
   REQUEST_CREATE,
-  REQUEST_RETRIEVE,
   REQUEST_LIST,
+  REQUEST_RETRIEVE,
   REQUEST_UPDATE_ONE,
   REQUEST_DELETE_ONE,
-  SET_CURRENT,
+  RESET,
   SET_CURRENT_ID,
-  RESET
+  SET_CURRENT,
 } from "./types";
-
 import invariant from "invariant";
 
 /**
- * API Endpoint
+ * APIEndpoint
  * A set of actions and states for an API
 **/
-
 export default class APIEndpoint {
   /*
    * APIEndpoint(url, options)
@@ -30,17 +27,16 @@ export default class APIEndpoint {
       Model = BaseModel;
     }
 
-    if(typeof urlScheme === "string") {
+    if(typeof urlScheme === 'string') {
       urlScheme = URLScheme.fromString(urlScheme);
     } else if (urlScheme instanceof Function) {
       urlScheme = new URLScheme(urlScheme);
     }
-
     this._urlScheme = urlScheme;
 
-    const name = options.name || (Model===BaseModel ? "_": Model.name);
+    const name = options.name || (Model===BaseModel ? "_" : Model.name);
     this._Model = Model;
-    this.index = options.index || Symbol(`${name}.INDEX`);
+    this.index = options.index || Symbol(`${name}.INDEX`);
     this.defaultLimit = options.limit || 10;
   }
 
@@ -64,17 +60,17 @@ export default class APIEndpoint {
    * @param {Object} options - options for the url generation
    * @return {Object} - the dispatched action
   **/
-  setCurrent(id, option={}) {
+  setCurrent(id, options={}) {
     id = id && String(id);
     return (dispatch, getState) => {
       const state = this._getSubState(getState());
-      invariant(options.update === update || typeof options.update === 'boolean', `options.update should be a boolean but is ${options.update}`);
+      invariant(options.update === undefined || typeof options.update === 'boolean',
+        `options.update should be a boolean but is ${options.update}`);
 
       const recycle = !options.update;
       if(state.currentID === id && recycle) {
         return;
       }
-
       dispatch({
         type: SET_CURRENT_ID,
         index: this.index,
@@ -106,7 +102,7 @@ export default class APIEndpoint {
   /**
    * Action to retrieve an instance of the Model
    * @param {number} id - instance id
-   * @param  {Object} options
+   * @param {Object} options
    * @returns {Object} - the action
   **/
   retrieve(id, options={}) {
@@ -144,17 +140,17 @@ export default class APIEndpoint {
     }
   }
 
-  updateOne(id, data, options={}) {
+  updateOne(id, data, options= {}) {
     return {
       type: REQUEST_UPDATE_ONE,
-      index: this_index,
+      index: this._index,
       payload: {
         id: id && String(id),
-        Model: this._Model,
+        Model: this._Model
       },
       request: {
         url: this._urlScheme.getDetails(id, options),
-        method: options.partial ? 'PATCH': 'PUT',
+        method: options.partial ? 'PATCH' : 'PUT',
         data: data
       }
     }
@@ -180,13 +176,13 @@ export default class APIEndpoint {
       type: REQUEST_DELETE_ONE,
       index: this.index,
       payload: {
-        id: id && String('id'),
-        Model: data ? this._Model: undefined,
+        id: id && String(id),
+        Model: data ? this._Model : undefined,
       },
       request: {
         method: 'DELETE',
         url: this._urlScheme.getDetails(id, options),
-        data: data
+         data: data
       }
     }
   }
@@ -195,7 +191,7 @@ export default class APIEndpoint {
     return {
       type: RESET,
       index: this.index,
-    }
+    };
   }
 
   _getSubState(state) {
@@ -215,30 +211,31 @@ export default class APIEndpoint {
   }
 
   getCurrentIDFromState(state) {
-    return this._getSubState(state).currentID || null;
+    return this._getSubState(state).currentID || null;
   }
 
   getCurrentLoadingFromState(state) {
-    return this._getSubState(state).currentLoading || false;
+    return this._getSubState(state).currentLoading || false;
   }
 
   getEmptyFromState(state) {
-    return this._getSubState(state).empty || false;
+    return this._getSubState(state).empty || false;
   }
 
   getCreatingFromState(state) {
-    return this._getSubState(state).creating || false;
-  }
-
-  getDeletingFromState(state) {
-    return this._getSubState(state).deleting || false;
-  }
-
-  getUpdatingFromState(state) {
-    return this._getSubState(state).updating || false;
+    return this._getSubState(state).creating || false;
   }
 
   getLoadingFromState(state) {
-    return this._getSubState(state).loading || false;
+    return this._getSubState(state).loading || false;
   }
+
+  getUpdatingFromState(state) {
+    return this._getSubState(state).updating || false;
+  }
+
+  getDeletingFromState(state) {
+    return this._getSubState(state).deleting || false;
+  }
+
 }

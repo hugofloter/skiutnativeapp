@@ -1,7 +1,10 @@
 import * as redux from "redux";
 import { logger } from "redux-logger";
 import thunk from "redux-thunk";
-import { apiReducer, APIMiddleware } from "./index";
+import { apiReducer, APIMiddleware, APIEndpoint } from "./index";
+import User from "../models/user";
+import { API_URL } from "../config";
+
 
 const middleware = APIMiddleware();
 
@@ -29,3 +32,5 @@ export function createStore(initial) {
     redux.applyMiddleware(...middlewareParameters)
   )
 }
+
+export const users = new APIEndpoint(`${API_URL}/users`, User);

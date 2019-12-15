@@ -26,15 +26,14 @@ function getDataFromResponse(response) {
 
 function makeDispatchFetch(fetch, store) {
   return async (action) => {
-    const { url , ...options } = action.request;
-    const headers = options.headers = options.headers || {};
-    headers['Content-Type'] = 'application/json';
+    const { url, ...options } = action.request;
+		const headers = options.headers = options.headers || {};
+		headers["Content-Type"] = "application/json";
 
     const abortController = new AbortController();
     options.signal = abortController.signal;
-    options.body = options.data ? JSON.Stringify(options.data) : {};
-    delete options.data;
-
+		options.body = options.data ? JSON.stringify(options.data) : {};
+		delete options.data;
     const request = fetch(url, options);
 
     store.dispatch({
@@ -55,12 +54,12 @@ function makeDispatchFetch(fetch, store) {
         response: response,
         data,
       });
-    } catch(err) {
+    } catch (err) {
       store.dispatch({
         ...action,
         success: false,
         request: request,
-        response: resonse,
+        response: response,
         meta: err
       })
     }
@@ -70,14 +69,14 @@ function makeDispatchFetch(fetch, store) {
 export function APIMiddleware(fetch=global.fetch, connectors) {
   connectors = connectors || APIMiddleware.connectors;
   return (store) => {
-    fetch = connectors.reverse().reduce((f, connector) => connector(f,store), fetch);
+    fetch = connectors.reverse().reduce((f, connector) => connector(f, store), fetch);
 
     const dispatchFetch = makeDispatchFetch(fetch, store);
     return (next) => (action => {
       if(action.request && action.success === undefined) {
         return dispatchFetch(action);
       }
-      return next(action)
+      return next(action);
     })
   }
 }

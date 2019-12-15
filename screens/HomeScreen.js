@@ -9,11 +9,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import { users as usersApi } from "../api/state";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function HomeScreen() {
 
+  const dispatch = useDispatch()
+  const listUsers = React.useCallback(() => dispatch(usersApi.list()), [dispatch])
 
+  React.useEffect(() => {
+    listUsers()
+  }, [])
+
+  const { users } = useSelector(state => ({ users: usersApi.getValuesFromState(state)}))
 
   return (
     <View style={styles.container}>
