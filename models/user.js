@@ -15,6 +15,10 @@ class User {
     this.isAdult = is_adult || false;
   }
 
+  getKey() {
+    return this.login;
+  }
+  
   getLogin() {
     return this.login;
   }
