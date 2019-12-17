@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import { apiReducer, APIMiddleware, APIEndpoint } from "./index";
 import User from "../models/user";
 import { API_URL } from "../config";
-
+import { connectReducer } from "./connect/"
 
 const middleware = APIMiddleware();
 
@@ -18,7 +18,8 @@ if(process.env.NODE_ENV === "dev") {
 }
 
 const reducers = [
-  apiReducer
+  apiReducer,
+  connectReducer
 ]
 
 const reducerFn = (state, action) => {

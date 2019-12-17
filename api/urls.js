@@ -14,21 +14,6 @@ export class BaseURLScheme  {
   }
 }
 
-export class SingleURLScheme extends BaseURLScheme {
-  static fromString(base) {
-    return SingleURLScheme(() => base)
-  }
-
-  getDetails(id, options) {
-    invariant(id === '', `SingleURLScheme expects empty ID not ${id}`);
-    return this.getBaseURL(options);
-  }
-
-  getList(options, query) {
-    throw new Error('List is not implemented');
-  }
-}
-
 export class URLScheme extends BaseURLScheme {
   static fromString(base) {
     return new URLScheme(() => base)

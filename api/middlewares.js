@@ -2,7 +2,7 @@ import { APIError } from "./utils";
 
 /* encode connector, it raise APIError if the response fails*/
 export function withAPIError(fetch) {
-  return async (url, option) => {
+  return async (url, options) => {
     const response = await fetch(url, options);
     if(!response.ok) {
       try {
@@ -30,17 +30,17 @@ function makeDispatchFetch(fetch, store) {
 		const headers = options.headers = options.headers || {};
 		headers["Content-Type"] = "application/json";
 
-    const abortController = new AbortController();
-    options.signal = abortController.signal;
-		options.body = options.data ? JSON.stringify(options.data) : {};
-		delete options.data;
+    if(options.method && options.method !== 'GET') {
+      options.body = (options.data) ? JSON.stringify(options.data) : {};
+    }
+    delete options.data;
+
     const request = fetch(url, options);
 
     store.dispatch({
       ...action,
       success: null,
       request: request,
-      abort: () => abortController.abort()
     });
 
     let response = null;
