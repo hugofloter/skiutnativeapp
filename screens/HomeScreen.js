@@ -9,20 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { users as usersApi } from "../api/state";
-import { useSelector, useDispatch } from "react-redux";
+import { getConnectedUser } from "../api/connect";
+import { useSelector } from "react-redux";
+import Colors from "../constants/Colors";
+import User from "../models/user";
 
 export default function HomeScreen() {
 
-  const dispatch = useDispatch()
-  const listUsers = React.useCallback(() => dispatch(usersApi.list()), [dispatch])
-
-  React.useEffect(() => {
-    listUsers()
-  }, [])
-
-  const { users } = useSelector(state => ({ users: usersApi.getValuesFromState(state)}))
-
+  const { user } = useSelector(state => ({ user: getConnectedUser(state)}))
   return (
     <View style={styles.container}>
       <ScrollView
@@ -42,6 +36,21 @@ export default function HomeScreen() {
         <View style={styles.getStartedContainer}>
 
           <Text style={styles.getStartedText}>SKIUTC APPLICATION,dqijdlq, </Text>
+          {
+            user ?
+            <React.Fragment>
+              <Text>
+                { user.getLogin() }
+              </Text>
+              <Text>
+                { user.getLastname()} {user.getFirstname() }
+              </Text>
+              <Text>
+                { user.getEmail() }
+              </Text>
+            </React.Fragment>
+            : null
+          }
         </View>
       </ScrollView>
     </View>
@@ -55,7 +64,7 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.defaultBackgroud,
   },
   developmentModeText: {
     marginBottom: 20,

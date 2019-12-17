@@ -1,6 +1,6 @@
 /*Class User*/
 
-class User{
+class User {
   constructor({
     login,
     lastname,
@@ -8,11 +8,11 @@ class User{
     email,
     is_adult,
   }) {
-    this.login = login
-    this.lastname = lastname
-    this.firstname = firstname
-    this.email = email
-    this.isAdult = is_adult || False
+    this.login = login;
+    this.lastname = lastname;
+    this.firstname = firstname;
+    this.email = email;
+    this.isAdult = is_adult || false;
   }
 
   getLogin() {

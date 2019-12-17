@@ -8,9 +8,27 @@ import { Provider } from "react-redux";
 import { createStore } from "./api/state";
 
 import AppNavigator from './navigation/AppNavigator';
+import ConnectScreen from "./screens/ConnectScreen";
+import { isLogged, relog } from "./api/connect";
+import { useSelector, useDispatch } from "react-redux";
 
 const store = createStore({});
 
+const ConnectHandler = () => {
+  const dispatch = useDispatch()
+  const relogUser = React.useCallback(() =>  dispatch(relog()), [dispatch])
+  React.useEffect(() => {
+    relogUser()
+  }, []);
+
+  const { logged } = useSelector(state => ({ logged: isLogged(state) }))
+
+  if(!logged) {
+    return <ConnectScreen />
+  }
+
+  return <AppNavigator/>
+}
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
@@ -27,12 +45,13 @@ export default function App(props) {
       <View style={styles.container}>
         <Provider store={store}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          <ConnectHandler/>
         </Provider>
       </View>
     );
   }
 }
+
 
 async function loadResourcesAsync() {
   await Promise.all([
