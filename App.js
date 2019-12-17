@@ -4,9 +4,31 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from "react-redux";
+import { createStore } from "./api/state";
 
 import AppNavigator from './navigation/AppNavigator';
+import ConnectScreen from "./screens/ConnectScreen";
+import { isLogged, relog } from "./api/connect";
+import { useSelector, useDispatch } from "react-redux";
 
+const store = createStore({});
+
+const ConnectHandler = () => {
+  const dispatch = useDispatch()
+  const relogUser = React.useCallback(() =>  dispatch(relog()), [dispatch])
+  React.useEffect(() => {
+    relogUser()
+  }, []);
+
+  const { logged } = useSelector(state => ({ logged: isLogged(state) }))
+
+  if(!logged) {
+    return <ConnectScreen />
+  }
+
+  return <AppNavigator/>
+}
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
@@ -21,12 +43,15 @@ export default function App(props) {
   } else {
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+        <Provider store={store}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <ConnectHandler/>
+        </Provider>
       </View>
     );
   }
 }
+
 
 async function loadResourcesAsync() {
   await Promise.all([
