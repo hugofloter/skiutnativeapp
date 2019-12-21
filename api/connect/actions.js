@@ -11,7 +11,7 @@ function getToken({ connect }) {
     return null;
   }
 
-  return { token: connect.token };
+  return connect.token;
 }
 
 export function requestLogin() {

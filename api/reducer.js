@@ -114,7 +114,8 @@ const reduceFunctions = {
       return nextState;
     }
 
-    const instances = data.map((value) => new payload.Model(value))
+    // const instances = data.map((value) => new payload.Model(value))
+    const instances = Object.entries(data).map(([_, value]) => new payload.Model(value))
     const nextValues = (payload.append && state.values) ? state.values.concat(instances) : instances;
 
     return {

@@ -1,4 +1,5 @@
 import { APIError } from "./utils";
+import { getAuthorizationHeader } from "./connect";
 
 /* encode connector, it raise APIError if the response fails*/
 export function withAPIError(fetch) {
@@ -14,6 +15,17 @@ export function withAPIError(fetch) {
     }
     return response;
   };
+}
+
+export function withAuthentication(fetch, store) {
+  return async (url, options={}) => {
+    const headers = options.headers = options.headers || {}
+    headers['Authorization'] = await getAuthorizationHeader(store.getState())
+
+    console.log(headers['Authorization']);
+
+    return fetch(url, options);
+  }
 }
 
 function getDataFromResponse(response) {
@@ -83,4 +95,5 @@ export function APIMiddleware(fetch=global.fetch, connectors) {
 
 APIMiddleware.connectors = [
   withAPIError,
+  withAuthentication,
 ]
