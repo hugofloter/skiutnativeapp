@@ -23,6 +23,8 @@ export default function InformationsScreen() {
     listUsers()
   }, [])
 
+    console.log(users)
+
     return (
         <View style={styles.container}>
             <ScrollView

@@ -25,6 +25,7 @@ const connect = (state={}, action) => {
         ...state,
         connect: action.connect,
       }
+
     default:
       return state;
   }
