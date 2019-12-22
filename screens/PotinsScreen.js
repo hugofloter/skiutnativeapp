@@ -24,14 +24,15 @@ export default function PotinsScreen() {
     getAllPotins()
   }, [])
 
-
-  console.log(potins)
-
   return (
     <ScrollView style={styles.container}>
       <View>
         <Text> Potins : </Text>
-        <Text> sss </Text>
+        {
+          potins.map(potin => (
+              <Text key={ potin.getKey() }>{ potin.getTitle() } : {potin.getText()} - {potin.isAnonymous ? "Anonyme" : potin.getSender()}</Text>
+          ))
+        }
       </View>
     </ScrollView>
   );
