@@ -1,17 +1,16 @@
 {
   "expo": {
-    "name": "SKIUTAPP",
+    "name": "SKI'UTC",
     "slug": "skiutc",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -23,8 +22,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+        "package": "fr.utc.assos.skiutc"
+    },
     "ios": {
-      "supportsTablet": true
+        "bundleIdentifier": "fr.utc.assos.skiutc",
+        "buildNumber": "2"
     }
   }
 }
+
