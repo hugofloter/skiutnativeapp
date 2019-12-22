@@ -13,4 +13,5 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   defaultBackgroud: '#fff',
+  primaryBlue : '#617eff'
 };
