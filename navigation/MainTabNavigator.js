@@ -136,7 +136,8 @@ const tabNavigator = createBottomTabNavigator({
   HomeStack: ActualityNavigator,
   InformationNavigator,
   GroupNavigator,
-  PotinNavigator
+  PotinNavigator,
+  SettingsStack
 });
 
 tabNavigator.path = '';
