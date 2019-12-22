@@ -7,18 +7,22 @@ class User {
     firstname,
     email,
     is_adult,
+    isAdmin,
+    lastPosition,
   }) {
     this.login = login;
     this.lastname = lastname;
     this.firstname = firstname;
     this.email = email;
     this.isAdult = is_adult || false;
+    this.isAdmin = isAdmin;
+    this.lastPosition = lastPosition;
   }
 
   getKey() {
     return this.login;
   }
-  
+
   getLogin() {
     return this.login;
   }
@@ -37,6 +41,14 @@ class User {
 
   isAdult() {
     return this.isAdult
+  }
+
+  isAdmin() {
+    return this.isAdmin;
+  }
+
+  lastPosition() {
+    return this.lastPosition;
   }
 }
 

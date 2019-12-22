@@ -9,19 +9,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { news as newsAPI } from "../api/state";
+import { news as newsAPI } from "../../api/state";
 import { useSelector, useDispatch } from "react-redux";
-import Colors from "../constants/Colors";
-import Block from "../components/blocks/Block";
-import ScreenTitle from "../components/ScreenTitle";
-import PlusBlock from "../components/blocks/PlusBlock";
+import { getConnectedUser } from "../../api/connect";
+import Colors from "../../constants/Colors";
+import Block from "../../components/blocks/Block";
+import ScreenTitle from "../../components/ScreenTitle";
+import PlusBlock from "../../components/blocks/PlusBlock";
+import Form from "./form";
 
-export default function HomeScreen() {
+
+
+function HomeScreen({ showEditer }) {
 
   const { news } = useSelector(state => ({ news: newsAPI.getValuesFromState(state) }))
   const dispatch = useDispatch()
-
   const listNews = React.useCallback(() => dispatch(newsAPI.list()), []);
+
+  const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }))
 
   React.useEffect(() => {
     listNews();
@@ -33,7 +38,7 @@ export default function HomeScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <ScreenTitle title="Accueil">
-          <PlusBlock title="+" action={() => console.log("oui")}/>
+            <PlusBlock title="+" action={() => showEditer(true)}/>
         </ScreenTitle>
         {
           news.map(oneNew => (
@@ -65,3 +70,15 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   }
 });
+
+const HomeScreenManager = () => {
+  const [editer, showEditer] = React.useState(false);
+
+  if (editer) {
+    return <Form/>
+  }
+
+  return <HomeScreen showEditer={ showEditer }/>
+}
+
+export default Form;
