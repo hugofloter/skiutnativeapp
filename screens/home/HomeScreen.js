@@ -75,10 +75,14 @@ const HomeScreenManager = () => {
   const [editer, showEditer] = React.useState(false);
 
   if (editer) {
-    return <Form/>
+    return <Form showEditer={showEditer}/>
   }
 
   return <HomeScreen showEditer={ showEditer }/>
 }
 
-export default Form;
+HomeScreenManager.navigationOptions = {
+  header: null,
+};
+
+export default HomeScreenManager;

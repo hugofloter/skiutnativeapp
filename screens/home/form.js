@@ -7,16 +7,23 @@
    Image,
    StyleSheet,
  } from "react-native";
+
+ import {
+   Input
+ } from "react-native-elements";
+
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 
 
-const Form = () => {
+const Form = ({ showEditer }) => {
    return (
      <View style = { styles.container }>
-       <Text style = { styles.text }>
-         Ceci est le formulaire
-       </Text>
+       <ScrollView
+         style={styles.container}
+         contentContainerStyle={styles.contentContainer}>
+         <Input placeholder = "Titre"/>
+       </ScrollView>
      </View>
    )
  }
@@ -27,8 +34,8 @@ const Form = () => {
         backgroundColor: Colors.defaultBackgroud,
         padding: 5,
    },
-   text: {
-     color: 'red',
+   contentContainer: {
+     paddingTop: 30,
    }
  })
 
