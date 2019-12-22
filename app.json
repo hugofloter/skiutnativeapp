@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SKIUTAPP",
+    "name": "SKI'UTC",
     "slug": "skiutc",
     "privacy": "public",
     "sdkVersion": "35.0.0",
@@ -23,8 +23,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+        "package": "fr.utc.assos.skiutc"
+    },
     "ios": {
-      "supportsTablet": true
+        "bundleIdentifier": "fr.utc.assos.skiutc",
+        "supportsTablet": true
     }
   }
 }
+
