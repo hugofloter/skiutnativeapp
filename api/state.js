@@ -3,6 +3,7 @@ import { logger } from "redux-logger";
 import thunk from "redux-thunk";
 import { apiReducer, APIMiddleware, APIEndpoint } from "./index";
 import User from "../models/user";
+import News from "../models/news";
 import { API_URL } from "../config";
 import { connectReducer } from "./connect/"
 
@@ -35,3 +36,5 @@ export function createStore(initial) {
 }
 
 export const users = new APIEndpoint(`${API_URL}/users`, User);
+
+export const news = new APIEndpoint(`${API_URL}/news`, News);
