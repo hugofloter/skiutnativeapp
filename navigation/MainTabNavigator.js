@@ -7,7 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import GroupeScreen from '../screens/GroupeScreen';
 import InformationsScreen from '../screens/InformationsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import PotinsScreen from '../screens/PotinsScreen';
+import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -97,7 +97,7 @@ GroupNavigator.path = '';
  */
 const PotinNavigator = createStackNavigator(
   {
-    Potins: PotinsScreen,
+    Potins: PotinsScreenManager,
   },
   config
 );

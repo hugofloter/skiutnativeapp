@@ -12,18 +12,19 @@ import {
 
 import {useDispatch, useSelector} from "react-redux";
 import { useEffect } from 'react';
-import colors from '../constants/Colors';
-import { potins as potinsAPI } from "../api/state"
-import Block from "../components/blocks/Block";
-import ScreenTitle from "../components/ScreenTitle";
-import PlusBlock from "../components/blocks/PlusBlock";
+import colors from '../../constants/Colors';
+import { potins as potinsAPI } from "../../api/state"
+import Block from "../../components/blocks/Block";
+import ScreenTitle from "../../components/ScreenTitle";
+import PlusBlock from "../../components/blocks/PlusBlock";
+import Form from "./form";
 
 function fetchPotins(setFetched, fetch) {
   fetch()
   setFetched(true)
 }
 
-export default function PotinsScreen() {
+function PotinsScreen({ showEditer }) {
 
   const [potinFetched, setFetched] = React.useState(false)
 
@@ -48,7 +49,7 @@ export default function PotinsScreen() {
                       />
                   }>
         <ScreenTitle title="Potins">
-          <PlusBlock title="+" action={() => console.log("oui")}/>
+          <PlusBlock title="+" action={() => showEditer(true)}/>
         </ScreenTitle>
         {
           potins.map(potin => (
@@ -65,7 +66,18 @@ export default function PotinsScreen() {
   );
 }
 
-PotinsScreen.navigationOptions = {
+
+export const PotinsScreenManager = () => {
+  const [editer, showEditer] = React.useState(false);
+
+  if (editer) {
+    return <Form/>
+  }
+
+  return <PotinsScreen showEditer={ showEditer }/>
+}
+
+PotinsScreenManager.navigationOptions = {
   header: null,
 };
 
