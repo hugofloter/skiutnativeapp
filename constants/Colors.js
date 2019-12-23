@@ -1,7 +1,8 @@
 const tintColor = '#2f95dc';
-
+const iosColor = "#007AFF";
 export default {
   tintColor,
+  iosColor,
   black: '#000',
   white: '#ffffff',
   lightGrey: "#eeeeee",

@@ -1,23 +1,27 @@
 import React from "react";
 import {
-   Text,
-   View,
-   TouchableOpacity,
-   ScrollView,
-   Image,
-   StyleSheet,
- } from "react-native";
+    Text,
+    View,
+    Platform,
+    TouchableOpacity,
+    ScrollView,
+    Image,
+    StyleSheet, Button,
+} from "react-native";
 import Colors from "../../constants/Colors";
-import Sizes from "../../constants/Sizes";
+import { Input } from 'react-native-elements';
 
 const Form = () => {
    return (
      <View style = { styles.container }>
        <View style={ styles.headerContainer }>
-         <Text style={ styles.annulationTitle }>Annuler</Text>
-         <Text style={ styles.title }>Créer</Text>
+         <Button onPress = { () => {} } color={Platform.OS === 'ios' ? Colors.iosColor : "transparent"} style={styles.button} title="Annuler"/>
+         <Text style={styles.text}>Création du potin</Text>
+         <Button onPress = { () => {} } color={Platform.OS === 'ios' ? Colors.iosColor : "transparent"} style={styles.button} title="Envoyer"/>
        </View>
        <View style={ styles.contentContainer }>
+         <Input placeholder='Titre' />
+
            <Text>
              Ceci est le formulaire
            </Text>
@@ -33,8 +37,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.defaultBackgroud,
   },
   headerContainer: {
-    display: "flex",
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 5,
     height: 50,
     backgroundColor: "#fff",
@@ -42,8 +46,11 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center'
   },
-  annulationTitle: {
-    textAlign: "left"
+  text: {
+    padding: 10,
+  },
+  button: {
+    color: Colors.iosColor
   },
   contentContainer: {
     padding: 5,
