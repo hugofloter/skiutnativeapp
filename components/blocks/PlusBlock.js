@@ -10,12 +10,12 @@ import { Icon } from "react-native-elements";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 
-const PlusBlock = ({ icon, action }) => {
+const PlusBlock = ({ icon, action, ...iconProps }) => {
   return (
     <View style = { styles.container }>
       <TouchableOpacity onPress = { action }>
         <View style = { styles.view }>
-          <Icon name={icon} />
+          <Icon name={icon} {...iconProps}/>
         </View>
       </TouchableOpacity>
     </View>
