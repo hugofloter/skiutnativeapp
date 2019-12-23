@@ -34,15 +34,15 @@ const Form = ({showEditer}) => {
    return (
      <View style = { styles.container }>
        <View style={ styles.headerContainer }>
-         <Button onPress = { () => showEditer(false) } color={Platform.OS === 'ios' ? Colors.primaryBlue : "transparent"} style={styles.button} title="Annuler"/>
+         <Button onPress = { () => showEditer(false) } color={Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
          <Text style={styles.text}>Création du potin</Text>
-         <Button disabled={!isSendable} onPress = { () => addPotin(add,{'title': title, 'text': text, 'isAnonymous': isAnonymous}, showEditer) } color={Platform.OS === 'ios' ? Colors.primaryBlue : "transparent"} style={styles.button} title="Envoyer"/>
+         <Button disabled={!isSendable} onPress = { () => addPotin(add,{'title': title, 'text': text, 'isAnonymous': isAnonymous}, showEditer) } color={Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor} style={styles.button} title="Envoyer"/>
        </View>
        <View style={ styles.contentContainer }>
          <Input placeholder='Ton titre' style={styles.input} onChangeText={text => {
              if (text) setSendable(true)
              onChangeTitle(text)
-         }} color={Colors.primaryBlue} />
+         }} color={Platform.OS === 'ios' ? Colors.primaryBlue : null} />
          <View style={ styles.textArea }>
            <TextInput
                placeholder='Raconte ton potin'
