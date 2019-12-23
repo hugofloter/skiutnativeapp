@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  RefreshControl,
 } from 'react-native';
 import { news as newsAPI } from "../../api/state";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,9 +23,13 @@ import Form from "./form";
 
 function HomeScreen({ showEditer }) {
 
+  const [fetched, setFetched] = React.useState(false);
   const { news } = useSelector(state => ({ news: newsAPI.getValuesFromState(state) }))
   const dispatch = useDispatch()
-  const listNews = React.useCallback(() => dispatch(newsAPI.list()), []);
+  const listNews = React.useCallback(() => {
+    dispatch(newsAPI.list());
+    setFetched(true);
+  }, [dispatch, setFetched, fetched]);
 
   const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }))
 
@@ -36,9 +41,17 @@ function HomeScreen({ showEditer }) {
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
+        contentContainerStyle={styles.contentContainer}
+        refreshControl={
+            <RefreshControl
+                refreshing={!fetched}
+                onRefresh={() => listNews() }
+                colors={[Colors.primaryBlue]}
+                tintColor={Colors.primaryBlue}
+            />
+        }>
         <ScreenTitle title="Accueil">
-            <PlusBlock icon="pen" action={() => showEditer(true)}/>
+            <PlusBlock icon="create" color={ Colors.white } action={() => showEditer(true)}/>
         </ScreenTitle>
         {
           news.map(oneNew => (
