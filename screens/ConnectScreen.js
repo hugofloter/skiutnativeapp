@@ -54,10 +54,8 @@ export default function ConnectScreen(){
           />
       </View>
       { pending ? <ActivityIndicator size="small" color={Colors.tintColor}/> : <Button onPress = { handleLogin }
-                                                                                       linearGradientProps={{
-                                                                                          colors: [Colors.buttonBackground, Colors.buttonBackground],
-                                                                                          start: { x: 0, y: 0.5 },
-                                                                                          end: { x: 1, y: 0.5 },
+                                                                                       buttonStyle={{
+                                                                                         backgroundColor: Colors.buttonBackground
                                                                                        }}
                                                                                        style = {styles.button}
                                                                                        title="Se connecter"/>}
@@ -99,7 +97,6 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.tintColor,
   },
   button: {
-    marginTop: 50,
-    backgroundColor: Colors.buttonBackground
+    marginTop: 50
   }
 })
