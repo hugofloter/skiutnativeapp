@@ -1,23 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   View,
   TextInput,
   Text,
-  Button,
   Separator,
   StyleSheet,
   ScrollView,
+  Image,
   ActivityIndicator,
 } from "react-native";
 import { Colors, Sizes } from "../constants";
-import { login as loginAPI, isLogged, isPending } from "../api/connect";
+import { login as loginAPI, isLogged, isPending, errorLog, clear as clearAPI } from "../api/connect";
 import { useSelector, useDispatch } from "react-redux";
+import { Button } from 'react-native-elements';
 
 export default function ConnectScreen(){
 
   const [login, setLogin ] = React.useState(null);
   const [password, setPassword] = React.useState(null);
-
 
   const { pending, logged }  = useSelector(state => ({ pending: isPending(state), logged: isLogged(state) }))
   const dispatch = useDispatch()
@@ -27,20 +27,22 @@ export default function ConnectScreen(){
   return (
     <View style={ styles.container }>
       <View style={ styles.titleContainer}>
-        <Text style={ styles.title }>Connection</Text>
+        <Image
+            resizeMode={"center"}
+            source={require("../assets/images/logo-valdallos.png")}
+        />
       </View>
       <View style={ styles.rowForm }>
-        <Text style={ styles.text }>Login</Text>
         <TextInput
           autoCompleteType = "username"
           placeholder = "Login"
           value = {login}
           onChangeText = { (text) => setLogin(text) }
           style = { styles.input }
+          maxLength={20}
           />
       </View>
       <View style={ styles.rowForm }>
-        <Text style={ styles.text }>Password</Text>
         <TextInput
           autoCompleteType = "password"
           secureTextEntry
@@ -48,9 +50,17 @@ export default function ConnectScreen(){
           value = {password}
           onChangeText = { (text) => setPassword(text) }
           style = { styles.input }
+          maxLength={30}
           />
       </View>
-      { pending ? <ActivityIndicator size="small" color={Colors.tintColor }/> : <Button onPress = { handleLogin } title="Se connecter"/>}
+      { pending ? <ActivityIndicator size="small" color={Colors.tintColor}/> : <Button onPress = { handleLogin }
+                                                                                       linearGradientProps={{
+                                                                                          colors: [Colors.buttonBackground, Colors.buttonBackground],
+                                                                                          start: { x: 0, y: 0.5 },
+                                                                                          end: { x: 1, y: 0.5 },
+                                                                                       }}
+                                                                                       style = {styles.button}
+                                                                                       title="Se connecter"/>}
     </View>
   )
 }
@@ -63,14 +73,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   titleContainer: {
-    justifyContent: 'center',
-    marginBottom: 50,
+    justifyContent: 'center'
   },
-
   rowForm: {
     marginVertical: 10
   },
-
   title: {
     marginTop: 10,
     marginBottom: 20,
@@ -84,7 +91,15 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   input: {
-    borderBottomWidth: 3,
-    borderBottomColor: Colors.black,
+    borderBottomWidth: 1,
+    fontSize: Sizes.h3,
+    height: Sizes.inputHeight,
+    minWidth: "70%",
+    margin: 5,
+    borderBottomColor: Colors.tintColor,
+  },
+  button: {
+    marginTop: 50,
+    backgroundColor: Colors.buttonBackground
   }
 })
