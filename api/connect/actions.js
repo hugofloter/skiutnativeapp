@@ -19,8 +19,7 @@ export function requestLogin() {
     type: REQUEST_LOGIN,
     connect: {
       pending: true,
-      isLogged: false,
-      errorLog: false
+      isLogged: false
     }
   }
 }
@@ -32,8 +31,7 @@ export function successLogin({ token, user }) {
       token,
       user,
       isLogged: true,
-      pending: false,
-      errorLog: false
+      pending: false
     }
   }
 }
@@ -44,8 +42,7 @@ export function errorLogin(error) {
     error,
     connect: {
       pending: false,
-      isLogged: false,
-      errorLog: true
+      isLogged: false
     }
   }
 }
@@ -102,12 +99,6 @@ export function isPending(state) {
   const { connect } = state;
 
   return Boolean(connect && connect.pending)
-}
-
-export function errorLog(state) {
-  const { connect } = state;
-
-  return Boolean(connect && connect.errorLog)
 }
 
 export function getConnectedUser(state) {

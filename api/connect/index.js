@@ -6,7 +6,6 @@ export {
   isPending,
   getConnectedUser,
   relog,
-  errorLog,
   clear
 } from "./actions";
 
