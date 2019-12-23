@@ -38,7 +38,7 @@ function HomeScreen({ showEditer }) {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <ScreenTitle title="Accueil">
-            <PlusBlock title="+" action={() => showEditer(true)}/>
+            <PlusBlock icon="pen" action={() => showEditer(true)}/>
         </ScreenTitle>
         {
           news.map(oneNew => (
