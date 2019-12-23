@@ -19,7 +19,7 @@ export function requestLogin() {
     type: REQUEST_LOGIN,
     connect: {
       pending: true,
-      isLogged: false,
+      isLogged: false
     }
   }
 }
@@ -31,7 +31,7 @@ export function successLogin({ token, user }) {
       token,
       user,
       isLogged: true,
-      pending: false,
+      pending: false
     }
   }
 }

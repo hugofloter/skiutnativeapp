@@ -1,5 +1,5 @@
-const tintColor = '#2f95dc';
 const iosColor = "#007AFF";
+const tintColor = '#00a4dc';
 
 export default {
   tintColor,
@@ -18,6 +18,8 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-  primaryBlue : '#617eff',
   defaultBackgroud: '#eeeeee',
+  buttonBackground: '#FFCC66',
+  primaryBlue: "#1A7E96",
+  errorColor: "#960008"
 };
