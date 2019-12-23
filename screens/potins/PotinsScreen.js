@@ -70,7 +70,7 @@ export const PotinsScreenManager = () => {
   const [editer, showEditer] = React.useState(false);
 
   if (editer) {
-    return <Form/>
+    return <Form showEditer={showEditer}/>
   }
 
   return <PotinsScreen showEditer={ showEditer }/>

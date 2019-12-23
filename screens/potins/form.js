@@ -11,25 +11,23 @@ import {
 import Colors from "../../constants/Colors";
 import { Input } from 'react-native-elements';
 
-const Form = () => {
+const Form = ({showEditer}) => {
+
    return (
      <View style = { styles.container }>
        <View style={ styles.headerContainer }>
-         <Button onPress = { () => {} } color={Platform.OS === 'ios' ? Colors.iosColor : "transparent"} style={styles.button} title="Annuler"/>
+         <Button onPress = { () => showEditer(false) } color={Platform.OS === 'ios' ? Colors.iosColor : "transparent"} style={styles.button} title="Annuler"/>
          <Text style={styles.text}>Création du potin</Text>
          <Button onPress = { () => {} } color={Platform.OS === 'ios' ? Colors.iosColor : "transparent"} style={styles.button} title="Envoyer"/>
        </View>
        <View style={ styles.contentContainer }>
-         <Input placeholder='Titre' />
+         <Input placeholder='Ton titre' style={styles.input} />
 
-           <Text>
-             Ceci est le formulaire
-           </Text>
+
        </View>
      </View>
    )
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -39,8 +37,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 5,
-    height: 50,
+    padding: 10,
+    height: 60,
     backgroundColor: "#fff",
   },
   title: {
@@ -56,6 +54,9 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingTop: 30,
   },
+  input: {
+      borderBottomColor: Colors.tintColor,
+  }
 })
 
 
