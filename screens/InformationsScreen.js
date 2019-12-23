@@ -33,7 +33,7 @@ export default function InformationsScreen() {
                 </View>
                 {
                   users.map(user => (
-                    <Text key={ user.getLogin() }>{user.getLogin()}: {user.getFirstname()} {user.getLastname()} - user.getEmail()</Text>
+                    <Text key={ user.getLogin() }>{user.getLogin()}: {user.getFirstname()} {user.getLastname()} - {user.getEmail()}</Text>
                   ))
                 }
             </ScrollView>
