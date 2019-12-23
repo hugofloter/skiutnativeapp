@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import GroupeScreen from '../screens/GroupeScreen';
 import InformationsScreen from '../screens/InformationsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -47,7 +48,7 @@ ActualityNavigator.path = '';
  */
 const InformationNavigator = createStackNavigator(
     {
-        Home: InformationsScreen,
+        Infos: InformationsScreen,
     },
     config
 );
@@ -75,7 +76,7 @@ InformationNavigator.path = '';
  */
 const GroupNavigator = createStackNavigator(
   {
-    Links: GroupeScreen,
+    Groupe: GroupeScreen,
   },
   config
 );
@@ -89,6 +90,32 @@ GroupNavigator.navigationOptions = {
 
 GroupNavigator.path = '';
 
+/**
+ *
+ * Potins Navigator
+ * @type {NavigationContainer}
+ */
+const PotinNavigator = createStackNavigator(
+  {
+    Potins: PotinsScreenManager,
+  },
+  config
+);
+
+PotinNavigator.navigationOptions = {
+  tabBarLabel: 'Potins',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-chatbubbles' : 'md-chatbubbles'} />
+  ),
+};
+
+PotinNavigator.path = '';
+
+/**
+ *
+ * Setting Navigator
+ * @type {NavigationContainer}
+ */
 const SettingsStack = createStackNavigator(
   {
     Settings: SettingsScreen,
@@ -109,7 +136,8 @@ const tabNavigator = createBottomTabNavigator({
   HomeStack: ActualityNavigator,
   InformationNavigator,
   GroupNavigator,
-  SettingsStack,
+  PotinNavigator,
+  SettingsStack
 });
 
 tabNavigator.path = '';

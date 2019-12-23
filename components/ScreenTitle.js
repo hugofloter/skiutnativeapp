@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'stretch',
+    marginTop: 5
   },
   title: {
     color: Colors.darkGrey,

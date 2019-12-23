@@ -21,9 +21,6 @@ export function withAuthentication(fetch, store) {
   return async (url, options={}) => {
     const headers = options.headers = options.headers || {}
     headers['Authorization'] = await getAuthorizationHeader(store.getState())
-
-    console.log(headers['Authorization']);
-
     return fetch(url, options);
   }
 }
