@@ -145,7 +145,7 @@ const reduceFunctions = {
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: true
+      updating: false
     }, instance);
   },
 
@@ -194,7 +194,7 @@ const reduceFunctions = {
       const instance = new Model(data);
       return replaceInstance({
         ...state,
-        deleting: true
+        deleting: false
       }, instance)
     }
 

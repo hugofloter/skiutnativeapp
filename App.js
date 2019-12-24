@@ -45,7 +45,7 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         <Provider store={store}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+          <StatusBar barStyle="dark-content" />
           <ConnectHandler/>
         </Provider>
         <FlashMessage position="top" />
