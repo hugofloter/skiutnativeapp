@@ -5,18 +5,17 @@ import {
   Text,
   StyleSheet
 } from "react-native";
+import { Icon } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 
-const PlusBlock = ({ title, action }) => {
+const PlusBlock = ({ icon, action, ...iconProps }) => {
   return (
     <View style = { styles.container }>
       <TouchableOpacity onPress = { action }>
         <View style = { styles.view }>
-          <Text style={ styles.title }>
-            { title }
-          </Text>
+          <Icon name={icon} {...iconProps}/>
         </View>
       </TouchableOpacity>
     </View>

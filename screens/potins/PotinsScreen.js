@@ -48,7 +48,7 @@ function PotinsScreen({ showEditer }) {
                       />
                   }>
         <ScreenTitle title="Potins">
-          <PlusBlock title="+" action={() => showEditer(true)}/>
+          <PlusBlock icon="create" color={colors.white} action={() => showEditer(true)}/>
         </ScreenTitle>
         {
           potins.map(potin => (
