@@ -27,16 +27,11 @@ export default function InformationsScreen() {
         <View style={styles.container}>
             <ScrollView
                 style={styles.container}
-                contentContainerStyle={styles.contentContainer}>
                 showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.contentContainer}>
                 <View>
                     <Text>Les informations</Text>
                 </View>
-                {
-                  users.map(user => (
-                    <Text key={ user.getLogin() }>{user.getLogin()}: {user.getFirstname()} {user.getLastname()} - {user.getEmail()}</Text>
-                  ))
-                }
             </ScrollView>
         </View>
     );
