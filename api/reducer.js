@@ -3,11 +3,13 @@ import {
   REQUEST_RETRIEVE,
   REQUEST_LIST,
   REQUEST_UPDATE_ONE,
+  REQUEST_UPDATE,
   REQUEST_DELETE_ONE,
   SET_CURRENT,
   SET_CURRENT_ID,
   RESET,
-  RESET_CURRENT
+  RESET_CURRENT,
+  RESET_UPDATE
 } from "./types";
 
 const mergeIndex = (oldIndex, instances) => {
@@ -147,6 +149,39 @@ const reduceFunctions = {
       ...state,
       updating: false
     }, instance);
+  },
+
+  [REQUEST_UPDATE]: (state, { data, payload, success }) => {
+    if(success === null) {
+      return {
+        ...state,
+        updating: true,
+        updateSuccess: null
+      }
+    }
+
+    if(success === false) {
+      return {
+        ...state,
+        updating: false,
+        updateSuccess: false
+      }
+    }
+
+    const instance = new payload.Model(data);
+    return replaceInstance({
+      ...state,
+      updating: false,
+      updateSuccess: success
+    }, instance);
+  },
+
+  [RESET_UPDATE]: (state) => {
+      return {
+        ...state,
+        updating: false,
+        updateSuccess: null
+      }
   },
 
   [REQUEST_CREATE]: (state, { data, payload, success}) => {
