@@ -87,6 +87,7 @@ export default function SettingsScreen() {
           <View style={ styles.rowForm }>
             <TextInput
               placeholder = "Ancien mot de passe"
+              placeholderTextColor={Colors.grey}
               value = {oldPassword}
               secureTextEntry
               onChangeText = { (text) => setOldPassword(text) }
@@ -98,6 +99,7 @@ export default function SettingsScreen() {
             <TextInput
               autoCompleteType = "password"
               secureTextEntry
+              placeholderTextColor={Colors.grey}
               placeholder = "Nouveau mot de passe"
               value = {newPassword}
               onChangeText = { (text) => setNewPassword(text) }
@@ -109,6 +111,7 @@ export default function SettingsScreen() {
             <TextInput
               autoCompleteType = "password"
               secureTextEntry
+              placeholderTextColor={Colors.grey}
               placeholder = "Confirmez le nouveau mot de passe"
               value = {confirmPassword}
               onChangeText = { (text) => setConfirmPassword(text) }
@@ -162,13 +165,12 @@ const styles = StyleSheet.create({
     height: Sizes.inputHeight,
     minWidth: "70%",
     margin: 5,
-    borderBottomColor: Colors.tintColor
+    borderBottomColor: Colors.primaryBlue
   },
   button: {
     marginTop: 50
   }
 })
-
 
 SettingsScreen.navigationOptions = {
   header: null
