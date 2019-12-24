@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   Platform,
@@ -10,7 +10,7 @@ import {
   View,
   RefreshControl,
 } from 'react-native';
-import { news as newsAPI } from "../../api/state";
+import {news as newsAPI, potins as potinsAPI} from "../../api/state";
 import { useSelector, useDispatch } from "react-redux";
 import { getConnectedUser } from "../../api/connect";
 import Colors from "../../constants/Colors";
@@ -18,6 +18,7 @@ import Block from "../../components/blocks/Block";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
+import {showMessage} from "react-native-flash-message";
 
 
 
@@ -33,15 +34,36 @@ function HomeScreen({ showEditer }) {
 
   const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }))
 
+  const resetCurrent = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
+  const { resNews } = useSelector(state => ({ resNews: newsAPI.getCurrentFromState(state) }));
+
   React.useEffect(() => {
     listNews();
   }, [])
+
+  useEffect(() => {
+    if (resNews) {
+      if (resNews.error) {
+        showMessage({
+           message: "Un problème a été détecté !",
+           type: "error",
+        });
+      } else {
+        showMessage({
+           message: "News envoyée !",
+           type: "success",
+        });
+      }
+      resetCurrent()
+    }
+  }, [resNews])
 
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
         refreshControl={
             <RefreshControl
                 refreshing={!fetched}

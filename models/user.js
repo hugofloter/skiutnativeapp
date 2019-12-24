@@ -39,16 +39,16 @@ class User {
     return this.email;
   }
 
-  isAdult() {
-    return this.isAdult
+  getAdult() {
+    return Boolean(this.isAdult);
   }
 
-  isAdmin() {
-    return this.isAdmin;
+  getAdmin() {
+    return Boolean(this.isAdmin);
   }
 
-  lastPosition() {
-    return this.lastPosition;
+  getLastPosition() {
+    return Boolean(this.lastPosition);
   }
 }
 

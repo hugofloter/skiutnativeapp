@@ -7,6 +7,7 @@ import{
   REQUEST_UPDATE_ONE,
   REQUEST_DELETE_ONE,
   RESET,
+  RESET_CURRENT,
   SET_CURRENT_ID,
   SET_CURRENT,
 } from "./types";
@@ -140,10 +141,10 @@ export default class APIEndpoint {
     }
   }
 
-  updateOne(id, data, options= {}) {
+  updateOne(id, data={}, options= {}) {
     return {
       type: REQUEST_UPDATE_ONE,
-      index: this._index,
+      index: this.index,
       payload: {
         id: id && String(id),
         Model: this._Model
@@ -171,7 +172,7 @@ export default class APIEndpoint {
     }
   }
 
-  delete(id, options={}, data=undefined) {
+  delete(id, options={}, data={}) {
     return {
       type: REQUEST_DELETE_ONE,
       index: this.index,
@@ -182,7 +183,7 @@ export default class APIEndpoint {
       request: {
         method: 'DELETE',
         url: this._urlScheme.getDetails(id, options),
-         data: data
+        data: data
       }
     }
   }
@@ -190,6 +191,13 @@ export default class APIEndpoint {
   reset() {
     return {
       type: RESET,
+      index: this.index,
+    };
+  }
+
+  resetCurrent() {
+    return {
+      type: RESET_CURRENT,
       index: this.index,
     };
   }

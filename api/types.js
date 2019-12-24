@@ -7,4 +7,5 @@ export const REQUEST_UPDATE_ONE = Symbol('REQUEST_UPDATE_ONE');
 export const REQUEST_DELETE_ONE = Symbol('REQUEST_DELETE_ONE');
 export const SET_CURRENT_ID = Symbol('SET_CURRENT_ID');
 export const RESET = Symbol('RESET');
+export const RESET_CURRENT = Symbol('RESET_CURRENT');
 export const SET_CURRENT = Symbol('SET_CURRENT');
