@@ -42,6 +42,7 @@ function HomeScreen({ showEditer }) {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
         refreshControl={
             <RefreshControl
                 refreshing={!fetched}

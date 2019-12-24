@@ -21,5 +21,6 @@ export default {
   defaultBackgroud: '#eeeeee',
   buttonBackground: '#FFCC66',
   primaryBlue: "#1A7E96",
-  errorColor: "#960008"
+  errorColor: "#b80204",
+  successColor: "#1bcd28"
 };

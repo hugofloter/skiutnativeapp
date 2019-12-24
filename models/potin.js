@@ -33,7 +33,7 @@ class Potin {
     return this.sender;
   }
 
-  isAnonymous() {
+  getAnonymous() {
     return this.isAnonymous;
   }
 

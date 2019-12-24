@@ -28,6 +28,7 @@ export default function InformationsScreen() {
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}>
+                showsVerticalScrollIndicator={false}
                 <View>
                     <Text>Les informations</Text>
                 </View>

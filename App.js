@@ -6,6 +6,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from "react-redux";
 import { createStore } from "./api/state";
+import FlashMessage from "react-native-flash-message";
 
 import AppNavigator from './navigation/AppNavigator';
 import ConnectScreen from "./screens/ConnectScreen";
@@ -44,9 +45,10 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         <Provider store={store}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
           <ConnectHandler/>
         </Provider>
+        <FlashMessage position="top" />
       </View>
     );
   }

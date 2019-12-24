@@ -6,7 +6,8 @@ import {
   REQUEST_DELETE_ONE,
   SET_CURRENT,
   SET_CURRENT_ID,
-  RESET
+  RESET,
+  RESET_CURRENT
 } from "./types";
 
 const mergeIndex = (oldIndex, instances) => {
@@ -144,7 +145,7 @@ const reduceFunctions = {
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: false
+      updating: true
     }, instance);
   },
 
@@ -193,7 +194,7 @@ const reduceFunctions = {
       const instance = new Model(data);
       return replaceInstance({
         ...state,
-        deleting: false
+        deleting: true
       }, instance)
     }
 
@@ -210,6 +211,15 @@ const reduceFunctions = {
       index,
       values,
     }
+  },
+
+  [RESET_CURRENT]: (state) => {
+      return {
+        ...state,
+        creating: false,
+        currentID: null,
+        current: null,
+      }
   },
 
   [RESET]: () => undefined
