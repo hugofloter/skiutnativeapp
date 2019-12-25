@@ -48,7 +48,7 @@ class User {
   }
 
   getLastPosition() {
-    return Boolean(this.lastPosition);
+    return this.lastPosition;
   }
 }
 
