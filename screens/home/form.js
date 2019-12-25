@@ -19,6 +19,7 @@
 
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
+import ImagePicker from "../../components/images/ImagePicker";
 import { useSelector, useDispatch } from "react-redux";
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { news as newsAPI } from "../../api/state";
@@ -50,21 +51,31 @@ const Form = ({ showEditer }) => {
        </View>
        <View style={ styles.contentContainer }>
          <Input placeholder="Titre" style={ styles.input } onChangeText = { title => setData({ ...data, title})} value={ data.title } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>
-         <View style={ styles.textArea }>
+         <ImagePicker/>
+       <View style={ styles.textArea }>
            <ScrollView>
              <TextInput
                  placeholder='Ecris ton message'
                  multiline
-                 numberOfLines={50}
+                 numberOfLines={100}
                  textAlignVertical="top"
                  onChangeText={text => setData({...data, text})}
                  value={data.text}
-                 style={{height: "75%"}}
+                 style={styles.textInput}
              />
            </ScrollView>
          </View>
          <Divider style={{ backgroundColor: Colors.primaryBlue }} />
+           <CheckBox
+             checked = { data.type === "email" }
+             title = "Envoyer par Email"
+             center
+             containerStyle = { styles.checkboxContainer }
+             onPress = { () => setData({...data, type: ( data.type === "email" ? "news" : "email")})}
+             checkedColor = { Colors.tintColor }
+             />
        </View>
+
      </View>
    )
  }
@@ -74,8 +85,9 @@ const Form = ({ showEditer }) => {
 
  const styles = StyleSheet.create({
    container: {
-        flex: 1,
-        backgroundColor: Colors.defaultBackgroud,
+     paddingTop: 20,
+     flex: 1,
+     backgroundColor: Colors.defaultBackgroud,
    },
    headerContainer: {
      padding: 5,
@@ -102,9 +114,17 @@ const Form = ({ showEditer }) => {
    },
    textArea: {
      paddingTop: 30,
-     padding: 10
+     padding: 10,
+     height: 200,
+   },
+   textInput: {
+     height: "75%"
+   },
+   checkboxContainer: {
+     backgroundColor: Colors.defaultBackgroud,
    }
  })
+
 
 
 export default Form;

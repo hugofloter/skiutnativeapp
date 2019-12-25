@@ -73,7 +73,7 @@ function HomeScreen({ showEditer }) {
             />
         }>
         <ScreenTitle title="Accueil">
-            <PlusBlock icon="create" color={ Colors.white } action={() => showEditer(true)}/>
+            {currentUser.getAdmin() ? <PlusBlock icon="create" color={ Colors.white } action={() => showEditer(true)}/> : null}
         </ScreenTitle>
         {
           news.map(oneNew => (
