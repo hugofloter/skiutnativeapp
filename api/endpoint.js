@@ -11,7 +11,7 @@ import{
   RESET_CURRENT,
   SET_CURRENT_ID,
   SET_CURRENT,
-  RESET_UPDATE
+  RESET_STATUS
 } from "./types";
 import invariant from "invariant";
 
@@ -219,9 +219,11 @@ export default class APIEndpoint {
     };
   }
 
+
   resetUpdate() {
     return {
-      type: RESET_UPDATE
+      type: RESET_STATUS,
+      index: this.index
     };
   }
 

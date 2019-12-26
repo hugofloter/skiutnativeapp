@@ -9,7 +9,7 @@ import {
   SET_CURRENT_ID,
   RESET,
   RESET_CURRENT,
-  RESET_UPDATE
+  RESET_STATUS
 } from "./types";
 
 const mergeIndex = (oldIndex, instances) => {
@@ -26,8 +26,8 @@ const mergeIndex = (oldIndex, instances) => {
 
 const replaceIn = (values, instance) => {
   if(values) {
-    const instanceIndex = values.findIndex((value) => value.getKey() === instance.detKey());
-    if(instancIndex !== -1) {
+    const instanceIndex = values.findIndex((value) => value.getKey() === instance.getKey());
+    if(instanceIndex !== -1) {
       values = values.slice();
       values.splice(instanceIndex, 1, instance)
     }
@@ -130,10 +130,12 @@ const reduceFunctions = {
   },
 
   [REQUEST_UPDATE_ONE]: (state, { data, payload, success }) => {
+    console.log(success)
     if(success === null) {
       return {
         ...state,
         updating: true,
+        updateSuccess: null
       }
     }
 
@@ -141,13 +143,15 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
+        updateSuccess: false
       }
     }
 
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: false
+      updating: false,
+      updateSuccess: true
     }, instance);
   },
 
@@ -176,10 +180,9 @@ const reduceFunctions = {
     }, instance);
   },
 
-  [RESET_UPDATE]: (state) => {
+  [RESET_STATUS]: (state) => {
       return {
         ...state,
-        updating: false,
         updateSuccess: null
       }
   },
@@ -210,17 +213,19 @@ const reduceFunctions = {
     };
   },
 
-  [REQUEST_DELETE_ONE]: (state, { pata, payload, success }) => {
+  [REQUEST_DELETE_ONE]: (state, { data, payload, success }) => {
     if(success === null) {
       return {
         ...state,
         deleting: true,
+        updateSuccess: null
       }
     }
     if(!success) {
       return {
         ...state,
         deleting: false,
+        updateSuccess: false
       }
     }
 
@@ -229,7 +234,8 @@ const reduceFunctions = {
       const instance = new Model(data);
       return replaceInstance({
         ...state,
-        deleting: false
+        deleting: false,
+        updateSuccess: true
       }, instance)
     }
 
