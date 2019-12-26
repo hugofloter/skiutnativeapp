@@ -103,7 +103,7 @@ function AdminPotinScreen({ showEditer, showAdmin, isAdmin }) {
   const approvePotin = React.useCallback((id) => dispatch(potinsAPI.updateOne(id)), [dispatch]);
   const deletePotin = React.useCallback((id) => dispatch(potinsAPI.delete(id)), [dispatch]);
   const resetUpdate = React.useCallback(() => dispatch(potinsAPI.resetUpdate()), [dispatch])
-  const { adminPotins, statusUpdate } = useSelector(state => ({ adminPotins: potinsAdminAPI.getValuesFromState(state), statusUpdate: potinsAPI.getUpdatingStatusFromState(state) }));
+  const { adminPotins, statusUpdate } = useSelector(state => ({ adminPotins: potinsAdminAPI.getValuesFromState(state), statusUpdate: potinsAPI.getStatusFromState(state) }));
 
   useEffect(() => {
     fetchPotins(setFetched, getAdminPotins)

@@ -267,8 +267,8 @@ export default class APIEndpoint {
     return this._getSubState(state).updating || false;
   }
 
-  getUpdatingStatusFromState(state) {
-    return this._getSubState(state).updateSuccess;
+  getStatusFromState(state) {
+    return this._getSubState(state).status || null;
   }
 
   getDeletingFromState(state) {

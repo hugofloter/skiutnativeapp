@@ -134,7 +134,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: true,
-        updateSuccess: null
+        status: null
       }
     }
 
@@ -142,7 +142,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
-        updateSuccess: false
+        status: false
       }
     }
 
@@ -150,7 +150,7 @@ const reduceFunctions = {
     return replaceInstance({
       ...state,
       updating: false,
-      updateSuccess: true
+      status: true
     }, instance);
   },
 
@@ -159,7 +159,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: true,
-        updateSuccess: null
+        status: null
       }
     }
 
@@ -167,7 +167,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
-        updateSuccess: false
+        status: false
       }
     }
 
@@ -175,14 +175,14 @@ const reduceFunctions = {
     return replaceInstance({
       ...state,
       updating: false,
-      updateSuccess: success
+      status: success
     }, instance);
   },
 
   [RESET_STATUS]: (state) => {
       return {
         ...state,
-        updateSuccess: null
+        status: null
       }
   },
 
@@ -217,14 +217,14 @@ const reduceFunctions = {
       return {
         ...state,
         deleting: true,
-        updateSuccess: null
+        status: null
       }
     }
     if(!success) {
       return {
         ...state,
         deleting: false,
-        updateSuccess: false
+        status: false
       }
     }
 
@@ -234,7 +234,7 @@ const reduceFunctions = {
       return replaceInstance({
         ...state,
         deleting: false,
-        updateSuccess: true
+        status: true
       }, instance)
     }
 

@@ -26,7 +26,7 @@ export default function SettingsScreen() {
   const changePassword = React.useCallback((data) => dispatch(usersAPI.update(data)), [dispatch])
   const resetUpdate = React.useCallback(() => dispatch(usersAPI.resetUpdate()), [dispatch])
 
-  const { updatePasswordStatus, statusUpdate } = useSelector(state => ({ updatePasswordStatus: usersAPI.getUpdatingFromState(state), statusUpdate: usersAPI.getUpdatingStatusFromState(state) }));
+  const { updatePasswordStatus, statusUpdate } = useSelector(state => ({ updatePasswordStatus: usersAPI.getUpdatingFromState(state), statusUpdate: usersAPI.getStatusFromState(state) }));
 
   React.useEffect(() => {
     if (statusUpdate === true) {
