@@ -21,14 +21,19 @@ import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 import { useSelector, useDispatch } from "react-redux";
 import { ifIphoneX } from 'react-native-iphone-x-helper'
-import { news as newsAPI } from "../../api/state";
+import { news as newsAPI, nofifications as nofificationsAPI  } from "../../api/state";
 
+//@TODO Add checkbox bottom to launch notification or not
 const Form = ({ showEditer }) => {
 
   const dispatch = useDispatch()
   const add = React.useCallback((data) => {
     dispatch(newsAPI.create(data));
     showEditer(false);
+  }, [dispatch])
+
+  const sendNotification = React.useCallback((data) => {
+    dispatch(nofificationsAPI.create(data));
   }, [dispatch])
 
   const [data, setData] = React.useState({});
@@ -40,13 +45,15 @@ const Form = ({ showEditer }) => {
     }
   }, [data])
 
-
    return (
      <View style = { styles.container }>
        <View style={ styles.headerContainer }>
          <Button onPress = { () => showEditer(false) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
          <Text style={ styles.text }>Création de News</Text>
-         <Button disabled={!isSendable} onPress = { () => add(data) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
+         <Button disabled={!isSendable} onPress = { () => {
+           sendNotification({message: {title: data.title, text: data.text}, notification_type: "all"})
+           add(data)
+         } } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
        </View>
        <View style={ styles.contentContainer }>
          <Input placeholder="Titre" style={ styles.input } onChangeText = { title => setData({ ...data, title})} value={ data.title } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>

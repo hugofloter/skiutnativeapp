@@ -110,3 +110,4 @@ export function getConnectedUser(state) {
   }
   return null;
 }
+

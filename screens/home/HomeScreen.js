@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -19,8 +19,10 @@ import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
 import {showMessage} from "react-native-flash-message";
-
-
+import { getPermission } from "../../utils/permissions";
+import registerForPushNotificationsAsync from "../../api/pushNotification";
+import {Notifications} from "expo";
+import { usersToken as usersTokenAPI } from "../../api/state"
 
 function HomeScreen({ showEditer }) {
 
@@ -37,9 +39,21 @@ function HomeScreen({ showEditer }) {
   const resetCurrent = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
   const { resNews } = useSelector(state => ({ resNews: newsAPI.getCurrentFromState(state) }));
 
+  const [notification, setNotification] = useState({})
+  const createToken = React.useCallback((token) => dispatch(usersTokenAPI.create({token: token})), [dispatch]);
+
+  const handleNotifications = (notification) => {
+    setNotification(notification)
+  }
+
   React.useEffect(() => {
+    if (getPermission('NOTIFICATIONS')) {
+      registerForPushNotificationsAsync(createToken)
+      Notifications.addListener(handleNotifications)
+    }
     listNews();
   }, [])
+
 
   useEffect(() => {
     if (resNews) {
