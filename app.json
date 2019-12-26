@@ -3,7 +3,7 @@
     "name": "SKI'UTC",
     "slug": "skiutc",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android"
@@ -22,13 +22,12 @@
       "**/*"
     ],
     "android": {
-        "package": "fr.utc.assos.skiutc",
-        "googleServicesFile": "./google-services.json"
+      "package": "fr.utc.assos.skiutc",
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
-        "bundleIdentifier": "fr.utc.assos.skiutc",
-        "buildNumber": "2"
+      "bundleIdentifier": "fr.utc.assos.skiutc",
+      "buildNumber": "2"
     }
   }
 }
-

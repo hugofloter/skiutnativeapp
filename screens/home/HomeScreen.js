@@ -22,7 +22,7 @@ import {showMessage} from "react-native-flash-message";
 import { getPermission } from "../../utils/permissions";
 import registerForPushNotificationsAsync from "../../api/pushNotification";
 import {Notifications} from "expo";
-import { usersToken as usersTokenAPI } from "../../api/state"
+import { users as usersAPI } from "../../api/state"
 
 function HomeScreen({ showEditer }) {
 
@@ -40,7 +40,7 @@ function HomeScreen({ showEditer }) {
   const { resNews } = useSelector(state => ({ resNews: newsAPI.getCurrentFromState(state) }));
 
   const [notification, setNotification] = useState({})
-  const createToken = React.useCallback((token) => dispatch(usersTokenAPI.create({token: token})), [dispatch]);
+  const createToken = React.useCallback((token) => dispatch(usersAPI.update({token: token})), [dispatch]);
 
   const handleNotifications = (notification) => {
     setNotification(notification)
@@ -53,7 +53,6 @@ function HomeScreen({ showEditer }) {
     }
     listNews();
   }, [])
-
 
   useEffect(() => {
     if (resNews) {

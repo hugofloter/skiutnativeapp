@@ -3,6 +3,7 @@ import {
   REQUEST_RETRIEVE,
   REQUEST_LIST,
   REQUEST_UPDATE_ONE,
+  REQUEST_UPDATE,
   REQUEST_DELETE_ONE,
   SET_CURRENT,
   SET_CURRENT_ID,
@@ -24,8 +25,8 @@ const mergeIndex = (oldIndex, instances) => {
 
 const replaceIn = (values, instance) => {
   if(values) {
-    const instanceIndex = values.findIndex((value) => value.getKey() === instance.detKey());
-    if(instancIndex !== -1) {
+    const instanceIndex = values.findIndex((value) => value.getKey() === instance.getKey());
+    if(instanceIndex !== -1) {
       values = values.slice();
       values.splice(instanceIndex, 1, instance)
     }
@@ -139,6 +140,28 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
+      }
+    }
+
+    const instance = new payload.Model(data);
+    return replaceInstance({
+      ...state,
+      updating: false
+    }, instance);
+  },
+
+  [REQUEST_UPDATE]: (state, { data, payload, success }) => {
+    if(success === null) {
+      return {
+        ...state,
+        updating: true
+      }
+    }
+
+    if(success === false) {
+      return {
+        ...state,
+        updating: false
       }
     }
 

@@ -5,11 +5,12 @@ import{
   REQUEST_LIST,
   REQUEST_RETRIEVE,
   REQUEST_UPDATE_ONE,
+  REQUEST_UPDATE,
   REQUEST_DELETE_ONE,
   RESET,
   RESET_CURRENT,
   SET_CURRENT_ID,
-  SET_CURRENT,
+  SET_CURRENT
 } from "./types";
 import invariant from "invariant";
 
@@ -151,6 +152,21 @@ export default class APIEndpoint {
       },
       request: {
         url: this._urlScheme.getDetails(id, options),
+        method: options.partial ? 'PATCH' : 'PUT',
+        data: data
+      }
+    }
+  }
+
+  update(data={}, options= {}) {
+    return {
+      type: REQUEST_UPDATE,
+      index: this.index,
+      payload: {
+        Model: this._Model
+      },
+      request: {
+        url: this._urlScheme.getList(options),
         method: options.partial ? 'PATCH' : 'PUT',
         data: data
       }
