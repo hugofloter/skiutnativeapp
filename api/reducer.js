@@ -130,7 +130,6 @@ const reduceFunctions = {
   },
 
   [REQUEST_UPDATE_ONE]: (state, { data, payload, success }) => {
-    console.log(success)
     if(success === null) {
       return {
         ...state,
@@ -246,7 +245,7 @@ const reduceFunctions = {
 
     return {
       ...state,
-      curent,
+      current,
       currentID: current ? state.currentID : null,
       deleting: false,
       index,

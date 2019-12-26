@@ -8,20 +8,16 @@ import {users as usersAPI} from "../api/state"
 import ScreenTitle from "../components/ScreenTitle";
 import { showMessage } from "react-native-flash-message";
 
-const resetFields = (setShowable, setOldPassword, setNewPassword, setConfirmPassword) => {
-  setOldPassword('')
-  setNewPassword('')
-  setConfirmPassword('')
+const resetFields = (setShowable, setPasswords) => {
+  setPasswords({oldPassword: "", newPassword: "", confirmPassword: ""})
   setShowable(false)
 }
 
 export default function SettingsScreen() {
 
   const [allowLocalisation, setAllowLocalisation] = React.useState(false);
+  const [passwords, setPasswords] = React.useState({oldPassword: "", newPassword: "", confirmPassword: ""})
   const [showChangePassword, setShowable] = React.useState(false);
-  const [oldPassword, setOldPassword] = React.useState("");
-  const [newPassword, setNewPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
 
   const { userConnected, isAdmin }  = useSelector(state => ({ userConnected: getConnectedUser(state), isAdmin: getConnectedUser(state).getAdmin() }))
 
@@ -38,7 +34,7 @@ export default function SettingsScreen() {
            message: "Mot de passe changé !",
            type: "success",
         });
-        resetFields(setShowable, setOldPassword, setNewPassword, setConfirmPassword)
+        resetFields(setShowable, setPasswords)
         resetUpdate()
     } else if (statusUpdate === false) {
         showMessage({
@@ -80,7 +76,7 @@ export default function SettingsScreen() {
         borderRadius={5}
         height="40%"
         onBackdropPress={() => {
-          resetFields(setShowable, setOldPassword, setNewPassword, setConfirmPassword)
+          resetFields(setShowable, setPasswords)
         }}
       >
         <View style={{padding: 20}}>
@@ -88,9 +84,9 @@ export default function SettingsScreen() {
             <TextInput
               placeholder = "Ancien mot de passe"
               placeholderTextColor={Colors.grey}
-              value = {oldPassword}
+              value = {passwords.oldPassword}
               secureTextEntry
-              onChangeText = { (text) => setOldPassword(text) }
+              onChangeText = { (oldPassword) => setPasswords({ ...passwords, oldPassword}) }
               style = { styles.input }
               maxLength={20}
               />
@@ -101,8 +97,8 @@ export default function SettingsScreen() {
               secureTextEntry
               placeholderTextColor={Colors.grey}
               placeholder = "Nouveau mot de passe"
-              value = {newPassword}
-              onChangeText = { (text) => setNewPassword(text) }
+              value = {passwords.newPassword}
+              onChangeText = { (newPassword) => setPasswords({ ...passwords, newPassword}) }
               style = { styles.input }
               maxLength={30}
               />
@@ -113,18 +109,18 @@ export default function SettingsScreen() {
               secureTextEntry
               placeholderTextColor={Colors.grey}
               placeholder = "Confirmez le nouveau mot de passe"
-              value = {confirmPassword}
-              onChangeText = { (text) => setConfirmPassword(text) }
+              value = {passwords.confirmPassword}
+              onChangeText = { (confirmPassword) => setPasswords({ ...passwords, confirmPassword}) }
               style = { styles.input }
               maxLength={30}
               />
           </View>
           { updatePasswordStatus ? <ActivityIndicator size="small" color={Colors.buttonBackground}/> :
-              <ButtonNative onPress = { () => changePassword({"password": oldPassword, "new_password": newPassword}) }
+              <ButtonNative onPress = { () => changePassword({"password": passwords.oldPassword, "new_password": passwords.newPassword}) }
                   buttonStyle={{
                     backgroundColor: Colors.buttonBackground
                   }}
-                  disabled={newPassword !== confirmPassword}
+                  disabled={(passwords.newPassword !== passwords.confirmPassword) || passwords.newPassword === ""}
                   style = {styles.button}
                   title="Valider"/>}
         </View>
@@ -160,6 +156,7 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   input: {
+    color: Colors.black,
     borderBottomWidth: 1,
     fontSize: Sizes.h3,
     height: Sizes.inputHeight,
