@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/app.png",
     "splash": {
@@ -26,7 +26,7 @@
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
-      "buildNumber": "2"
+      "buildNumber": "5"
     }
   }
 }
