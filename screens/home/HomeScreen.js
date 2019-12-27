@@ -46,14 +46,15 @@ function HomeScreen({ showEditer }) {
     setNotification(notification)
   }
 
+
   React.useEffect(() => {
-    if (getPermission('NOTIFICATIONS')) {
+    if (getPermission('NOTIFICATIONS') && !currentUser.getPushToken()) {
       registerForPushNotificationsAsync(createToken)
       Notifications.addListener(handleNotifications)
     }
     listNews();
   }, [])
-
+  
   useEffect(() => {
     if (resNews) {
       if (resNews.error) {
