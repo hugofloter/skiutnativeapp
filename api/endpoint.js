@@ -10,7 +10,8 @@ import{
   RESET,
   RESET_CURRENT,
   SET_CURRENT_ID,
-  SET_CURRENT
+  SET_CURRENT,
+  RESET_STATUS
 } from "./types";
 import invariant from "invariant";
 
@@ -218,6 +219,14 @@ export default class APIEndpoint {
     };
   }
 
+
+  resetUpdate() {
+    return {
+      type: RESET_STATUS,
+      index: this.index
+    };
+  }
+
   _getSubState(state) {
     return state[this.index] || {};
   }
@@ -256,6 +265,10 @@ export default class APIEndpoint {
 
   getUpdatingFromState(state) {
     return this._getSubState(state).updating || false;
+  }
+
+  getStatusFromState(state) {
+    return this._getSubState(state).status || null;
   }
 
   getDeletingFromState(state) {

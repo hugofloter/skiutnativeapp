@@ -8,7 +8,8 @@ import {
   SET_CURRENT,
   SET_CURRENT_ID,
   RESET,
-  RESET_CURRENT
+  RESET_CURRENT,
+  RESET_STATUS
 } from "./types";
 
 const mergeIndex = (oldIndex, instances) => {
@@ -133,6 +134,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: true,
+        status: null
       }
     }
 
@@ -140,13 +142,15 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
+        status: false
       }
     }
 
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: false
+      updating: false,
+      status: true
     }, instance);
   },
 
@@ -154,22 +158,32 @@ const reduceFunctions = {
     if(success === null) {
       return {
         ...state,
-        updating: true
+        updating: true,
+        status: null
       }
     }
 
     if(success === false) {
       return {
         ...state,
-        updating: false
+        updating: false,
+        status: false
       }
     }
 
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: false
+      updating: false,
+      status: success
     }, instance);
+  },
+
+  [RESET_STATUS]: (state) => {
+      return {
+        ...state,
+        status: null
+      }
   },
 
   [REQUEST_CREATE]: (state, { data, payload, success}) => {
@@ -198,17 +212,19 @@ const reduceFunctions = {
     };
   },
 
-  [REQUEST_DELETE_ONE]: (state, { pata, payload, success }) => {
+  [REQUEST_DELETE_ONE]: (state, { data, payload, success }) => {
     if(success === null) {
       return {
         ...state,
         deleting: true,
+        status: null
       }
     }
     if(!success) {
       return {
         ...state,
         deleting: false,
+        status: false
       }
     }
 
@@ -217,7 +233,8 @@ const reduceFunctions = {
       const instance = new Model(data);
       return replaceInstance({
         ...state,
-        deleting: false
+        deleting: false,
+        status: true
       }, instance)
     }
 
@@ -228,7 +245,7 @@ const reduceFunctions = {
 
     return {
       ...state,
-      curent,
+      current,
       currentID: current ? state.currentID : null,
       deleting: false,
       index,

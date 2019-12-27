@@ -14,7 +14,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import { useEffect } from 'react';
 import colors from '../../constants/Colors';
-import { potins as potinsAPI, potinsAdmin as potinsAdminAPI } from "../../api/state"
+import {potins as potinsAPI, potinsAdmin as potinsAdminAPI, users as usersAPI} from "../../api/state"
 import Block from "../../components/blocks/Block";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
@@ -102,11 +102,31 @@ function AdminPotinScreen({ showEditer, showAdmin, isAdmin }) {
   const getAdminPotins = React.useCallback(() => dispatch(potinsAdminAPI.list()), [dispatch]);
   const approvePotin = React.useCallback((id) => dispatch(potinsAPI.updateOne(id)), [dispatch]);
   const deletePotin = React.useCallback((id) => dispatch(potinsAPI.delete(id)), [dispatch]);
-  const { adminPotins } = useSelector(state => ({ adminPotins: potinsAdminAPI.getValuesFromState(state) }));
+  const resetUpdate = React.useCallback(() => dispatch(potinsAPI.resetUpdate()), [dispatch])
+  const { adminPotins, statusUpdate } = useSelector(state => ({ adminPotins: potinsAdminAPI.getValuesFromState(state), statusUpdate: potinsAPI.getStatusFromState(state) }));
 
   useEffect(() => {
     fetchPotins(setFetched, getAdminPotins)
   }, [])
+
+  React.useEffect(() => {
+
+    if (statusUpdate === true) {
+        resetUpdate()
+        showMessage({
+           message: "Potin updated !",
+           type: "success",
+        });
+        fetchPotins(setFetched, getAdminPotins)
+    } else if (statusUpdate === false) {
+        resetUpdate()
+        showMessage({
+           message: "Un erreur est survenue, ré-essayes !",
+           type: "error",
+        });
+        fetchPotins(setFetched, getAdminPotins)
+    }
+  },[statusUpdate])
 
   return (
     <View style={styles.container}>

@@ -53,7 +53,7 @@ export default function ConnectScreen(){
           maxLength={30}
           />
       </View>
-      { pending ? <ActivityIndicator size="small" color={Colors.tintColor}/> : <Button onPress = { handleLogin }
+      { pending ? <ActivityIndicator size="small" color={Colors.buttonBackground}/> : <Button onPress = { handleLogin }
                                                                                        buttonStyle={{
                                                                                          backgroundColor: Colors.buttonBackground
                                                                                        }}

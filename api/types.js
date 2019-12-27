@@ -10,3 +10,5 @@ export const SET_CURRENT_ID = Symbol('SET_CURRENT_ID');
 export const RESET = Symbol('RESET');
 export const RESET_CURRENT = Symbol('RESET_CURRENT');
 export const SET_CURRENT = Symbol('SET_CURRENT');
+export const RESET_STATUS = Symbol('RESET_STATUS');
+
