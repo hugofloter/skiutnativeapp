@@ -5,11 +5,13 @@ import{
   REQUEST_LIST,
   REQUEST_RETRIEVE,
   REQUEST_UPDATE_ONE,
+  REQUEST_UPDATE,
   REQUEST_DELETE_ONE,
   RESET,
   RESET_CURRENT,
   SET_CURRENT_ID,
   SET_CURRENT,
+  RESET_STATUS
 } from "./types";
 import invariant from "invariant";
 
@@ -157,6 +159,21 @@ export default class APIEndpoint {
     }
   }
 
+  update(data={}, options= {}) {
+    return {
+      type: REQUEST_UPDATE,
+      index: this.index,
+      payload: {
+        Model: this._Model
+      },
+      request: {
+        url: this._urlScheme.getList(options),
+        method: options.partial ? 'PATCH' : 'PUT',
+        data: data
+      }
+    }
+  }
+
   create(data, options={}) {
     return {
       type: REQUEST_CREATE,
@@ -202,6 +219,14 @@ export default class APIEndpoint {
     };
   }
 
+
+  resetUpdate() {
+    return {
+      type: RESET_STATUS,
+      index: this.index
+    };
+  }
+
   _getSubState(state) {
     return state[this.index] || {};
   }
@@ -240,6 +265,10 @@ export default class APIEndpoint {
 
   getUpdatingFromState(state) {
     return this._getSubState(state).updating || false;
+  }
+
+  getStatusFromState(state) {
+    return this._getSubState(state).status || null;
   }
 
   getDeletingFromState(state) {
