@@ -23,11 +23,18 @@ import ImagePicker from "../../components/images/ImagePicker";
 import { useSelector, useDispatch } from "react-redux";
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { news as newsAPI } from "../../api/state";
+import { newsImage } from "../../api/image";
 
 const Form = ({ showEditer }) => {
 
   const dispatch = useDispatch()
-  const add = React.useCallback((data) => {
+  const add = React.useCallback(async (data) => {
+    if(data.image && data.image.uri) {
+      const { img_url } = await newsImage(data.image.uri);
+      delete data['image'];
+      data['photo'] = img_url;
+    }
+
     dispatch(newsAPI.create(data));
     showEditer(false);
   }, [dispatch])
@@ -51,7 +58,7 @@ const Form = ({ showEditer }) => {
        </View>
        <View style={ styles.contentContainer }>
          <Input placeholder="Titre" style={ styles.input } onChangeText = { title => setData({ ...data, title})} value={ data.title } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>
-         <ImagePicker/>
+         <ImagePicker setData={ setData} data={data}/>
        <View style={ styles.textArea }>
            <ScrollView>
              <TextInput
