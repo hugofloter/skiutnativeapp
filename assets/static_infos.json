@@ -1,0 +1,56 @@
+{
+    "Contacts": [
+      {
+        "Nom":"Pauline Mandon",
+        "Poste":"President",
+        "Telephone":"+337 12 12 12 12",
+        "Email":"prez@skiutz.gg",
+        "Photo":"/assets/images/logo.png"
+      },
+      {
+        "Nom":"Valentin Metz",
+        "Poste":"Vice-President",
+        "Telephone":"+337 12 12 12 12",
+        "Email":"viceprez@skiutc.gg",
+        "Photo":"/assets/images/logo.png"
+      },
+      {
+        "Nom":"Paul Jullien",
+        "Poste":"Resp de mes couilles",
+        "Telephone":"+337 12 12 12 12",
+        "Email":"pjullien@skiutc.fr",
+        "Photo":"/assets/images/logo.png"
+      },
+      {
+        "Nom":"Cogent",
+        "Poste":"Les chiottes",
+        "Telephone":"+337 12 12 12 12",
+        "Email":"wc@skiutc.fr",
+        "Photo":"/assets/images/logo.png"
+      },
+      {
+        "Nom":"Tim",
+        "Poste":"Resp After",
+        "Telephone":"+337 12 12 12 12",
+        "Email":"aftercheztim@skiutc.gg",
+        "Photo":"/assets/images/logo.png"
+      }
+    ],
+    "ContactsAutres": [
+      {
+        "Nom":"Les Condés",
+        "Telephone":"17",
+        "Email":null,
+      },
+      {
+        "Nom":"Les pompiers",
+        "Telephone":"18",
+        "Email":null
+      },
+      {
+        "Nom":"JP",
+        "Telephone":"Confidentiel",
+        "Email":"jp@lacauette.biere"
+      }
+    ]
+  }
