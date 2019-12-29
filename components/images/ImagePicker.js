@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
+  Dimensions,
+  Image
 } from "react-native";
 import {
   Icon
@@ -16,33 +18,39 @@ import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 
 
-const ImagePicker = (setData = null, data = null) => {
+const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   const [image, setImage] = React.useState(null);
+  const handleSet = React.useCallback((result) => {
+    setImage(result);
+    if(data && setData) {
+      setData({...data, [param]: result })
+    }
+  }, [data, setData, param, setImage])
 
   const _pickImage = async () => {
     const result = await Picker.launchImageLibraryAsync({
       mediaTypes: Picker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [16,9],
       quality: 1,
     });
-    console.log(result)
-    setImage(result);
+    handleSet(result);
   }
 
   React.useEffect(() => {
     getPermission('CAMERA_ROLL');
   }, []);
 
+
+
   return (
     <View style={styles.container}>
       {
-        image ?
-          <ImageBackground source = {{uri: image.uri}} style={styles.image}>
-            <TouchableOpacity onPress = { () => setImage(null) } style={styles.crossContainer}>
-              <Icon name="clear" color={Colors.white}/>
-            </TouchableOpacity>
-          </ImageBackground>
+        image && image.uri ?
+        <ImageBackground source = {{uri: image.uri}} style={{...styles.image, width: '100%', height: 150}} resizeMode='cover'>
+          <TouchableOpacity onPress = { () => handleSet(null) } style={styles.crossContainer}>
+            <Icon name="clear" color={Colors.white}/>
+          </TouchableOpacity>
+        </ImageBackground>
         :
         <TouchableOpacity onPress = {_pickImage} style={ styles.container }>
           <View style={styles.pickerView}>
@@ -70,8 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
   },
   image: {
-    width: '100%',
-    height: 150,
+    alignSelf: 'stretch',
   }
 })
 
