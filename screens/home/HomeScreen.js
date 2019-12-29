@@ -5,7 +5,7 @@ import {
   View,
   RefreshControl,
 } from 'react-native';
-import {news as newsAPI} from "../../api/state";
+import { news as newsAPI } from "../../api/state";
 import { useSelector, useDispatch } from "react-redux";
 import { getConnectedUser } from "../../api/connect";
 import Colors from "../../constants/Colors";
@@ -15,7 +15,7 @@ import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
 import { getPermission } from "../../utils/permissions";
 import registerForPushNotificationsAsync from "../../utils/notifications";
-import {Notifications} from "expo";
+import { Notifications } from "expo";
 import { users as usersAPI } from "../../api/state"
 import { handleMessage } from "../../utils/message";
 

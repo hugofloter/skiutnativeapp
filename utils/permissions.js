@@ -14,4 +14,4 @@ export const getPermission = async (permission) => {
     return askPermission(permission);
   }
   return true;
-}
+};

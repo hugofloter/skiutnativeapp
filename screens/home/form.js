@@ -2,9 +2,7 @@
  import {
    Text,
    View,
-   TouchableOpacity,
    ScrollView,
-   Image,
    Platform,
    StyleSheet,
    Button,
@@ -14,14 +12,12 @@
  import {
    Input,
    Divider,
-   CheckBox,
  } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
-import Sizes from "../../constants/Sizes";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ifIphoneX } from 'react-native-iphone-x-helper'
-import { news as newsAPI  } from "../../api/state";
+import { news as newsAPI } from "../../api/state";
 
 //@TODO Add checkbox bottom to launch notification or not
 const Form = ({ showEditer }) => {

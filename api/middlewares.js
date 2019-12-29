@@ -10,7 +10,7 @@ export function withAPIError(fetch) {
         const value = await response.json();
         return new APIError(`${options.method || 'GET'} ${url} returned ${response.status}`, response, value);
       } catch (err) {
-        throw new APIError(`${options.method || 'GET'} ${url} returned ${response.status}`);
+        return new APIError(`${options.method || 'GET'} ${url} returned ${response.status}`);
       }
     }
     return response;
