@@ -8,7 +8,7 @@ export function withAPIError(fetch) {
     if(!response.ok) {
       try {
         const value = await response.json();
-        throw new APIError(`${options.method || 'GET'} ${url} returned ${response.status}`, response, value);
+        return new APIError(`${options.method || 'GET'} ${url} returned ${response.status}`, response, value);
       } catch (err) {
         throw new APIError(`${options.method || 'GET'} ${url} returned ${response.status}`);
       }

@@ -1,16 +1,11 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
   RefreshControl,
 } from 'react-native';
-import {news as newsAPI, potins as potinsAPI} from "../../api/state";
+import {news as newsAPI} from "../../api/state";
 import { useSelector, useDispatch } from "react-redux";
 import { getConnectedUser } from "../../api/connect";
 import Colors from "../../constants/Colors";
@@ -18,11 +13,11 @@ import Block from "../../components/blocks/Block";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
-import {showMessage} from "react-native-flash-message";
 import { getPermission } from "../../utils/permissions";
-import registerForPushNotificationsAsync from "../../api/pushNotification";
+import registerForPushNotificationsAsync from "../../utils/notifications";
 import {Notifications} from "expo";
 import { users as usersAPI } from "../../api/state"
+import { handleMessage } from "../../utils/message";
 
 function HomeScreen({ showEditer }) {
 
@@ -36,8 +31,8 @@ function HomeScreen({ showEditer }) {
 
   const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }))
 
-  const resetCurrent = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
-  const { resNews } = useSelector(state => ({ resNews: newsAPI.getCurrentFromState(state) }));
+  const resetCurrentNews = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
+  const { currentNews, currentError } = useSelector(state => ({ currentNews: newsAPI.getCurrentFromState(state), currentError: usersAPI.getErrorFromState(state) }));
 
   const [notification, setNotification] = useState({})
   const createToken = React.useCallback((token) => dispatch(usersAPI.update({token: token})), [dispatch]);
@@ -46,6 +41,7 @@ function HomeScreen({ showEditer }) {
     setNotification(notification)
   }
 
+  handleMessage(currentNews, currentError, resetCurrentNews, "Impossible de poster la news !","News envoyée !");
 
   React.useEffect(() => {
     if (getPermission('NOTIFICATIONS') && !currentUser.getPushToken()) {
@@ -54,23 +50,6 @@ function HomeScreen({ showEditer }) {
     }
     listNews();
   }, [])
-  
-  useEffect(() => {
-    if (resNews) {
-      if (resNews.error) {
-        showMessage({
-           message: "Un problème a été détecté !",
-           type: "error",
-        });
-      } else {
-        showMessage({
-           message: "News envoyée !",
-           type: "success",
-        });
-      }
-      resetCurrent()
-    }
-  }, [resNews])
 
   return (
     <View style={styles.container}>

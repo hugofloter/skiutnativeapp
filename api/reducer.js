@@ -8,8 +8,7 @@ import {
   SET_CURRENT,
   SET_CURRENT_ID,
   RESET,
-  RESET_CURRENT,
-  RESET_STATUS
+  RESET_CURRENT
 } from "./types";
 
 const mergeIndex = (oldIndex, instances) => {
@@ -35,12 +34,12 @@ const replaceIn = (values, instance) => {
 }
 
 const replaceInstance = (state, instance) => {
-  const {current, currentID, index, values} = state;
+  const {index, values} = state;
   return {
     ...state,
     index: mergeIndex(index, [instance]),
     values: replaceIn(values, instance),
-    current: (currentID !== null && currentID === instance.getKey()) ? instance : current,
+    current: instance,
   }
 }
 
@@ -117,7 +116,6 @@ const reduceFunctions = {
       return nextState;
     }
 
-    // const instances = data.map((value) => new payload.Model(value))
     const instances = Object.entries(data).map(([_, value]) => new payload.Model(value))
     const nextValues = (payload.append && state.values) ? state.values.concat(instances) : instances;
 
@@ -129,12 +127,11 @@ const reduceFunctions = {
     };
   },
 
-  [REQUEST_UPDATE_ONE]: (state, { data, payload, success }) => {
+  [REQUEST_UPDATE_ONE]: (state, { data, payload, success, response }) => {
     if(success === null) {
       return {
         ...state,
-        updating: true,
-        status: null
+        updating: true
       }
     }
 
@@ -142,24 +139,22 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
-        status: false
+        error: response.getMessage()
       }
     }
 
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: false,
-      status: true
+      updating: false
     }, instance);
   },
 
-  [REQUEST_UPDATE]: (state, { data, payload, success }) => {
+  [REQUEST_UPDATE]: (state, { data, payload, success, response }) => {
     if(success === null) {
       return {
         ...state,
-        updating: true,
-        status: null
+        updating: true
       }
     }
 
@@ -167,26 +162,18 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
-        status: false
+        error: response.getMessage()
       }
     }
 
     const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
-      updating: false,
-      status: success
+      updating: false
     }, instance);
   },
 
-  [RESET_STATUS]: (state) => {
-      return {
-        ...state,
-        status: null
-      }
-  },
-
-  [REQUEST_CREATE]: (state, { data, payload, success}) => {
+  [REQUEST_CREATE]: (state, { data, payload, success, response }) => {
     if(success === null) {
       return {
         ...state,
@@ -200,6 +187,7 @@ const reduceFunctions = {
         creating: false,
         currentID: null,
         current: null,
+        error: response.getMessage()
       }
     }
     const instance = new payload.Model(data);
@@ -212,45 +200,40 @@ const reduceFunctions = {
     };
   },
 
-  [REQUEST_DELETE_ONE]: (state, { data, payload, success }) => {
+  [REQUEST_DELETE_ONE]: (state, { data, payload, success, response }) => {
     if(success === null) {
       return {
         ...state,
-        deleting: true,
-        status: null
+        deleting: true
       }
     }
     if(!success) {
       return {
         ...state,
         deleting: false,
-        status: false
+        error: response.getMessage()
       }
     }
 
-    const {id, Model} = payload;
-    if(data && Model) {
-      const instance = new Model(data);
-      return replaceInstance({
-        ...state,
-        deleting: false,
-        status: true
-      }, instance)
+    const {Model} = payload;
+
+    const nextState = {
+      ...state,
+      request: undefined,
+      abort: undefined,
+      loading: false,
     }
 
-    const current = (state.current && state.current.getKey() === id) ? null : state.current;
-    const values = state.values ? state.values.filter((value) => value.getKey() !== id) :  [];
-    const index = {...state.index};
-    delete index[id];
+    const instances = Object.entries(data).map(([_, value]) => new Model(value))
+    const nextValues = (payload.append && state.values) ? state.values.concat(instances) : instances;
 
     return {
-      ...state,
-      current,
-      currentID: current ? state.currentID : null,
-      deleting: false,
-      index,
-      values,
-    }
+      ...nextState,
+      empty: nextValues.length === 0,
+      values: nextValues,
+      index: mergeIndex(state.index, instances),
+      current: nextValues,
+    };
   },
 
   [RESET_CURRENT]: (state) => {
@@ -259,6 +242,7 @@ const reduceFunctions = {
         creating: false,
         currentID: null,
         current: null,
+        error: null
       }
   },
 

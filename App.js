@@ -10,13 +10,8 @@ import FlashMessage from "react-native-flash-message";
 
 import AppNavigator from './navigation/AppNavigator';
 import ConnectScreen from "./screens/ConnectScreen";
-import {getConnectedUser, isLogged, relog} from "./api/connect";
+import { isLogged, relog } from "./api/connect";
 import { useSelector, useDispatch } from "react-redux";
-
-import registerForPushNotificationsAsync from './api/pushNotification';
-import {
-  Notifications,
-} from 'expo';
 
 const store = createStore({});
 

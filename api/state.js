@@ -5,7 +5,6 @@ import { apiReducer, APIMiddleware, APIEndpoint } from "./index";
 import User from "../models/user";
 import Potin from "../models/potin";
 import News from "../models/news";
-import NotificationMessage from "../models/notification"
 import { API_URL } from "../config";
 import { connectReducer } from "./connect/"
 

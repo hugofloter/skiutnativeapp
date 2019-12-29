@@ -1,7 +1,8 @@
 
 export class APIError extends Error {
   constructor(message, response, value) {
-    super(message);
+    super();
+    this.message = message;
     this.response = response;
     this.value = value;
 
@@ -9,6 +10,10 @@ export class APIError extends Error {
 
   get status() {
     return this.response.status;
+  }
+
+  getMessage() {
+    return this.message
   }
 }
 
