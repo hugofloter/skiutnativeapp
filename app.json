@@ -23,11 +23,18 @@
     ],
     "android": {
       "package": "fr.utc.assos.skiutc",
+      "permissions": ["CAMERA"],
       //"googleServicesFile": "./google-services.json"
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
-      "buildNumber": "5"
+      "buildNumber": "5",
+      "infoPlist": {
+        "NSCameraUsageDescription": "L'application utilise la caméra pour poster des news en ajoutant une photo"
+      }
+    },
+    "notification": {
+      "icon": "./assets/images/app.png"
     }
   }
 }
