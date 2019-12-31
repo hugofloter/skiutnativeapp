@@ -13,9 +13,6 @@ import Block from "../../components/blocks/Block";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
-import { getPermission } from "../../utils/permissions";
-import registerForPushNotificationsAsync from "../../utils/notifications";
-import { Notifications } from "expo";
 import { users as usersAPI } from "../../api/state"
 import { handleMessage } from "../../utils/message";
 
@@ -29,25 +26,12 @@ function HomeScreen({ showEditer }) {
     setFetched(true);
   }, [dispatch, setFetched, fetched]);
 
-  const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }))
-
   const resetCurrentNews = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
   const { currentNews, currentError } = useSelector(state => ({ currentNews: newsAPI.getCurrentFromState(state), currentError: usersAPI.getErrorFromState(state) }));
-
-  const [notification, setNotification] = useState({})
-  const createToken = React.useCallback((token) => dispatch(usersAPI.update({token: token})), [dispatch]);
-
-  const handleNotifications = (notification) => {
-    setNotification(notification)
-  }
 
   handleMessage(currentNews, currentError, resetCurrentNews, "Impossible de poster la news !","News envoyée !");
 
   React.useEffect(() => {
-    if (getPermission('NOTIFICATIONS') && !currentUser.getPushToken()) {
-      registerForPushNotificationsAsync(createToken)
-      Notifications.addListener(handleNotifications)
-    }
     listNews();
   }, [])
 

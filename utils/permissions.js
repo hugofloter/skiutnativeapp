@@ -10,8 +10,11 @@ export const askPermission = async (permission) => {
 
 export const getPermission = async (permission) => {
   const { status } = await Permissions.getAsync(Permissions[permission])
-  if(status !== 'granted') {
-    return askPermission(permission);
+
+  switch (status) {
+    case 'undetermined' : return askPermission(permission);
+    case 'granted': return true;
+    case 'denied': return false;
+    default: return false
   }
-  return true;
 };
