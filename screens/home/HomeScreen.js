@@ -37,6 +37,7 @@ function HomeScreen({ showEditer }) {
   const resetCurrent = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
   const { resNews } = useSelector(state => ({ resNews: newsAPI.getCurrentFromState(state) }));
 
+  console.log(resNews);
   React.useEffect(() => {
     listNews();
   }, [])
@@ -83,6 +84,7 @@ function HomeScreen({ showEditer }) {
               text={oneNew.getText()}
               date={oneNew.getDate()}
               info={oneNew.getType()}
+              img = {oneNew.getImage() }
               />
           ))
         }

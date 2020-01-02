@@ -31,8 +31,10 @@ const Form = ({ showEditer }) => {
   const add = React.useCallback(async (data) => {
     if(data.image && data.image.uri) {
       const { img_url } = await newsImage(data.image.uri);
+      data['img_url'] = img_url;
+      data['img_width'] = data.image.width;
+      data['img_height'] = data.image.height;
       delete data['image'];
-      data['photo'] = img_url;
     }
 
     dispatch(newsAPI.create(data));
