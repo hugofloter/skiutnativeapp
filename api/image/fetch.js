@@ -1,7 +1,7 @@
 import { API_URL } from "../../config";
 import { retrieveStorage } from "../connect/fetch";
 
-export const fetch_ = async(path, fileURI, category, options={}) => {
+export const fetch_ = async(path, fileURI, options={}) => {
 
   const formData = new FormData()
 
@@ -19,8 +19,6 @@ export const fetch_ = async(path, fileURI, category, options={}) => {
   const fileType = uriParts[uriParts.length -1];
   const filename = fileURI.substring(fileURI.lastIndexOf('/') + 1);
 
-
-  formData.append('category', category)
   formData.append('image', {
     uri: fileURI,
     type: `image/${fileType}`,
