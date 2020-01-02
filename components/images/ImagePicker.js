@@ -1,6 +1,7 @@
 import React from "react";
 import {
   View,
+  ScrollView,
   ImageBackground,
   Button,
   TouchableOpacity,
@@ -13,13 +14,15 @@ import {
   Icon
 } from "react-native-elements";
 import * as  Picker from "expo-image-picker";
+import { ImageManipulator } from "expo-image-crop";
 import { getPermission } from "../../utils/permissions";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 
-
 const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   const [image, setImage] = React.useState(null);
+  const [isManip, setManip] = React.useState(false);
+
   const handleSet = React.useCallback((result) => {
     setImage(result);
     if(data && setData) {
@@ -40,25 +43,29 @@ const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
     getPermission('CAMERA_ROLL');
   }, []);
 
+  if(image && image.uri) {
+    const dimensions = Dimensions.get('window')
+    const imgWidth = parseInt(dimensions.width)
+    const imgHeight = parseInt((dimensions.width * image.height) / image.width)
 
-
-  return (
-    <View style={styles.container}>
-      {
-        image && image.uri ?
-        <ImageBackground source = {{uri: image.uri}} style={{...styles.image, width: '100%', height: 150}} resizeMode='cover'>
+    return (
+      <View style={styles.container}>
+        <ImageBackground source = {{uri: image.uri}} style={{ height: imgHeight, width: imgWidth}} resizeMode='cover'>
           <TouchableOpacity onPress = { () => handleSet(null) } style={styles.crossContainer}>
             <Icon name="clear" color={Colors.white}/>
           </TouchableOpacity>
         </ImageBackground>
-        :
-        <TouchableOpacity onPress = {_pickImage} style={ styles.container }>
-          <View style={styles.pickerView}>
-            <Icon name='folder' color={ Colors.tintColor }/>
-            <Text style={styles.text}>Ajouter une image</Text>
-          </View>
-        </TouchableOpacity>
-      }
+      </View>
+    )
+    }
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress = {_pickImage} style={ styles.container }>
+        <View style={styles.pickerView}>
+          <Icon name='folder' color={ Colors.tintColor }/>
+          <Text style={styles.text}>Ajouter une image</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -77,9 +84,6 @@ const styles = StyleSheet.create({
   crossContainer: {
     flexDirection: 'row-reverse',
   },
-  image: {
-    alignSelf: 'stretch',
-  }
 })
 
 export default ImagePicker;
