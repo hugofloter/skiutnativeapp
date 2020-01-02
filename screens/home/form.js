@@ -2,9 +2,7 @@
  import {
    Text,
    View,
-   TouchableOpacity,
    ScrollView,
-   Image,
    Platform,
    StyleSheet,
    Button,
@@ -14,17 +12,18 @@
  import {
    Input,
    Divider,
-   CheckBox,
+   CheckBox
  } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 import ImagePicker from "../../components/images/ImagePicker";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { news as newsAPI } from "../../api/state";
 import { newsImage } from "../../api/image";
 
+//@TODO Add checkbox bottom to launch notification or not
 const Form = ({ showEditer }) => {
 
   const dispatch = useDispatch()
@@ -50,13 +49,12 @@ const Form = ({ showEditer }) => {
     }
   }, [data])
 
-
    return (
      <View style = { styles.container }>
        <View style={ styles.headerContainer }>
          <Button onPress = { () => showEditer(false) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
          <Text style={ styles.text }>Création de News</Text>
-         <Button disabled={!isSendable} onPress = { () => add(data) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
+         <Button disabled={!isSendable} onPress = { () => add(data)} color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
        </View>
        <View style={ styles.contentContainer }>
          <Input placeholder="Titre" style={ styles.input } onChangeText = { title => setData({ ...data, title})} value={ data.title } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>

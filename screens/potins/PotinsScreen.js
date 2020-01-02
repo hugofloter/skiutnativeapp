@@ -3,9 +3,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  Button,
   RefreshControl,
   Animated,
   I18nManager
@@ -14,15 +12,15 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import { useEffect } from 'react';
 import colors from '../../constants/Colors';
-import { potins as potinsAPI, potinsAdmin as potinsAdminAPI } from "../../api/state"
+import {potins as potinsAPI, potinsAdmin as potinsAdminAPI, users as usersAPI} from "../../api/state"
 import Block from "../../components/blocks/Block";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
 import { getConnectedUser } from "../../api/connect"
-import { showMessage } from "react-native-flash-message";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
+import { handleMessage } from "../../utils/message"
 
 function fetchPotins(setFetched, fetch) {
   fetch()
@@ -100,13 +98,18 @@ function AdminPotinScreen({ showEditer, showAdmin, isAdmin }) {
 
   const dispatch = useDispatch()
   const getAdminPotins = React.useCallback(() => dispatch(potinsAdminAPI.list()), [dispatch]);
-  const approvePotin = React.useCallback((id) => dispatch(potinsAPI.updateOne(id)), [dispatch]);
-  const deletePotin = React.useCallback((id) => dispatch(potinsAPI.delete(id)), [dispatch]);
-  const { adminPotins } = useSelector(state => ({ adminPotins: potinsAdminAPI.getValuesFromState(state) }));
+  const approvePotin = React.useCallback((id) => dispatch(potinsAdminAPI.updateOne(id)), [dispatch]);
+  const deletePotin = React.useCallback((id) => dispatch(potinsAdminAPI.delete(id)), [dispatch]);
+  const resetCurrentAdminPotin = React.useCallback(() => dispatch(potinsAdminAPI.resetCurrent()), [dispatch])
+  const { adminPotins, currentAdminPotin, currentError } = useSelector(state => ({ adminPotins: potinsAdminAPI.getValuesFromState(state),
+      currentAdminPotin: potinsAdminAPI.getCurrentFromState(state), currentError: usersAPI.getErrorFromState(state) }));
 
   useEffect(() => {
     fetchPotins(setFetched, getAdminPotins)
   }, [])
+
+  handleMessage(currentAdminPotin, currentError, resetCurrentAdminPotin, "Un problème est survenu lors de l'update du potin !",
+      "Le potin a été mis à jour !");
 
   return (
     <View style={styles.container}>
@@ -202,25 +205,10 @@ export const PotinsScreenManager = () => {
 
   const dispatch = useDispatch()
 
-  const resetCurrent = React.useCallback(() => dispatch(potinsAPI.resetCurrent()), [dispatch]);
-  const { resPotin } = useSelector(state => ({ resPotin: potinsAPI.getCurrentFromState(state) }));
+  const resetCurrentPotin = React.useCallback(() => dispatch(potinsAPI.resetCurrent()), [dispatch]);
+  const { currentPotin, currentError } = useSelector(state => ({ currentPotin: potinsAPI.getCurrentFromState(state), currentError: usersAPI.getErrorFromState(state) }));
 
-  useEffect(() => {
-    if (resPotin) {
-      if (resPotin.error) {
-        showMessage({
-           message: "Un problème a été détecté !",
-           type: "error",
-        });
-      } else {
-        showMessage({
-           message: "Ton potin a bien été envoyé bg !",
-           type: "success",
-        });
-      }
-      resetCurrent()
-    }
-  }, [resPotin])
+  handleMessage(currentPotin, currentError, resetCurrentPotin, "Un problème a été détecté !", "Ton potin a bien été envoyé bg !");
 
   if (editer) {
     return <Form showEditer={showEditer}/>

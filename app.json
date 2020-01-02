@@ -3,12 +3,12 @@
     "name": "SKI'UTC",
     "slug": "skiutc",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/app.png",
     "splash": {
@@ -22,12 +22,19 @@
       "**/*"
     ],
     "android": {
-        "package": "fr.utc.assos.skiutc"
+      "package": "fr.utc.assos.skiutc",
+      "permissions": ["CAMERA"],
+      //"googleServicesFile": "./google-services.json"
     },
     "ios": {
-        "bundleIdentifier": "fr.utc.assos.skiutc",
-        "buildNumber": "2"
+      "bundleIdentifier": "fr.utc.assos.skiutc",
+      "buildNumber": "5",
+      "infoPlist": {
+        "NSCameraUsageDescription": "L'application utilise la caméra pour poster des news en ajoutant une photo"
+      }
+    },
+    "notification": {
+      "icon": "./assets/images/app.png"
     }
   }
 }
-
