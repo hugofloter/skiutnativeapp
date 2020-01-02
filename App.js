@@ -12,24 +12,28 @@ import AppNavigator from './navigation/AppNavigator';
 import ConnectScreen from "./screens/ConnectScreen";
 import { isLogged, relog } from "./api/connect";
 import { useSelector, useDispatch } from "react-redux";
+import { NotificationMiddleware } from "./utils/notifications"
 
 const store = createStore({});
 
 const ConnectHandler = () => {
   const dispatch = useDispatch()
   const relogUser = React.useCallback(() =>  dispatch(relog()), [dispatch])
+  const { logged } = useSelector(state => ({ logged: isLogged(state) }))
+
   React.useEffect(() => {
     relogUser()
   }, []);
 
-  const { logged } = useSelector(state => ({ logged: isLogged(state) }))
+  NotificationMiddleware();
 
   if(!logged) {
     return <ConnectScreen />
   }
 
-  return <AppNavigator/>
+  return <AppNavigator />
 }
+
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 

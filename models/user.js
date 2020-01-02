@@ -9,6 +9,7 @@ class User {
     is_adult,
     isAdmin,
     lastPosition,
+    push_token
   }) {
     this.login = login;
     this.lastname = lastname;
@@ -17,6 +18,7 @@ class User {
     this.isAdult = is_adult || false;
     this.isAdmin = isAdmin;
     this.lastPosition = lastPosition;
+    this.push_token = push_token
   }
 
   getKey() {
@@ -48,7 +50,11 @@ class User {
   }
 
   getLastPosition() {
-    return Boolean(this.lastPosition);
+    return this.lastPosition;
+  }
+
+  getPushToken() {
+    return this.push_token;
   }
 }
 

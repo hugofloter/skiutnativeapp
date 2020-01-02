@@ -4,9 +4,9 @@ import {Colors, Sizes} from "../constants";
 import {getConnectedUser, logout} from "../api/connect";
 import {useDispatch, useSelector} from "react-redux";
 import { Avatar, Divider, Overlay, Button as ButtonNative } from 'react-native-elements';
-import {users as usersAPI} from "../api/state"
+import {users as usersAPI} from "../api/state";
 import ScreenTitle from "../components/ScreenTitle";
-import { showMessage } from "react-native-flash-message";
+import { handleMessage } from "../utils/message";
 
 const resetFields = (setShowable, setPasswords) => {
   setPasswords({oldPassword: "", newPassword: "", confirmPassword: ""})
@@ -24,26 +24,12 @@ export default function SettingsScreen() {
   const dispatch = useDispatch()
   const disconnect = React.useCallback(() => dispatch(logout()), [dispatch])
   const changePassword = React.useCallback((data) => dispatch(usersAPI.update(data)), [dispatch])
-  const resetUpdate = React.useCallback(() => dispatch(usersAPI.resetUpdate()), [dispatch])
+  const resetCurrentPasswordUpdate = React.useCallback(() => dispatch(usersAPI.resetCurrent()), [dispatch])
 
-  const { updatePasswordStatus, statusUpdate } = useSelector(state => ({ updatePasswordStatus: usersAPI.getUpdatingFromState(state), statusUpdate: usersAPI.getStatusFromState(state) }));
+  const { updatePasswordStatus, currentPasswordUpdate, currentError } = useSelector(state => ({ updatePasswordStatus: usersAPI.getUpdatingFromState(state),
+    currentPasswordUpdate: usersAPI.getCurrentFromState(state), currentError: usersAPI.getErrorFromState(state) }));
 
-  React.useEffect(() => {
-    if (statusUpdate === true) {
-        showMessage({
-           message: "Mot de passe changé !",
-           type: "success",
-        });
-        resetFields(setShowable, setPasswords)
-        resetUpdate()
-    } else if (statusUpdate === false) {
-        showMessage({
-           message: "Mauvais mot de passe !",
-           type: "error",
-        });
-        resetUpdate()
-    }
-  },[statusUpdate])
+  handleMessage(currentPasswordUpdate, currentError, resetCurrentPasswordUpdate, "Mauvais mot de passe !", "Mot de passe changé !", () => { setPasswords({}); setShowable(false)});
 
   return (
     <View style={styles.container}>
