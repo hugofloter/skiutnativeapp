@@ -14,7 +14,6 @@ import {
   Icon
 } from "react-native-elements";
 import * as  Picker from "expo-image-picker";
-import { ImageManipulator } from "expo-image-crop";
 import { getPermission } from "../../utils/permissions";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
