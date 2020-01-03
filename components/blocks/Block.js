@@ -17,7 +17,7 @@ const Block = ({ title, img, text, date, info, adminBlock = false }) => {
   let imgUri = '';
   if(img) {
     const dimensions = Dimensions.get('window')
-    imgWidth = parseInt(dimensions.width)
+    imgWidth = parseInt(dimensions.width - 30)
     imgHeight = parseInt((dimensions.width * img.height) / img.width)
   }
 
@@ -25,7 +25,7 @@ const Block = ({ title, img, text, date, info, adminBlock = false }) => {
     <View style={ styles.globalContainer }>
       <View style={ styles.container }>
         <Text style = { styles.title }>{ title }</Text>
-        { img ? <Image style = {{width: imgWidth, height: imgHeight }} source = { {uri: getImage(img.uri)} }/> : null}
+        { img ? <Image style = {{width: imgWidth, height: imgHeight, borderRadius: 5, overflow: "hidden", marginBottom: 10 }} source = { {uri: getImage(img.uri)} }/> : null}
         <Text style = { styles.text }>{ text }</Text>
         <View style = { styles.payloads}>
           <Text style = { styles.info }>{ info }</Text>
@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginTop: 10,
-    padding: 5,
     backgroundColor: Colors.white,
     borderRadius: 5,
+    padding: 5
   },
   container : {
     flex: 1,
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     borderBottomColor: Colors.lightGrey,
     borderBottomWidth: 1,
+
   },
   text: {
     color: Colors.darkGrey,

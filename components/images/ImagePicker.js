@@ -1,14 +1,10 @@
 import React from "react";
 import {
   View,
-  ScrollView,
   ImageBackground,
-  Button,
   TouchableOpacity,
   StyleSheet,
-  Text,
-  Dimensions,
-  Image
+  Text
 } from "react-native";
 import {
   Icon
@@ -20,7 +16,6 @@ import Sizes from "../../constants/Sizes";
 
 const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   const [image, setImage] = React.useState(null);
-  const [isManip, setManip] = React.useState(false);
 
   const handleSet = React.useCallback((result) => {
     setImage(result);
@@ -43,20 +38,17 @@ const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   }, []);
 
   if(image && image.uri) {
-    const dimensions = Dimensions.get('window')
-    const imgWidth = parseInt(dimensions.width)
-    const imgHeight = parseInt((dimensions.width * image.height) / image.width)
-
     return (
       <View style={styles.container}>
-        <ImageBackground source = {{uri: image.uri}} style={{ height: imgHeight, width: imgWidth}} resizeMode='cover'>
+        <ImageBackground source = {{uri: image.uri}} style={{ height: 150, width: 150}} resizeMode='cover'>
           <TouchableOpacity onPress = { () => handleSet(null) } style={styles.crossContainer}>
             <Icon name="clear" color={Colors.white}/>
           </TouchableOpacity>
         </ImageBackground>
       </View>
     )
-    }
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress = {_pickImage} style={ styles.container }>

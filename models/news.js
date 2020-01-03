@@ -34,6 +34,9 @@ class News {
   }
 
   getImage() {
+    if (!this.imgURL) {
+      return null
+    }
     return {
       uri: this.imgURL,
       width: this.imgWidth,

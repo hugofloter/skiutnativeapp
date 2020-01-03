@@ -19,9 +19,9 @@ import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 import ImagePicker from "../../components/images/ImagePicker";
 import { useDispatch } from "react-redux";
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { news as newsAPI } from "../../api/state";
 import { newsImage } from "../../api/image";
+import { ScreenAddingTitle } from "../../components/ScreenTitle"
 
 //@TODO Add checkbox bottom to launch notification or not
 const Form = ({ showEditer }) => {
@@ -40,7 +40,7 @@ const Form = ({ showEditer }) => {
     showEditer(false);
   }, [dispatch])
 
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState({title: '', text: '', type: 'news'});
   const [isSendable, setSendable] = React.useState(false);
 
   React.useEffect(() => {
@@ -51,11 +51,9 @@ const Form = ({ showEditer }) => {
 
    return (
      <View style = { styles.container }>
-       <View style={ styles.headerContainer }>
-         <Button onPress = { () => showEditer(false) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
-         <Text style={ styles.text }>Création de News</Text>
+       <ScreenAddingTitle title="Création de News" showEditer={showEditer}>
          <Button disabled={!isSendable} onPress = { () => add(data)} color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
-       </View>
+       </ScreenAddingTitle>
        <View style={ styles.contentContainer }>
          <Input placeholder="Titre" style={ styles.input } onChangeText = { title => setData({ ...data, title})} value={ data.title } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>
          <ImagePicker setData={ setData} data={data}/>
@@ -87,24 +85,10 @@ const Form = ({ showEditer }) => {
    )
  }
 
- //UX with Iphone 11 large header
- const headerHeight = ifIphoneX(88, 60)
-
  const styles = StyleSheet.create({
    container: {
-     paddingTop: 20,
      flex: 1,
      backgroundColor: Colors.defaultBackgroud,
-   },
-   headerContainer: {
-     padding: 5,
-     alignItems: 'center',
-     justifyContent: 'space-between',
-     flexDirection: 'row',
-     paddingTop: headerHeight - 40,
-     height: headerHeight,
-     backgroundColor: Colors.white,
-     borderBottomWidth: 0.5,
    },
    text: {
      padding: 10,
@@ -113,19 +97,18 @@ const Form = ({ showEditer }) => {
      color: Colors.primaryBlue,
    },
    contentContainer: {
-     paddingTop: 30,
      padding: 5,
    },
    input: {
      borderBottomColor: Colors.tintColor,
    },
    textArea: {
+     height: '50%',
      paddingTop: 30,
      padding: 10,
-     height: 200,
    },
    textInput: {
-     height: "75%"
+     minHeight: '100%'
    },
    checkboxContainer: {
      backgroundColor: Colors.defaultBackgroud,
