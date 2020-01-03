@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Button, StyleSheet, ScrollView, Switch, Text, TextInput, ActivityIndicator} from "react-native";
+import {View, Button, StyleSheet, ScrollView, Switch, Text, TextInput, ActivityIndicator, Image} from "react-native";
 import {Colors, Sizes} from "../constants";
 import {getConnectedUser, logout} from "../api/connect";
 import {useDispatch, useSelector} from "react-redux";
 import { Avatar, Divider, Overlay, Button as ButtonNative } from 'react-native-elements';
 import {users as usersAPI} from "../api/state";
-import ScreenTitle from "../components/ScreenTitle";
+import { Header } from "react-navigation"
 import { handleMessage } from "../utils/message";
 
 const resetFields = (setShowable, setPasswords) => {
@@ -37,8 +37,7 @@ export default function SettingsScreen() {
                   contentContainerStyle={styles.contentContainer}
                   showsVerticalScrollIndicator={false}
       >
-        <ScreenTitle title="Paramètres">
-        </ScreenTitle>
+        <Text style = { styles.title }>Paramètres </Text>
         <View style={styles.accountManager}>
           <View style={{paddingBottom: 30}}><Avatar rounded
                   size="large"
@@ -152,7 +151,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 50
-  }
+  },
+  title: {
+    color: Colors.darkGrey,
+    fontSize: Sizes.h1,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: Header.HEIGHT - 40
+  },
 })
 
 SettingsScreen.navigationOptions = {
