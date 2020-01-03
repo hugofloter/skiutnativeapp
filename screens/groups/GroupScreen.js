@@ -17,6 +17,7 @@ import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import { useSelector, useDispatch } from "react-redux";
 import { getConnectedUser } from "../../api/connect";
+import Sizes from "../../constants/Sizes";
 
 
 function GroupScreen({ showEditer, showDetail, setSelectedGroup, selectedGroup }) {
@@ -65,50 +66,56 @@ function GroupScreen({ showEditer, showDetail, setSelectedGroup, selectedGroup }
             />
         }
       >
-      <View style={styles.listContainer}>
-        <Text style={styles.textContainer} >Tes groupes</Text>
-        {
-          groups.map(group => {
-            if (group.getUserStatus() === 'V') {
-              return <ListItem
-                key={group.getKey()}
-                leftAvatar={{}}
-                title={group.getName()}
-                subtitle={group.getBeerCall() ?  "Prochain appel à la soif : " + group.getBeerCall() : "Aucun appel à la soif prévu" }
-                bottomDivider
-                chevron
-                onPress={() => {
-                  setSelectedGroup(group)
-                  showDetail(true)
-                }}
-              />
-            }
-          })
-        }
-      </View>
-      <Divider style={{ backgroundColor: Colors.primaryBlue }} />
-      <View style={styles.listContainer}>
-        <Text style={styles.textContainer} >On t'a invité ici</Text>
-        {
-          groups.map(group => {
-            if (group.getUserStatus() === 'P') {
-              return <ListItem
-                key={group.getKey()}
-                leftAvatar={{}}
-                title={group.getName()}
-                subtitle={"Invité par : " + group.getOwner()}
-                bottomDivider
-                chevron
-                containerStyle={{backgroundColor: Colors.grey}}
-                onPress={() => {
-                  setSelectedGroup(group)
-                  setShowGroupRequest(true)
-                }}
-              />
-            }
-          })
-        }
-      </View>
+          {(groups && groups.length) ?
+              <View>
+                  <View style={styles.listContainer}>
+                      <Text style={styles.textContainer}>Tes groupes</Text>
+                      {
+                          groups.map(group => {
+                              if (group.getUserStatus() === 'V') {
+                                  return <ListItem
+                                      key={group.getKey()}
+                                      leftAvatar={{}}
+                                      title={group.getName()}
+                                      subtitle={group.getBeerCall() ? "Prochain appel à la soif : " + group.getBeerCall() : "Aucun appel à la soif prévu"}
+                                      bottomDivider
+                                      chevron
+                                      onPress={() => {
+                                          setSelectedGroup(group)
+                                          showDetail(true)
+                                      }}
+                                  />
+                              }
+                          })
+                      }
+                  </View>
+                  <Divider style={{backgroundColor: Colors.primaryBlue}}/>
+                  <View style={styles.listContainer}>
+                      <Text style={styles.textContainer}>On t'a invité ici</Text>
+                      {
+                          groups.map(group => {
+                              if (group.getUserStatus() === 'P') {
+                                  return <ListItem
+                                      key={group.getKey()}
+                                      leftAvatar={{}}
+                                      title={group.getName()}
+                                      subtitle={"Invité par : " + group.getOwner()}
+                                      bottomDivider
+                                      chevron
+                                      containerStyle={{backgroundColor: Colors.grey}}
+                                      onPress={() => {
+                                          setSelectedGroup(group)
+                                          setShowGroupRequest(true)
+                                      }}
+                                  />
+                              }
+                          })
+                      }
+                  </View>
+              </View>
+              :
+              <Text style={styles.text}>Ici apparaissent les groupes auxquels tu appartiens, crées-en un et invites tes potes !</Text>
+          }
       </ScrollView>
       <Overlay
         isVisible={showGroupRequest}
@@ -173,6 +180,11 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 50
   },
+  text: {
+    textAlign: 'center',
+    margin: '20%',
+    fontSize: Sizes.h3,
+  }
 });
 
 export default GroupeScreenManager;
