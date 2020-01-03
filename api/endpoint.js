@@ -188,7 +188,7 @@ export default class APIEndpoint {
     }
   }
 
-  delete(id, options={}, data={}) {
+  delete(id, data={}, options={}) {
     return {
       type: REQUEST_DELETE_ONE,
       index: this.index,
@@ -256,10 +256,6 @@ export default class APIEndpoint {
 
   getUpdatingFromState(state) {
     return this._getSubState(state).updating || false;
-  }
-
-  getStatusFromState(state) {
-    return this._getSubState(state).status || null;
   }
 
   getDeletingFromState(state) {

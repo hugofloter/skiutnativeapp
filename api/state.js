@@ -5,6 +5,7 @@ import { apiReducer, APIMiddleware, APIEndpoint } from "./index";
 import User from "../models/user";
 import Potin from "../models/potin";
 import News from "../models/news";
+import Groups from "../models/groups";
 import { API_URL } from "../config";
 import { connectReducer } from "./connect/"
 
@@ -40,3 +41,4 @@ export const users = new APIEndpoint(`${API_URL}/users`, User);
 export const potins = new APIEndpoint(`${API_URL}/potins`, Potin);
 export const potinsAdmin = new APIEndpoint(`${API_URL}/potins/admin`, Potin, {name: "adminPotin"});
 export const news = new APIEndpoint(`${API_URL}/news`, News);
+export const groups = new APIEndpoint(`${API_URL}/groups`, Groups);
