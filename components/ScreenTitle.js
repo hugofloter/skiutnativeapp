@@ -2,7 +2,7 @@ import React from "react";
 import {
   View,
   Text,
-  StyleSheet, Image
+  StyleSheet, Image, Button, Platform
 } from "react-native";
 import { Header } from "react-navigation"
 import Colors from "../constants/Colors";
@@ -21,6 +21,16 @@ const ScreenTitle = ({ title, children }) => {
       { children }
     </View>
   )
+};
+
+export const ScreenAddingTitle = ({ title, showEditer, children }) => {
+  return (
+    <View style={ styles.containerAdding }>
+      <Button onPress = { () => showEditer(false) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
+      <Text style = { styles.title }>{ title }</Text>
+      { children }
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -29,7 +39,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Header.HEIGHT
+    maxHeight: Header.HEIGHT
+  },
+  containerAdding: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    maxHeight: 2*Header.HEIGHT
   },
   title: {
     color: Colors.darkGrey,

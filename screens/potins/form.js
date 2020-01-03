@@ -4,13 +4,13 @@ import {
     View,
     Platform,
     TextInput,
-    StyleSheet, Button,
+    StyleSheet, Button, ScrollView,
 } from "react-native";
 import Colors from "../../constants/Colors";
 import { Input, Divider, CheckBox  } from 'react-native-elements';
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { potins as potinsAPI } from "../../api/state"
 import { useDispatch } from "react-redux";
+import {ScreenAddingTitle} from "../../components/ScreenTitle";
 
 const addPotin = (add, data, showEditer) => {
     if (data) {
@@ -35,31 +35,28 @@ const Form = ({showEditer}) => {
 
    return (
      <View style = { styles.container }>
-       <View style={ styles.headerContainer }>
-         <Button onPress = { () => showEditer(false) } color={Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
-         <Text style={styles.text}>Création du potin</Text>
+       <ScreenAddingTitle title="Création du Potin" showEditer={showEditer}>
          <Button disabled={!isSendable} onPress = { () => addPotin(add,data, showEditer) } color={Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor} style={styles.button} title="Envoyer"/>
-       </View>
+       </ScreenAddingTitle>
        <View style={ styles.contentContainer }>
          <Input placeholder='Ton titre' style={styles.input} onChangeText={title => changeData({...data, title})} color={Platform.OS === 'ios' ? Colors.primaryBlue : null} />
          <View style={ styles.textArea }>
+           <ScrollView>
            <TextInput
-               placeholder='Raconte ton potin'
-               multiline
-               numberOfLines={9}
-               textAlignVertical="top"
-               onChangeText={text => changeData({...data, text})}
-               value={data.text}
-               style={{height: "75%"}}
-           />
+                   placeholder='Raconte ton potin'
+                   multiline
+                   numberOfLines={9}
+                   textAlignVertical="top"
+                   onChangeText={text => changeData({...data, text})}
+                   value={data.text}
+               />
+           </ScrollView>
          </View>
          <Divider style={{ backgroundColor: Colors.primaryBlue }} />
          <CheckBox
              center
              title='Potin Anonyme'
-             checkedIcon='dot-circle-o'
-             uncheckedIcon='circle-o'
-             checkedColor={Colors.primaryBlue}
+             checkedColor={Colors.tintColor}
              checked={data.isAnonymous}
              onPress={() => {
                  let isAnonymous = !data.isAnonymous;
@@ -71,25 +68,11 @@ const Form = ({showEditer}) => {
    )
 }
 
-//UX with Iphone 11 large header
-const headerHeight = ifIphoneX(88, 60)
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
-  },
-  headerContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    paddingTop: headerHeight-40,
-    height: headerHeight,
-    backgroundColor: "#fff",
-    borderBottomWidth: 0.5
-  },
-  title: {
-    textAlign: 'center'
+    padding: 5
   },
   text: {
     padding: 10,
@@ -99,12 +82,12 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 5,
-    paddingTop: 30,
   },
   input: {
     borderBottomColor: Colors.tintColor,
   },
   textArea: {
+    height: '50%',
     paddingTop: 30,
     padding: 10
   }
