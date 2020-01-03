@@ -25,7 +25,7 @@ const Block = ({ title, img, text, date, info, adminBlock = false }) => {
     <View style={ styles.globalContainer }>
       <View style={ styles.container }>
         <Text style = { styles.title }>{ title }</Text>
-        { img ? <Image style = {{width: imgWidth, height: imgHeight, borderRadius: 5, overflow: "hidden", marginBottom: 10 }} source = { {uri: getImage(img.uri)} }/> : null}
+        { img ? <Image style = {{...styles.img, width: imgWidth, height: imgHeight }} source = { {uri: getImage(img.uri)} }/> : null}
         <Text style = { styles.text }>{ text }</Text>
         <View style = { styles.payloads}>
           <Text style = { styles.info }>{ info }</Text>
@@ -80,6 +80,11 @@ const styles = StyleSheet.create({
   },
   info: {
     color: Colors.grey,
+  },
+  img: {
+    borderRadius: 5,
+    overflow: "hidden",
+    marginBottom: 10
   },
   date: {
     fontStyle: 'italic',
