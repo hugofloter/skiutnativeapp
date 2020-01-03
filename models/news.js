@@ -5,14 +5,18 @@ class News {
     id,
     title,
     text,
-    photo,
+    img_url,
+    img_width,
+    img_height,
     date,
     type
   }) {
     this.id = id;
     this.title = title;
     this.text = text;
-    this.photo = photo;
+    this.imgURL = img_url;
+    this.imgWidth = img_width;
+    this.imgHeight = img_height;
     this.date = date;
     this.type = type;
   }
@@ -29,8 +33,15 @@ class News {
     return this.text;
   }
 
-  getPhoto() {
-    return this.photo;
+  getImage() {
+    if (!this.imgURL) {
+      return null
+    }
+    return {
+      uri: this.imgURL,
+      width: this.imgWidth,
+      height: this.imgHeight,
+    }
   }
 
   getDate() {

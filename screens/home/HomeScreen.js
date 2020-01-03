@@ -12,6 +12,7 @@ import Block from "../../components/blocks/Block";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
 import Form from "./form";
+import { getConnectedUser } from "../../api/connect"
 import { users as usersAPI } from "../../api/state"
 import { handleMessage } from "../../utils/message";
 
@@ -27,7 +28,7 @@ function HomeScreen({ showEditer }) {
 
   const resetCurrentNews = React.useCallback(() => dispatch(newsAPI.resetCurrent()), [dispatch]);
   const { currentNews, currentError } = useSelector(state => ({ currentNews: newsAPI.getCurrentFromState(state), currentError: usersAPI.getErrorFromState(state) }));
-
+  const { currentUser } = useSelector((state) => ({ currentUser: getConnectedUser(state)}))
   handleMessage(currentNews, currentError, resetCurrentNews, "Impossible de poster la news !","News envoyée !");
 
   React.useEffect(() => {
@@ -59,6 +60,7 @@ function HomeScreen({ showEditer }) {
               text={oneNew.getText()}
               date={oneNew.getDate()}
               info={oneNew.getType()}
+              img = {oneNew.getImage() }
               />
           ))
         }
@@ -75,7 +77,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
-    padding: 5
+    padding: 5,
+    paddingBottom: 0
   }
 });
 

@@ -3,19 +3,29 @@ import {
   View,
   Image,
   Text,
-  StyleSheet
+  StyleSheet,
+  Dimensions,
 } from "react-native";
-
+import { getImage } from "../../api/image";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 import { Icon } from "react-native-elements";
 
-const Block = ({ title, photo, text, date, info, adminBlock = false }) => {
+const Block = ({ title, img, text, date, info, adminBlock = false }) => {
+  let imgWidth = null;
+  let imgHeight = null;
+  let imgUri = '';
+  if(img) {
+    const dimensions = Dimensions.get('window')
+    imgWidth = parseInt(dimensions.width - 30)
+    imgHeight = parseInt((dimensions.width * img.height) / img.width)
+  }
+
   return (
     <View style={ styles.globalContainer }>
       <View style={ styles.container }>
         <Text style = { styles.title }>{ title }</Text>
-        { photo ? <Image style = { styles.image } source = { photo }/> : null}
+        { img ? <Image style = {{...styles.img, width: imgWidth, height: imgHeight }} source = { {uri: getImage(img.uri)} }/> : null}
         <Text style = { styles.text }>{ text }</Text>
         <View style = { styles.payloads}>
           <Text style = { styles.info }>{ info }</Text>
@@ -35,9 +45,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginTop: 10,
-    padding: 5,
     backgroundColor: Colors.white,
     borderRadius: 5,
+    padding: 5
   },
   container : {
     flex: 1,
@@ -54,8 +64,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     borderBottomColor: Colors.lightGrey,
     borderBottomWidth: 1,
-  },
-  photo: {
 
   },
   text: {
@@ -72,6 +80,11 @@ const styles = StyleSheet.create({
   },
   info: {
     color: Colors.grey,
+  },
+  img: {
+    borderRadius: 5,
+    overflow: "hidden",
+    marginBottom: 10
   },
   date: {
     fontStyle: 'italic',

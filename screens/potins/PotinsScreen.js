@@ -235,7 +235,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.defaultBackgroud,
-    padding: 5
+    padding: 5,
+    paddingBottom: 0
   },
   swipedZone: {
     alignItems: 'center',

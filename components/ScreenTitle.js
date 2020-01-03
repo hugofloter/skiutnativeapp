@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     bottom: 10
   },
   headerLogo: {
-    width: Header.HEIGHT + 10,
+    width: Header.HEIGHT + 25,
     height: Header.HEIGHT - 10,
   }
 })

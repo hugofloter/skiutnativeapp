@@ -49,6 +49,7 @@ const Form = ({showEditer}) => {
                    textAlignVertical="top"
                    onChangeText={text => changeData({...data, text})}
                    value={data.text}
+                   style={styles.textInput}
                />
            </ScrollView>
          </View>
@@ -58,6 +59,7 @@ const Form = ({showEditer}) => {
              title='Potin Anonyme'
              checkedColor={Colors.tintColor}
              checked={data.isAnonymous}
+             containerStyle = { styles.checkboxContainer }
              onPress={() => {
                  let isAnonymous = !data.isAnonymous;
                  changeData({...data, isAnonymous})
@@ -89,6 +91,12 @@ const styles = StyleSheet.create({
     height: '50%',
     paddingTop: 30,
     padding: 10
+  },
+  textInput: {
+     minHeight: '100%'
+  },
+  checkboxContainer: {
+     backgroundColor: Colors.defaultBackgroud,
   }
 })
 
