@@ -28,7 +28,7 @@ export default function ConnectScreen(){
     <View style={ styles.container }>
       <View style={ styles.titleContainer}>
         <Image
-            resizeMode={"center"}
+            style={styles.logo}
             source={require("../assets/images/logo-valdallos.png")}
         />
       </View>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   titleContainer: {
+    margin: 100,
     justifyContent: 'center'
   },
   rowForm: {
@@ -98,5 +99,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 50
+  },
+  logo: {
+    width: 165,
+    height: 130,
   }
 })

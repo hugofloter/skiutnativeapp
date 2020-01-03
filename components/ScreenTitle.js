@@ -25,7 +25,7 @@ const ScreenTitle = ({ title, children }) => {
 
 export const ScreenAddingTitle = ({ title, showEditer, children }) => {
   return (
-    <View style={ styles.containerAdding }>
+    <View style={ styles.container }>
       <Button onPress = { () => showEditer(false) } color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Annuler"/>
       <Text style = { styles.title }>{ title }</Text>
       { children }
@@ -38,15 +38,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    maxHeight: Header.HEIGHT
-  },
-  containerAdding: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    maxHeight: 2*Header.HEIGHT
+    alignItems: 'flex-end',
+    maxHeight: 1.5*Header.HEIGHT,
+    padding: 5
   },
   title: {
     color: Colors.darkGrey,
@@ -55,12 +49,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'absolute',
     left: TITLE_OFFSET,
-    right: TITLE_OFFSET
-
+    right: TITLE_OFFSET,
+    bottom: 10
   },
   headerLogo: {
     width: Header.HEIGHT + 10,
-    height: Header.HEIGHT - 10
+    height: Header.HEIGHT - 10,
   }
 })
 

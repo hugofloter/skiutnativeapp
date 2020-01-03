@@ -50,6 +50,13 @@ function PotinsScreen({ showEditer, showAdmin, isAdmin }) {
 
   return (
     <View style={styles.container}>
+      <ScreenTitle title="Potins">
+        <PlusBlock icon="create" adminIcon="settings-applications" color={colors.white}
+                   isAdmin={isAdmin}
+                   action={() => showEditer(true)}
+                   adminAction={() => showAdmin(true)}
+        />
+      </ScreenTitle>
       <ScrollView style={styles.container}
                   contentContainerStyle={styles.contentContainer}
                   showsVerticalScrollIndicator={false}
@@ -61,13 +68,6 @@ function PotinsScreen({ showEditer, showAdmin, isAdmin }) {
                           tintColor={colors.primaryBlue}
                       />
                   }>
-        <ScreenTitle title="Potins">
-          <PlusBlock icon="create" adminIcon="settings-applications" color={colors.white}
-                     isAdmin={isAdmin}
-                     action={() => showEditer(true)}
-                     adminAction={() => showAdmin(true)}
-          />
-        </ScreenTitle>
         {
           potins.map(potin => (
             <Block
@@ -113,6 +113,13 @@ function AdminPotinScreen({ showEditer, showAdmin, isAdmin }) {
 
   return (
     <View style={styles.container}>
+      <ScreenTitle title="Admin Potins">
+        <PlusBlock icon="create" adminIcon="backspace" color={colors.white}
+                   isAdmin={isAdmin}
+                   action={() => showEditer(true)}
+                   adminAction={() => showAdmin(false)}
+        />
+      </ScreenTitle>
       <ScrollView style={styles.container}
                   contentContainerStyle={styles.contentContainer}
                   showsVerticalScrollIndicator={false}
@@ -124,13 +131,6 @@ function AdminPotinScreen({ showEditer, showAdmin, isAdmin }) {
                           tintColor={colors.primaryBlue}
                       />
                   }>
-        <ScreenTitle title="Admin Potins">
-          <PlusBlock icon="create" adminIcon="backspace" color={colors.white}
-                     isAdmin={isAdmin}
-                     action={() => showEditer(true)}
-                     adminAction={() => showAdmin(false)}
-          />
-        </ScreenTitle>
         {
           adminPotins.map(potin => (
             <Swipeable
@@ -236,9 +236,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.defaultBackgroud,
     padding: 5
-  },
-  contentContainer: {
-    paddingTop: 30,
   },
   swipedZone: {
     alignItems: 'center',

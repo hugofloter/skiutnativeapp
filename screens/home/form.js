@@ -53,7 +53,6 @@ const Form = ({ showEditer }) => {
                  textAlignVertical="top"
                  onChangeText={text => setData({...data, text})}
                  value={data.text}
-                 style={{height: "75%"}}
              />
            </ScrollView>
          </View>
@@ -67,7 +66,6 @@ const Form = ({ showEditer }) => {
    container: {
      flex: 1,
      backgroundColor: Colors.defaultBackgroud,
-     padding: 5
    },
    text: {
      padding: 10,
