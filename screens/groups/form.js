@@ -11,15 +11,20 @@ import {
 } from "react-native";
 import Colors from "../../constants/Colors";
 import { ScreenAddingTitle } from "../../components/ScreenTitle";
-import { Input } from "react-native-elements";
+import { Input, Icon, ListItem, Avatar } from "react-native-elements";
 import { useSelector, useDispatch } from "react-redux";
-import { groups as groupsAPI, users as usersAPI } from "../../api/state";
+import { groups as groupsAPI, autocomplete as autocompleteAPI } from "../../api/state";
+import { UserTag } from "../../components/tag";
 
 const Form = ({ showEditer }) => {
 
-  const [data, setData] = React.useState({name: '', list_login: []});
+  const inputTitle = React.createRef();
+
+  const [name, setName] = React.useState('');
   const [userTag, setUserTag] = React.useState({userTagText: '', userTagsArray: []});
   const [isSendable, setSendable] = React.useState(false);
+
+  const { usersComplete } = useSelector((state) => ({ usersComplete: autocompleteAPI.getValuesFromState(state) }))
 
   const dispatch = useDispatch()
 
@@ -29,54 +34,133 @@ const Form = ({ showEditer }) => {
   }, [dispatch]);
 
   const autoComplete = React.useCallback((query) => {
-    dispatch(usersAPI.list({parameters: {'query': query}}));
+    dispatch(autocompleteAPI.list({parameters: {'query': query}}));
   }, [dispatch]);
 
   React.useEffect(() => {
-      if (data.name && data.name.length) {
+      if (name && name.length) {
           setSendable(true)
       }
-  }, [data])
+  }, [name])
 
   return (
     <View style = { styles.container }>
       <ScreenAddingTitle title="Création du Groupe" showEditer={showEditer}>
-        <Button disabled={!isSendable} onPress = { () => createGroup(data)} color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
+        <Button disabled={!isSendable} onPress = { () => createGroup({name: name, list_login: userTag.userTagsArray.map(user => user.getLogin())})} color = { Platform.OS === 'ios' ? Colors.primaryBlue : Colors.tintColor } style={styles.button} title="Envoyer"/>
       </ScreenAddingTitle>
       <View style={ styles.contentContainer }>
-        <Input placeholder="Le nom de ton groupe" style={ styles.input } onChangeText = { name => setData({ ...data, name})} value={ data.name } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>
-        <Input placeholder="User" style={ styles.input } onChangeText = { user => {
-             autoComplete(user)
-             updateTags(user, setUserTag, userTag)
-        }} value={ data.user } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}/>
+        <Input placeholder="Le nom de ton groupe" inputStyle={ styles.input }
+               onChangeText = { name => setName(name)}
+               value={ name } color={Platform.OS === 'ios' ? Colors.primaryBlue : null}
+               leftIconContainerStyle={{marginRight: 15}}
+               leftIcon={<Icon name='group' size={24} color='black' />}
+        />
+        <HandleTag setUserTag={setUserTag} userTag={userTag} />
+        <Input placeholder="User"
+               inputStyle={ styles.input }
+               onChangeText = { userTagText => {
+                   setUserTag({...userTag, userTagText});
+                   if (userTagText) autoComplete(userTagText)
+               }}
+               value={ userTag.userTagText }
+               color={Platform.OS === 'ios' ? Colors.primaryBlue : null}
+               onSubmitEditing={(e) => {
+                   console.log(e)
+                 updateTags(e.nativeEvent.text, setUserTag, userTag, usersComplete, inputTitle)
+               }}
+               ref={inputTitle}
+        />
+        <AutoCompleteShower usersComplete={usersComplete} setUserTag={setUserTag} userTag={userTag} inputTitle={inputTitle}/>
        </View>
     </View>
   )
 };
 
-const updateTags = (text, setUserTag, userTag) => {
-    if (text.length === 0) {
-      //detect if user is erasing
-      setUserTag({userTagText:  userTag.userTagsArray.slice(-1)[0], userTagsArray: userTag.userTagsArray.slice(0, -1)})
-    } else if (
-      text.length > 1 &&
-      this.props.createTagOnString.includes(text.slice(-1)) &&
-      !(this.state.tags.indexOf(text.slice(0, -1).trim()) > -1)
-    ) {
-      this.addTag(text.slice(0, -1));
+
+const HandleTag = ({ setUserTag, userTag }) => {
+
+    if (Array.isArray(userTag.userTagsArray) && userTag.userTagsArray.length) {
+        return <ScrollView style={styles.tagStyle} >
+            <View style={{alignItems:'center'}}>
+            {
+                userTag.userTagsArray.map((user, i) => {
+                    return <UserTag key={user.getLogin()} user={user} setUserTag={setUserTag} userTag={userTag} />
+                })
+            }
+            </View>
+        </ScrollView>
     } else {
-      this.setState({ text });
+        return <View style={styles.tagStyle} >
+            <Text style={styles.text}>Ajoutes tes amis !</Text>
+        </View>
     }
-}
+};
+
+const updateTags = (text, setUserTag, userTag, usersComplete, inputTitle) => {
+
+    let newTags = userTag.userTagsArray
+
+    const userIdentified = text ? usersComplete.filter(user => user.getLogin().includes(text)) : [];
+
+    if (Array.isArray(userIdentified) && userIdentified.length) {
+        const isInList = userTag.userTagsArray.filter(user => user.getLogin() === userIdentified[0].getLogin());
+        if (!isInList.length) {
+            newTags.push(userIdentified[0]);
+            setUserTag({userTagText: '', userTagsArray: newTags})
+        } else {
+            setUserTag({...userTag, userTagText: ''})
+            inputTitle.current.shake()
+        }
+    }
+};
+
+const AutoCompleteShower = ({ usersComplete, setUserTag, userTag, inputTitle }) => {
+    if (userTag.userTagText) {
+        return <View style={styles.autoCompleteShower}>
+            {
+             usersComplete.map( user => {
+                 return <View key={user.getLogin()}>
+                     <ListItem
+                         leftAvatar={<Avatar rounded title={user.getFirstname()[0]+user.getLastname()[0]} />}
+                         title={`${user.getFirstname()} ${user.getLastname()}`}
+                         subtitle={user.getLogin()}
+                         bottomDivider
+                         onPress={() => {
+                             updateTags(user.getLogin(), setUserTag, userTag, usersComplete, inputTitle)
+                         }}
+                     />
+                 </View>
+             })
+            }
+        </View>
+    }
+    return null
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-      backgroundColor: Colors.defaultBackgroud,
+    backgroundColor: Colors.defaultBackgroud,
   },
+  contentContainer: {
+    marginTop: 20
+  }  ,
   button: {
     color: Colors.primaryBlue,
   },
+  input: {
+    borderBottomColor: Colors.tintColor,
+  },
+  text: {
+    fontSize: 18
+  },
+  tagStyle: {
+    padding: 10,
+    maxHeight: '50%'
+  },
+  autoCompleteShower: {
+      padding: 10
+  }
 });
 
 export default Form;

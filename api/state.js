@@ -38,6 +38,7 @@ export function createStore(initial) {
 }
 
 export const users = new APIEndpoint(`${API_URL}/users`, User);
+export const autocomplete = new APIEndpoint(`${API_URL}/users`, User, {name: 'autocomplete'});
 export const potins = new APIEndpoint(`${API_URL}/potins`, Potin);
 export const potinsAdmin = new APIEndpoint(`${API_URL}/potins/admin`, Potin, {name: "adminPotin"});
 export const news = new APIEndpoint(`${API_URL}/news`, News);

@@ -36,11 +36,6 @@ const DetailedGroupScreen = ({ showDetail, selectedGroup }) => {
     getGroupInfos(selectedGroup.getKey());
   }, []);
 
-  React.useEffect(() => {
-      if (groupInfos)
-        groupInfos.getUsersInGroup()
-  }, [groupInfos])
-
   return (
         <GestureRecognizer
             onSwipeRight={() => showDetail(false)}
