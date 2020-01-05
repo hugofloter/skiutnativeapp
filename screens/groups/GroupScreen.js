@@ -19,7 +19,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getConnectedUser } from "../../api/connect";
 import Sizes from "../../constants/Sizes";
 
-
+/**
+ * Groupe Screen global view
+ * @constructor
+ */
 function GroupScreen({ showEditer, showDetail, setSelectedGroup, selectedGroup }) {
 
   const [fetched, setFetched] = React.useState(false);
@@ -70,47 +73,12 @@ function GroupScreen({ showEditer, showDetail, setSelectedGroup, selectedGroup }
               <View>
                   <View style={styles.listContainer}>
                       <Text style={styles.textContainer}>Tes groupes</Text>
-                      {
-                          groups.map(group => {
-                              if (group.getUserStatus() === 'V') {
-                                  return <ListItem
-                                      key={group.getKey()}
-                                      leftAvatar={{}}
-                                      title={group.getName()}
-                                      subtitle={group.getBeerCall() ? "Prochain appel à la soif : " + group.getBeerCall() : "Aucun appel à la soif prévu"}
-                                      bottomDivider
-                                      chevron
-                                      onPress={() => {
-                                          setSelectedGroup(group)
-                                          showDetail(true)
-                                      }}
-                                  />
-                              }
-                          })
-                      }
+                      <ListGroups groups={groups} requested={false} setSelectedGroup={setSelectedGroup} showDetail={showDetail}/>
                   </View>
                   <Divider style={{backgroundColor: Colors.primaryBlue}}/>
                   <View style={styles.listContainer}>
-                      <Text style={styles.textContainer}>On t'a invité ici</Text>
-                      {
-                          groups.map(group => {
-                              if (group.getUserStatus() === 'P') {
-                                  return <ListItem
-                                      key={group.getKey()}
-                                      leftAvatar={{}}
-                                      title={group.getName()}
-                                      subtitle={"Invité par : " + group.getOwner()}
-                                      bottomDivider
-                                      chevron
-                                      containerStyle={{backgroundColor: Colors.grey}}
-                                      onPress={() => {
-                                          setSelectedGroup(group)
-                                          setShowGroupRequest(true)
-                                      }}
-                                  />
-                              }
-                          })
-                      }
+                    <Text style={styles.textContainer}>On t'a invité ici</Text>
+                    <ListGroups groups={groups} requested={true} setSelectedGroup={setSelectedGroup} setShowGroupRequest={setShowGroupRequest}/>
                   </View>
               </View>
               :
@@ -145,6 +113,35 @@ function GroupScreen({ showEditer, showDetail, setSelectedGroup, selectedGroup }
   );
 }
 
+/**
+ * List items to display list of groups
+ * @constructor
+ */
+const ListGroups = ({groups, setSelectedGroup, setShowGroupRequest=null, showDetail=null, requested}) => {
+  return groups.map(group => {
+    if (group.getUserStatus() === (requested ? 'P' : 'V')) {
+      const subtitle = requested ? "Invité par : " + group.getOwner() : group.getBeerCall() ? "Prochain appel à la soif : " + group.getBeerCall() : "Aucun appel à la soif prévu"
+      return <ListItem
+          key={group.getKey()}
+          leftAvatar={{}}
+          title={group.getName()}
+          subtitle={subtitle}
+          bottomDivider
+          chevron
+          containerStyle={requested ? {backgroundColor: Colors.grey} : {backgroundColor: Colors.white}}
+          onPress={() => {
+            setSelectedGroup(group)
+            requested ? setShowGroupRequest(true) : showDetail(true)
+          }}
+      />
+    }
+  })
+};
+
+/**
+ * Group screen manager
+ * @constructor
+ */
 const GroupeScreenManager = () => {
   const [editer, showEditer] = React.useState(false);
   const [detail, showDetail] = React.useState(false);

@@ -46,7 +46,7 @@ const DetailedGroupScreen = ({ showDetail, selectedGroup }) => {
             onSwipeRight={() => showDetail(false)}
             config={config}
             style={styles.container}>
-          <ScreenTitle title="WOW" />
+          <ScreenTitle title="FocusedGroup" />
           <ScrollView>
             <Text>groupInfos</Text>
           </ScrollView>
