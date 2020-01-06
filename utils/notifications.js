@@ -20,7 +20,6 @@ export const NotificationMiddleware = () => {
 
   React.useEffect(() => {
     if (logged && getPermission('NOTIFICATIONS') && !currentUser.getPushToken()) {
-      console.log("push token")
       registerForPushNotificationsAsync(createToken)
       Notifications.addListener(handleNotifications)
     }

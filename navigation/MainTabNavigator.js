@@ -4,9 +4,9 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
-import GroupeScreen from '../screens/GroupeScreen';
+import GroupScreen from '../screens/groups/GroupScreen';
 import InformationsScreen from '../screens/InformationsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
 import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 
 const config = Platform.select({
@@ -76,7 +76,7 @@ InformationNavigator.path = '';
  */
 const GroupNavigator = createStackNavigator(
   {
-    Groupe: GroupeScreen,
+    Group: GroupScreen,
   },
   config
 );

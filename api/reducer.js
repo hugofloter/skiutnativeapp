@@ -69,7 +69,7 @@ const reduceFunctions = {
   [REQUEST_RETRIEVE]: (state, { data, payload, success}) => {
     if(success === null) {
       return ({
-        ...status,
+        ...state,
         currentLoading: true,
       });
     }
@@ -79,10 +79,11 @@ const reduceFunctions = {
         currentLoading: false,
       })
     }
+
     const instance =  new payload.Model(data);
     return {
       ...state,
-      current: instance.getKey() === state.currentID ? instance : state.current,
+      current: instance,
       currentLoading: false,
       index: mergeIndex(state.index, [instance]),
     };
@@ -144,6 +145,7 @@ const reduceFunctions = {
     }
 
     const instance = new payload.Model(data);
+
     return replaceInstance({
       ...state,
       updating: false

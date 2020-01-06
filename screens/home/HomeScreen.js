@@ -42,7 +42,6 @@ function HomeScreen({ showEditer }) {
       </ScreenTitle>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
             <RefreshControl
