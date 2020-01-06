@@ -1,5 +1,5 @@
 import { API_URL } from "../../config";
-import { AsyncStorage } from "react-native";
+import { retrieveStorage, storeData } from "../../utils/asyncStorage";
 
 export const fetch_ = async(options={}) => {
   const headers =  options.headers = options.headers || {};
@@ -19,39 +19,9 @@ export const fetch_ = async(options={}) => {
       }
       response = await response.json();
 
-      await _storeData(response);
+      await storeData('@skiutcapp:key', response);
 
       return response;
     }
   ).catch((err) => err)
-}
-
-const _storeData = async (data) => {
-  try {
-    await AsyncStorage.setItem('@skiutcapp:key', JSON.stringify(data))
-  }
-
-  catch (error) {
-    return error
-  }
-}
-
-export const retrieveStorage = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@skiutcapp:key');
-    if(value !== null) {
-      return await JSON.parse(value)
-    }
-  } catch (error) {
-    return error
-  }
-}
-
-export const deleteStorage = async () => {
-  try {
-    await AsyncStorage.removeItem('@skiutcapp:key')
-  }
-  catch (error) {
-    return error
-  }
 }
