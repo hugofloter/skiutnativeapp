@@ -13,7 +13,7 @@ import Colors from "../../constants/Colors";
 import { ScreenAddingTitle } from "../../components/ScreenTitle";
 import { Input, Icon, ListItem, Avatar } from "react-native-elements";
 import { useSelector, useDispatch } from "react-redux";
-import { groups as groupsAPI, autocomplete as autocompleteAPI } from "../../api/state";
+import { groups as groupsAPI, users as usersAPI } from "../../api/state";
 import { UserTag } from "../../components/tag";
 
 const Form = ({ showEditer }) => {
@@ -24,7 +24,7 @@ const Form = ({ showEditer }) => {
   const [userTag, setUserTag] = React.useState({userTagText: '', userTagsArray: []});
   const [isSendable, setSendable] = React.useState(false);
 
-  const { usersComplete } = useSelector((state) => ({ usersComplete: autocompleteAPI.getValuesFromState(state) }))
+  const { usersComplete } = useSelector((state) => ({ usersComplete: usersAPI.getValuesFromState(state) }))
 
   const dispatch = useDispatch()
 
@@ -34,7 +34,7 @@ const Form = ({ showEditer }) => {
   }, [dispatch]);
 
   const autoComplete = React.useCallback((query) => {
-    dispatch(autocompleteAPI.list({parameters: {'query': query}}));
+    dispatch(usersAPI.list({parameters: {'query': query}}));
   }, [dispatch]);
 
   React.useEffect(() => {

@@ -13,6 +13,7 @@ import ScreenTitle from "../../components/ScreenTitle";
 import { useSelector, useDispatch } from "react-redux";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { groups as groupsAPI } from "../../api/state";
+import PlusBlock from "../../components/blocks/PlusBlock";
 
 const config = {
       velocityThreshold: 0.3,
@@ -37,14 +38,19 @@ const DetailedGroupScreen = ({ showDetail, selectedGroup }) => {
   }, []);
 
   return (
+
         <GestureRecognizer
             onSwipeRight={() => showDetail(false)}
             config={config}
             style={styles.container}>
-          <ScreenTitle title="FocusedGroup" />
+            <View style={styles.container}>
+          <ScreenTitle title="FocusedGroup">
+            <PlusBlock icon="backspace" color={ Colors.white } action={() => showDetail(false)}/>
+          </ScreenTitle>
           <ScrollView>
             <Text>groupInfos</Text>
           </ScrollView>
+          </View>
         </GestureRecognizer>
   )
 };
