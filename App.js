@@ -20,7 +20,7 @@ import {
   locationServiceHandler } from "./utils/location";
 
 const store = createStore({});
-locationTaskManager();
+//locationTaskManager();
 
 const ConnectHandler = () => {
   const dispatch = useDispatch()
@@ -46,7 +46,7 @@ export default function App(props) {
   //initialisation phase
   React.useEffect(() => {
     locationPermission();
-    locationTask();
+    //locationTask();
     locationServiceHandler();
   }, []);
 
