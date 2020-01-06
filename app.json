@@ -24,7 +24,9 @@
     "android": {
       "package": "fr.utc.assos.skiutc",
       "permissions": ["CAMERA"],
-      //"googleServicesFile": "./google-services.json"
+      "config": {
+        "googleMaps": { "apiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ" }   
+     }
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
@@ -34,7 +36,10 @@
       }
     },
     "notification": {
-      "icon": "./assets/images/app.png"
+      "icon": "./assets/images/app.png",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ"
+      }
     }
   }
 }

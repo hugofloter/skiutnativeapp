@@ -5,7 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
 import GroupeScreen from '../screens/GroupeScreen';
-import InformationsScreen from '../screens/InformationsScreen';
+import {InfosScreenManager} from '../screens/InformationsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 
@@ -48,7 +48,7 @@ ActualityNavigator.path = '';
  */
 const InformationNavigator = createStackNavigator(
     {
-        Infos: InformationsScreen,
+        Infos: InfosScreenManager,
     },
     config
 );
