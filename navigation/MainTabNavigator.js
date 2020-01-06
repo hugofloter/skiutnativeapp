@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
 import GroupScreen from '../screens/groups/GroupScreen';
 import InformationsScreen from '../screens/InformationsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
 import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 
 const config = Platform.select({
