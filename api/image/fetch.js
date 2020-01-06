@@ -1,12 +1,12 @@
 import { API_URL } from "../../config";
-import { retrieveStorage } from "../connect/fetch";
+import { retrieveStorage } from "../../utils/asyncStorage";
 
 export const fetch_ = async(path, fileURI, options={}) => {
 
   const formData = new FormData()
 
   const headers = options.headers = options.headers || {};
-  const authorization = await retrieveStorage();
+  const authorization = await retrieveStorage('@skiutcapp:key');
   if(authorization && authorization.token) {
     headers['Authorization'] = authorization['token'];
   }
