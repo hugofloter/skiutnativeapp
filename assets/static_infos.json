@@ -5,7 +5,7 @@
         "Poste":"President",
         "Telephone":"+337 12 12 12 12",
         "Email":"prez@skiutz.gg",
-        "Photo":"/assets/images/logo.png"
+        "Photo":"require('../assets/images/app.png')"
       },
       {
         "Nom":"Valentin Metz",
@@ -24,7 +24,7 @@
       {
         "Nom":"Cogent",
         "Poste":"Les chiottes",
-        "Telephone":"+337 12 12 12 12",
+        "Telephone":"+337 12 12 12 11",
         "Email":"wc@skiutc.fr",
         "Photo":"/assets/images/logo.png"
       },
@@ -38,19 +38,37 @@
     ],
     "ContactsAutres": [
       {
-        "Nom":"Les Condés",
-        "Telephone":"17",
-        "Email":null,
-      },
-      {
-        "Nom":"Les pompiers",
-        "Telephone":"18",
+        "Nom":"Gendarmerie",
+        "Telephone":"04 92 83 40 20",
         "Email":null
       },
       {
-        "Nom":"JP",
-        "Telephone":"Confidentiel",
-        "Email":"jp@lacauette.biere"
+        "Nom":"Police Municipale",
+        "Telephone":"06 84 31 02 79",
+        "Email":null
+      },
+      {
+        "Nom":"JP - La cauette à bière",
+        "Telephone":null,
+        "Email":"cauetteabieres@orange.fr"
       }
+    ],
+    "markers": [
+        {
+          "coor": {
+            "lat": 44.292037,
+            "lng": 6.564996
+          },
+          "title": "La residence",
+          "subtitle": "C la kon dor"
+        },
+        {
+          "coor": {
+            "lat": 44.289756, 
+            "lng": 6.569350
+          },
+          "title": "Le bar a bieres",
+          "subtitle": "C la kon gnole"
+        }
     ]
   }

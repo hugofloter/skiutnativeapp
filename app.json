@@ -22,11 +22,17 @@
       "**/*"
     ],
     "android": {
-      "package": "fr.utc.assos.skiutc"
+      "package": "fr.utc.assos.skiutc",
+      "config": {
+        "googleMaps": { "apiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ" }   
+     }
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
-      "buildNumber": "5"
+      "buildNumber": "5",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ"
+      }
     }
   }
 }
