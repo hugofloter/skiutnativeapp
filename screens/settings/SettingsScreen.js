@@ -10,7 +10,7 @@ import { retrieveStorage } from "../../utils/asyncStorage";
 
 import Modal from "./modal";
 import ScreenTitle from "../../components/ScreenTitle";
-import Avatar from "../../components/avatar";
+import Avatar from "./AvatarManager";
 
 const SettingsScreen = () => {
   const [modal, showModal] = React.useState(false);
