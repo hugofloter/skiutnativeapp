@@ -27,6 +27,7 @@
       "config": {
         "googleMaps": { "apiKey": "" }   
      }
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
