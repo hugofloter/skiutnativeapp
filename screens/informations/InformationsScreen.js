@@ -1,36 +1,29 @@
-import * as WebBrowser from 'expo-web-browser';
 import MapView from 'react-native-maps';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Icon, Button } from "react-native-elements";
 import {
     Image,
-    Platform,
     ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
-    FlatList,
     Dimensions,
     View,
-    Modal,
-    ListView,
-    ImageBackground,
     Linking,
     Animated,
 } from 'react-native';
-import ImageZoom from 'react-native-image-pan-zoom';
 import CollapsibleList from 'react-native-collapsible-list';
 import {
   ListItem,
   Overlay
 } from 'react-native-elements'
-import static_infos from "../assets/static_infos.json";
-import Colors from "../constants/Colors";
-import ScreenTitle from "../components/ScreenTitle";
-import PlusBlock from "../components/blocks/PlusBlock";
-import colors from '../constants/Colors';
-import Images from '../assets/imageIndex';
-
+import static_infos from "../../assets/static_infos.json";
+import Colors from "../../constants/Colors";
+import ScreenTitle from "../../components/ScreenTitle";
+import PlusBlock from "../../components/blocks/PlusBlock";
+import Images from '../../assets/imageIndex';
+import { ContactScreen } from "./Contact"
+import { PlanningScreen } from "./Planning"
+import { SlopesMapScreen } from "./SlopesMap"
 const contactsSkiut = static_infos.Contacts;
 const contactsImportants = static_infos.ContactsAutres;
 const markerList = static_infos.markers;
@@ -54,28 +47,6 @@ function AssoContactList({ data, setContactSelected, showContactScreen}) {
    );
 };
 
-function ContactScreen({contactSelected, showContactScreen}){
-  return(
-    <View style={styles.container}>
-    <View style={styles.header}></View>
-    <Image style={styles.avatar} source={Images[contactSelected.Photo]}/>
-    <View style={styles.body}>
-      <View style={styles.bodyContent}>
-        <Text style={styles.name}> {contactSelected.Nom}</Text>
-        <Text style={styles.info}> {contactSelected.Poste}</Text>
-  <Text style={styles.description}> {contactSelected.Email}</Text>
-        
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => Linking.openURL(`tel:${contactSelected.Telephone}`)}>
-          <Text>Appeler</Text>  
-        </TouchableOpacity>              
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => showContactScreen(false)}>
-          <Text>Retour</Text> 
-        </TouchableOpacity>
-      </View>
-  </View>
-</View>
-  )
-}
 
 function AutresContactList({ data }) {
   return (
@@ -91,38 +62,6 @@ function AutresContactList({ data }) {
    );
 };
 
-export const InfosScreenManager = () => {
-  const [slopesMap, showSlopesMap] = React.useState(false);
-  const [rotated, setRotated] = React.useState(false);
-  const [POIMap, showPOIMap] = React.useState(false);
-  const [planning, showPlanning] = React.useState(false);
-  const [contactScreen, showContactScreen] = React.useState(false);
-  const [contactSelected, setContactSelected] = React.useState({
-    Nom:"",
-    Poste:"",
-    Telephone:"",
-    Email:"",
-    Photo:""
-  });
-
-  if (slopesMap) {
-    return <SlopesMapScreen showPOIMap={ showPOIMap } showSlopesMap={ showSlopesMap } setRotated={ setRotated } rotated={ rotated }/>
-  }
-
-  if (POIMap) {
-    return <POIMapScreen showPOIMap={ showPOIMap } showSlopesMap={ showSlopesMap } setRotated={ setRotated } rotated={ rotated } markers={ markerList }/>
-  }
-
-  if (contactScreen) {
-    return <ContactScreen contactSelected={ contactSelected } showContactScreen={ showContactScreen }/>
-  }
-
-  if (planning) {
-    return <PlanningScreen showPlanning={ showPlanning }/>
-  }
-
-  return <InformationsScreen showSlopesMap={ showSlopesMap } showPOIMap={ showPOIMap } setContactSelected={ setContactSelected } showContactScreen={ showContactScreen } showPlanning={ showPlanning }/>
-}
 function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, showContactScreen, showPlanning}) {
     return (
         <View style={styles.container}>
@@ -151,8 +90,8 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                 
                 <View style={styles.collapsibleItem}>                                      
                   <ListItem 
-                    leftAvatar={{ source: require("../assets/images/app.png")}} 
-                    title="La Team Skiut" 
+                    leftAvatar={{ source: require("../../assets/images/app.png")}}
+                    title="La Team SKI'UTC"
                     bottomDivider/>
                 </View>
                 <View style={styles.collapsibleItem}>
@@ -160,7 +99,6 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                 </View>
                 </CollapsibleList>
                 </View>
-                
                 <View style={styles.ContactList}>
                 <CollapsibleList
                           numberOfVisibleItems={1}
@@ -177,10 +115,11 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                           }
                 >
                 <View style={styles.collapsibleItem}>                  
-                <ListItem 
-                    leftAvatar={{ source: require("../assets/images/urgence.png")}} 
-                    title="Autre Contacts, Urgence" 
-                    bottomDivider/></View>
+                    <ListItem
+                        leftAvatar={{ source: require("../../assets/images/urgence.png")}}
+                        title="Autre Contacts, Urgence"
+                        bottomDivider/>
+                </View>
                 <View style={styles.collapsibleItem}>
                 <AutresContactList data={contactsImportants}/>
                 </View>
@@ -190,97 +129,26 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                 buttonStyle={styles.customButton}
                 title="Le plan des pistes"
                 onPress={() => showSlopesMap(true)}
-                icon={<Icon name="map"/>}
+                iconRight
+                icon={<Icon name="map" color={ Colors.white } />}
                 />
                 <Button
                 buttonStyle={styles.customButton}
                 title="Les points d'interet"
                 onPress={() => showPOIMap(true)}
-                icon={<Icon name="bookmark"/>}
+                iconRight
+                icon={<Icon name="bookmark" color={ Colors.white } />}
                 />
                 <Button
                 buttonStyle={styles.customButton}
                 title="Le planning de la semaine"
                 onPress={() => showPlanning(true)}
-                icon={<Icon name="date-range"/>}
+                iconRight
+                icon={<Icon name="date-range" color={ Colors.white } />}
                 />
             </ScrollView>
         </View>
     );
-}
-
-function SlopesMapScreen({showPOIMap, showSlopesMap, rotated, setRotated}) {
-  return(
-    <View style={styles.container}>
-              <ScreenTitle title="Plan des pistes">
-              <PlusBlock icon="backspace" adminIcon="rotate-right" color={colors.white}
-                isAdmin={true}
-                action={() => showSlopesMap(false)}
-                adminAction={() => setRotated(!rotated)}
-              />
-              </ScreenTitle>
-      <View style={styles.container}
-            contentContainerStyle={styles.contentContainer}>
-
-          <ImageZoom
-            cropHeight={height}
-            cropWidth={width}
-            imageHeight={1749}
-            imageWidth={4961}
-            minScale={0.1}
-            maxScale={10}
-            enableCenterFocus={false}
-            >  
-            <ImageBackground
-            style={[(rotated) ? styles.landscapeMap : styles.portraitMap]}
-            source={require('../assets/images/SlopesMap.png')}>
-
-            </ImageBackground>
-          </ImageZoom>
-
-          <View style={styles.quit}>
-
-              </View>
-        </View>
-    </View>
-  )
-}
-
-function PlanningScreen({ showPlanning, rotated, setRotated}) {
-  return(
-    <View style={styles.container}>
-              <ScreenTitle title="Planning">
-              <PlusBlock icon="backspace" adminIcon="rotate-right" color={colors.white}
-                isAdmin={true}
-                action={() => showPlanning(false)}
-                adminAction={() => setRotated(!rotated)}
-              />
-              </ScreenTitle>
-      <View style={styles.container}
-            contentContainerStyle={styles.contentContainer}>
-
-          <ImageZoom
-            cropHeight={height}
-            cropWidth={width}
-            imageHeight={1749}
-            imageWidth={4961}
-            minScale={0.1}
-            maxScale={10}
-            enableCenterFocus={false}
-            >  
-            <ImageBackground
-            style={[(rotated) ? styles.landscapeMap : styles.portraitMap]}
-            source={require('../assets/images/SlopesMap.png')}>
-
-            </ImageBackground>
-          </ImageZoom>
-
-          <View style={styles.quit}>
-
-              </View>
-        </View>
-    </View>
-  )
 }
 
 function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, index=0, animation = new Animated.Value(0), regionTimeout}) {
@@ -332,7 +200,7 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
   return(
     <View style={styles.container}>
               <ScreenTitle title="Lieux utiles" logo={false}>
-              <PlusBlock icon="backspace" color={colors.white}
+              <PlusBlock icon="backspace" color={Colors.white}
                 action={() => showPOIMap(false)}
               />
               </ScreenTitle>
@@ -416,6 +284,39 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
   )
 }
 
+export const InfosScreenManager = () => {
+  const [slopesMap, showSlopesMap] = React.useState(false);
+  const [rotated, setRotated] = React.useState(false);
+  const [POIMap, showPOIMap] = React.useState(false);
+  const [planning, showPlanning] = React.useState(false);
+  const [contactScreen, showContactScreen] = React.useState(false);
+  const [contactSelected, setContactSelected] = React.useState({
+    Nom:"",
+    Poste:"",
+    Telephone:"",
+    Email:"",
+    Photo:""
+  });
+
+  if (slopesMap) {
+    return <SlopesMapScreen showPOIMap={ showPOIMap } showSlopesMap={ showSlopesMap } setRotated={ setRotated } rotated={ rotated }/>
+  }
+
+  if (POIMap) {
+    return <POIMapScreen showPOIMap={ showPOIMap } showSlopesMap={ showSlopesMap } setRotated={ setRotated } rotated={ rotated } markers={ markerList }/>
+  }
+
+  if (contactScreen) {
+    return <ContactScreen contactSelected={ contactSelected } showContactScreen={ showContactScreen }/>
+  }
+
+  if (planning) {
+    return <PlanningScreen showPlanning={ showPlanning } setRotated={ setRotated } rotated={ rotated }/>
+  }
+
+  return <InformationsScreen showSlopesMap={ showSlopesMap } showPOIMap={ showPOIMap } setContactSelected={ setContactSelected } showContactScreen={ showContactScreen } showPlanning={ showPlanning }/>
+};
+
 InfosScreenManager.navigationOptions = {
     header: null,
 };
@@ -423,13 +324,8 @@ InfosScreenManager.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.defaultBackgroud,
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  ContactList: {
-    padding:15,
+    backgroundColor: Colors.defaultBackgroud,
+    padding: 5
   },
   landscapeMap: {
     height:1749, 
@@ -565,7 +461,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#00BFFF",
   },
   customButton: {
-    margin: 15, 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 15,
+    padding: 10,
     borderRadius: 60
   }
 });

@@ -25,8 +25,8 @@
       "package": "fr.utc.assos.skiutc",
       "permissions": ["CAMERA"],
       "config": {
-        "googleMaps": { "apiKey": "" }   
-     }
+        "googleMaps": { "apiKey": "" }
+      },
       "googleServicesFile": "./google-services.json"
     },
     "ios": {
