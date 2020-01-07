@@ -5,35 +5,35 @@
         "Poste":"President",
         "Telephone":"+337 12 12 12 12",
         "Email":"prez@skiutz.gg",
-        "Photo":"require('../assets/images/app.png')"
+        "Photo":1
       },
       {
         "Nom":"Valentin Metz",
         "Poste":"Vice-President",
         "Telephone":"+337 12 12 12 12",
         "Email":"viceprez@skiutc.gg",
-        "Photo":"/assets/images/logo.png"
+        "Photo":2
       },
       {
         "Nom":"Paul Jullien",
         "Poste":"Resp de mes couilles",
         "Telephone":"+337 12 12 12 12",
         "Email":"pjullien@skiutc.fr",
-        "Photo":"/assets/images/logo.png"
+        "Photo":3
       },
       {
         "Nom":"Cogent",
         "Poste":"Les chiottes",
         "Telephone":"+337 12 12 12 11",
         "Email":"wc@skiutc.fr",
-        "Photo":"/assets/images/logo.png"
+        "Photo":4
       },
       {
         "Nom":"Tim",
         "Poste":"Resp After",
         "Telephone":"+337 12 12 12 12",
         "Email":"aftercheztim@skiutc.gg",
-        "Photo":"/assets/images/logo.png"
+        "Photo":5
       }
     ],
     "ContactsAutres": [
@@ -60,7 +60,8 @@
             "lng": 6.564996
           },
           "title": "La residence",
-          "subtitle": "C la kon dor"
+          "subtitle": "C la kon dor",
+          "image": 6
         },
         {
           "coor": {
@@ -68,7 +69,53 @@
             "lng": 6.569350
           },
           "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole"
+          "subtitle": "C la kon gnole",
+          "image": 7
+        },
+        {
+          "coor": {
+            "lat": 44.280000, 
+            "lng": 6.560000
+          },
+          "title": "Le bar a bieres",
+          "subtitle": "C la kon gnole",
+          "image": 8
+        },
+        {
+          "coor": {
+            "lat": 44.279000, 
+            "lng": 6.569000
+          },
+          "title": "Le bar a bieres",
+          "subtitle": "C la kon gnole",
+          "image": 9
+        },
+        {
+          "coor": {
+            "lat": 44.291212, 
+            "lng": 6.569800
+          },
+          "title": "Le bar a bieres",
+          "subtitle": "C la kon gnole",
+          "image": 10
+        },
+        {
+          "coor": {
+            "lat": 44.245123, 
+            "lng": 6.568888
+          },
+          "title": "Le bar a bieres",
+          "subtitle": "C la kon gnole",
+          "image": 11
+        },
+        {
+          "coor": {
+            "lat": 44.262626, 
+            "lng": 6.580000
+          },
+          "title": "Le bar a bieres",
+          "subtitle": "C la kon gnole",
+          "image": 12
         }
     ]
   }

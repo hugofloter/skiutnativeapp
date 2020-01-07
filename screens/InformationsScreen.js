@@ -1,7 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import MapView from 'react-native-maps';
-import Marker from 'react-native-maps';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Icon, Button } from "react-native-elements";
 import {
     Image,
     Platform,
@@ -14,9 +14,9 @@ import {
     View,
     Modal,
     ListView,
-    Button,
     ImageBackground,
     Linking,
+    Animated,
 } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import CollapsibleList from 'react-native-collapsible-list';
@@ -29,10 +29,11 @@ import Colors from "../constants/Colors";
 import ScreenTitle from "../components/ScreenTitle";
 import PlusBlock from "../components/blocks/PlusBlock";
 import colors from '../constants/Colors';
+import Images from '../assets/imageIndex';
 
 const contactsSkiut = static_infos.Contacts;
 const contactsImportants = static_infos.ContactsAutres;
-const markers = static_infos.markers;
+const markerList = static_infos.markers;
 
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
@@ -44,7 +45,7 @@ function AssoContactList({ data, setContactSelected, showContactScreen}) {
      data.map((l, i) => 
         <ListItem 
           key={i}
-          leftAvatar={{ source: {uri: l.Photo}}} 
+          leftAvatar={{ source: Images[l.Photo]}} 
           title={l.Nom} 
           subtitle={l.Poste} 
           bottomDivider 
@@ -57,12 +58,12 @@ function ContactScreen({contactSelected, showContactScreen}){
   return(
     <View style={styles.container}>
     <View style={styles.header}></View>
-    <Image style={styles.avatar} source={eval(contactSelected)}/>
+    <Image style={styles.avatar} source={Images[contactSelected.Photo]}/>
     <View style={styles.body}>
       <View style={styles.bodyContent}>
-        <Text style={styles.name}>Nom: {contactSelected.Nom}</Text>
-        <Text style={styles.info}>Poste: {contactSelected.Poste}</Text>
-  <Text style={styles.description}>Email: {contactSelected.Email}</Text>
+        <Text style={styles.name}> {contactSelected.Nom}</Text>
+        <Text style={styles.info}> {contactSelected.Poste}</Text>
+  <Text style={styles.description}> {contactSelected.Email}</Text>
         
         <TouchableOpacity style={styles.buttonContainer} onPress={() => Linking.openURL(`tel:${contactSelected.Telephone}`)}>
           <Text>Appeler</Text>  
@@ -82,7 +83,8 @@ function AutresContactList({ data }) {
         <ListItem 
           key={i} 
           title={l.Nom} 
-          subtitle={l.Telephone || l.Email} 
+          subtitle={l.Telephone || l.Email}
+          onPress={() => {l.Telephone ? Linking.openURL(`tel:${l.Telephone}`) : Linking.openURL(`mailto:${l.Email}`)}} 
           bottomDivider
           chevron 
           />)
@@ -93,6 +95,7 @@ export const InfosScreenManager = () => {
   const [slopesMap, showSlopesMap] = React.useState(false);
   const [rotated, setRotated] = React.useState(false);
   const [POIMap, showPOIMap] = React.useState(false);
+  const [planning, showPlanning] = React.useState(false);
   const [contactScreen, showContactScreen] = React.useState(false);
   const [contactSelected, setContactSelected] = React.useState({
     Nom:"",
@@ -107,39 +110,51 @@ export const InfosScreenManager = () => {
   }
 
   if (POIMap) {
-    return <POIMapScreen showPOIMap={ showPOIMap } showSlopesMap={ showSlopesMap } setRotated={ setRotated } rotated={ rotated }/>
+    return <POIMapScreen showPOIMap={ showPOIMap } showSlopesMap={ showSlopesMap } setRotated={ setRotated } rotated={ rotated } markers={ markerList }/>
   }
 
   if (contactScreen) {
     return <ContactScreen contactSelected={ contactSelected } showContactScreen={ showContactScreen }/>
   }
 
-  return <InformationsScreen showSlopesMap={ showSlopesMap } showPOIMap={ showPOIMap } setContactSelected={ setContactSelected } showContactScreen={ showContactScreen }/>
+  if (planning) {
+    return <PlanningScreen showPlanning={ showPlanning }/>
+  }
+
+  return <InformationsScreen showSlopesMap={ showSlopesMap } showPOIMap={ showPOIMap } setContactSelected={ setContactSelected } showContactScreen={ showContactScreen } showPlanning={ showPlanning }/>
 }
-function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, showContactScreen}) {
+function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, showContactScreen, showPlanning}) {
     return (
         <View style={styles.container}>
+          <ScreenTitle title="Informations">
+          </ScreenTitle>
             <ScrollView
               style={styles.container}
               contentContainerStyle={styles.contentContainer}
               showsVerticalScrollIndicator={false}>
-                
-                <ScreenTitle title="Informations">
-                </ScreenTitle>
 
-                
                 <View style={styles.ContactList}>
                 <CollapsibleList
                           numberOfVisibleItems={1}
                           wrapperStyle={styles.wrapperCollapsibleList}
                           buttonContent={
                             <View style={styles.button}>
-                              <Text style={styles.buttonText}>Afficher/Cacher</Text>
+                                      <ListItem 
+                                        leftIcon={<Icon name="expand-more"/>}
+                                        rightIcon={<Icon name="expand-less"/>}
+                                        title="afficher/cacher" 
+                                        titleStyle={{justifyContent: 'center', alignItems: 'center'}}
+                                        bottomDivider/>
                             </View>
                           }
                 >
                 
-                <View style={styles.collapsibleItem}><Text>Team Skiutc</Text></View>
+                <View style={styles.collapsibleItem}>                                      
+                  <ListItem 
+                    leftAvatar={{ source: require("../assets/images/app.png")}} 
+                    title="La Team Skiut" 
+                    bottomDivider/>
+                </View>
                 <View style={styles.collapsibleItem}>
                 <AssoContactList data={contactsSkiut} setContactSelected={setContactSelected} showContactScreen={showContactScreen}/>
                 </View>
@@ -152,23 +167,42 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                           wrapperStyle={styles.wrapperCollapsibleList}
                           buttonContent={
                             <View style={styles.button}>
-                              <Text style={styles.buttonText}>Afficher/Cacher</Text>
+                                      <ListItem 
+                                        leftIcon={<Icon name="expand-more"/>}
+                                        rightIcon={<Icon name="expand-less"/>}
+                                        title="afficher/cacher" 
+                                        titleStyle={{justifyContent: 'center', alignItems: 'center'}}
+                                        bottomDivider/>
                             </View>
                           }
                 >
-                <View style={styles.collapsibleItem}><Text>Importants</Text></View>
+                <View style={styles.collapsibleItem}>                  
+                <ListItem 
+                    leftAvatar={{ source: require("../assets/images/urgence.png")}} 
+                    title="Autre Contacts, Urgence" 
+                    bottomDivider/></View>
                 <View style={styles.collapsibleItem}>
                 <AutresContactList data={contactsImportants}/>
                 </View>
                 </CollapsibleList>
                 </View>
                 <Button
+                buttonStyle={styles.customButton}
                 title="Le plan des pistes"
                 onPress={() => showSlopesMap(true)}
+                icon={<Icon name="map"/>}
                 />
                 <Button
+                buttonStyle={styles.customButton}
                 title="Les points d'interet"
                 onPress={() => showPOIMap(true)}
+                icon={<Icon name="bookmark"/>}
+                />
+                <Button
+                buttonStyle={styles.customButton}
+                title="Le planning de la semaine"
+                onPress={() => showPlanning(true)}
+                icon={<Icon name="date-range"/>}
                 />
             </ScrollView>
         </View>
@@ -178,6 +212,13 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
 function SlopesMapScreen({showPOIMap, showSlopesMap, rotated, setRotated}) {
   return(
     <View style={styles.container}>
+              <ScreenTitle title="Plan des pistes">
+              <PlusBlock icon="backspace" adminIcon="rotate-right" color={colors.white}
+                isAdmin={true}
+                action={() => showSlopesMap(false)}
+                adminAction={() => setRotated(!rotated)}
+              />
+              </ScreenTitle>
       <View style={styles.container}
             contentContainerStyle={styles.contentContainer}>
 
@@ -198,25 +239,105 @@ function SlopesMapScreen({showPOIMap, showSlopesMap, rotated, setRotated}) {
           </ImageZoom>
 
           <View style={styles.quit}>
-        <ScreenTitle title="Le plan des pistes">
-              <PlusBlock icon="backspace" adminIcon="rotate-right" color={colors.white}
-                isAdmin={true}
-                action={() => showSlopesMap(false)}
-                adminAction={() => setRotated(!rotated)}
-              />
-              </ScreenTitle>
+
               </View>
         </View>
     </View>
   )
 }
 
-function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated}) {
+function PlanningScreen({ showPlanning, rotated, setRotated}) {
   return(
     <View style={styles.container}>
+              <ScreenTitle title="Planning">
+              <PlusBlock icon="backspace" adminIcon="rotate-right" color={colors.white}
+                isAdmin={true}
+                action={() => showPlanning(false)}
+                adminAction={() => setRotated(!rotated)}
+              />
+              </ScreenTitle>
       <View style={styles.container}
             contentContainerStyle={styles.contentContainer}>
 
+          <ImageZoom
+            cropHeight={height}
+            cropWidth={width}
+            imageHeight={1749}
+            imageWidth={4961}
+            minScale={0.1}
+            maxScale={10}
+            enableCenterFocus={false}
+            >  
+            <ImageBackground
+            style={[(rotated) ? styles.landscapeMap : styles.portraitMap]}
+            source={require('../assets/images/SlopesMap.png')}>
+
+            </ImageBackground>
+          </ImageZoom>
+
+          <View style={styles.quit}>
+
+              </View>
+        </View>
+    </View>
+  )
+}
+
+function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, index=0, animation = new Animated.Value(0), regionTimeout}) {
+  
+  useEffect(() => {
+  animation.addListener(({ value }) => {
+    let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+    if (index >= markers.length) {
+      index = markers.length - 1;
+    }
+    if (index <= 0) {
+      index = 0;
+    }
+    clearTimeout(regionTimeout);
+    regionTimeout = setTimeout(() => {
+      if (index !== index) {
+        index = index;
+        const { coordinate } = markers[index];
+        map.animateToRegion(
+          {
+            ...coordinate,
+            latitudeDelta: region.latitudeDelta,
+            longitudeDelta: region.longitudeDelta,
+          },
+          350
+        );
+      }
+    }, 10);
+  })})
+
+  const interpolations = markers.map((marker, index) => {
+    const inputRange = [
+      (index - 1) * CARD_WIDTH,
+      index * CARD_WIDTH,
+      ((index + 1) * CARD_WIDTH),
+    ];
+    const scale = animation.interpolate({
+      inputRange,
+      outputRange: [1, 2.5, 1],
+      extrapolate: "clamp",
+    });
+    const opacity = animation.interpolate({
+      inputRange,
+      outputRange: [0.35, 1, 0.35],
+      extrapolate: "clamp",
+    });
+    return { scale, opacity };
+  });
+  return(
+    <View style={styles.container}>
+              <ScreenTitle title="Lieux utiles" logo={false}>
+              <PlusBlock icon="backspace" color={colors.white}
+                action={() => showPOIMap(false)}
+              />
+              </ScreenTitle>
+      <View style={styles.container}
+            contentContainerStyle={styles.contentContainer}>
           <MapView style={styles.mapStyle} provider="google"
               showsPointsOfInterest = {false}
               initialRegion={{
@@ -225,26 +346,70 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated}) {
                 latitudeDelta: 0.009,
                 longitudeDelta: 0.009,
               }}>
-                  {markers.map((marker, i) => (
-                    <MapView.Marker
-                      key={i}
+                  {markers.map((marker, index) => 
+                    {const scaleStyle = {
+                      transform: [
+                        {
+                          scale: interpolations[index].scale,
+                        },
+                      ],
+                    };
+                    const opacityStyle = {
+                      opacity: interpolations[index].opacity,
+                    };
+                    return(<MapView.Marker
+                      key={index}
                       coordinate={{
                         latitude: marker.coor.lat,
                         longitude: marker.coor.lng
                       }}
-                      title={marker.title}
-                      description={marker.subtitle}
-                    />
-                  ))}
+                    >
+                    <Animated.View style={[styles.markerWrap, opacityStyle]}>
+                      <Animated.View style={[styles.ring, scaleStyle]} />
+                        <View style={styles.marker} />
+                      </Animated.View>
+                    </MapView.Marker>)
+                  })}
           </MapView>
-
+          <Animated.ScrollView
+              horizontal
+              scrollEventThrottle={1}
+              showsHorizontalScrollIndicator={false}
+              snapToInterval={CARD_WIDTH}
+              onScroll={Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        x: animation,
+                      },
+                    },
+                  },
+                ],
+                { useNativeDriver: true }
+              )}
+              style={styles.scrollView}
+              contentContainerStyle={styles.endPadding}
+            >
+                {markers.map((marker, index) => (
+    <View style={styles.card} key={index}>
+      <Image
+        source={Images[marker.image]}
+        style={styles.cardImage}
+        resizeMode="cover"
+      />
+      <View style={styles.textContent}>
+        <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+        <Text numberOfLines={1} style={styles.cardDescription}>
+          {marker.subtitle}
+        </Text>
+      </View>
+    </View>
+  ))}
+</Animated.ScrollView>
 
           <View style={styles.quit}>
-        <ScreenTitle title="Points d'interets">
-              <PlusBlock icon="backspace" color={colors.white}
-                action={() => showPOIMap(false)}
-              />
-              </ScreenTitle>
+
               </View>
         </View>
     </View>
@@ -264,8 +429,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   ContactList: {
-    paddingTop: 30,
-    paddingLeft:15,
+    padding:15,
   },
   landscapeMap: {
     height:1749, 
@@ -280,10 +444,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  quit: {
-    position: 'absolute',
-    transform: [{'translate': [0,0, 1]}]
-  },
   block: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -291,9 +451,6 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: Colors.white,
     borderRadius: 5,
-  },
-  container: {
-    flex: 1,
   },
   scrollView: {
     position: "absolute",
@@ -373,21 +530,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop:130
   },
-  name:{
-    fontSize:22,
-    color:"#FFFFFF",
-    fontWeight:'600',
-  },
   body:{
     marginTop:40,
   },
   bodyContent: {
-    flex: 1,
     alignItems: 'center',
     padding:30,
   },
   name:{
-    fontSize:28,
+    fontSize:20,
     color: "#696969",
     fontWeight: "600"
   },
@@ -413,4 +564,8 @@ const styles = StyleSheet.create({
     borderRadius:30,
     backgroundColor: "#00BFFF",
   },
+  customButton: {
+    margin: 15, 
+    borderRadius: 60
+  }
 });

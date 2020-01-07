@@ -33,13 +33,13 @@
       "buildNumber": "5",
       "infoPlist": {
         "NSCameraUsageDescription": "L'application utilise la caméra pour poster des news en ajoutant une photo"
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ"
       }
     },
     "notification": {
       "icon": "./assets/images/app.png",
-      "config": {
-        "googleMapsApiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ"
-      }
     }
   }
 }

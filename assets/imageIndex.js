@@ -1,0 +1,20 @@
+export default Images={
+    "1": require("./images/app.png"),
+    "2": require("./images/app.png"),
+    "3": require("./images/app.png"),
+    "4": require("./images/app.png"),
+    "5": require("./images/app.png"),
+    "6": require("./images/app.png"),
+    "7": require("./images/app.png"),
+    "8": require("./images/app.png"),
+    "9": require("./images/app.png"),
+    "10": require("./images/app.png"),
+    "11": require("./images/app.png"),
+    "12": require("./images/app.png"),
+    "13": require("./images/app.png"),
+    "14": require("./images/app.png"),
+    "15": require("./images/app.png"),
+    "16": require("./images/app.png"),
+    "17": require("./images/app.png"),
+    "18": require("./images/app.png")
+}
