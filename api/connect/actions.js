@@ -85,6 +85,20 @@ export function relog() {
   }
 }
 
+export function refreshData() {
+  return (dispatch, getState) => {
+    retrieveStorage('@skiutcapp:key').then(
+      (data) => {
+        fetchAPI({ data }).then(
+          (response) => {
+            dispatch(successLogin(response))
+          }
+        ).catch((err) => err)
+      }
+    ).catch((err) => err)
+  }
+}
+
 export function logout(){
   return async (dispatch) => {
     await deleteStorage('@skiutcapp:key');

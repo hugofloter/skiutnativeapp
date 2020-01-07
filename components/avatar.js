@@ -3,18 +3,16 @@ import { getImage } from "../api/image";
 import { Avatar as NativeAvatar } from "react-native-elements";
 
 const Avatar = ({ user, ...params }) => {
-  // TODO: implement user.getImageURI()
-  /*
-  if(user.getImageURI()) {
+  if(user.getAvatar()) {
+    const {img_url, img_width, img_height} = user.getAvatar();
     return (
       <NativeAvatar
         rounded
-        source={{ uri: getImage(user.getImageURI())}}
+        source={{ uri: getImage(img_url)}}
         {...params}
       />
     )
   }
-  */
   return (
     <NativeAvatar
       rounded
