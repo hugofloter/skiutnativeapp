@@ -9,7 +9,8 @@ class User {
     is_adult,
     isAdmin,
     lastPosition,
-    push_token
+    push_token,
+    avatar
   }) {
     this.login = login;
     this.lastname = lastname;
@@ -18,7 +19,8 @@ class User {
     this.isAdult = is_adult || false;
     this.isAdmin = isAdmin;
     this.lastPosition = lastPosition;
-    this.push_token = push_token
+    this.push_token = push_token;
+    this.avatar = avatar;
   }
 
   getKey() {
@@ -55,6 +57,13 @@ class User {
 
   getPushToken() {
     return this.push_token;
+  }
+
+  getAvatar() {
+    if(this.avatar && this.avatar.img_url) {
+      return this.avatar;
+    }
+    return null;
   }
 }
 
