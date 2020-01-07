@@ -6,9 +6,10 @@ class User {
     lastname,
     firstname,
     email,
-    is_adult,
     isAdmin,
-    lastPosition,
+    location,
+    status,
+    expiration_date,
     push_token,
     avatar
   }) {
@@ -16,10 +17,11 @@ class User {
     this.lastname = lastname;
     this.firstname = firstname;
     this.email = email;
-    this.isAdult = is_adult || false;
     this.isAdmin = isAdmin;
-    this.lastPosition = lastPosition;
-    this.push_token = push_token;
+    this.location = location;
+    this.status = status;
+    this.expirationDate = expiration_date;
+    this.pushToken = push_token;
     this.avatar = avatar;
   }
 
@@ -43,20 +45,24 @@ class User {
     return this.email;
   }
 
-  getAdult() {
-    return Boolean(this.isAdult);
-  }
-
   getAdmin() {
     return Boolean(this.isAdmin);
   }
 
-  getLastPosition() {
-    return this.lastPosition;
+  getLocation() {
+    return this.location;
+  }
+
+  getStatus() {
+    return this.status;
+  }
+
+  getExpirationDate() {
+    return this.expirationDate;
   }
 
   getPushToken() {
-    return this.push_token;
+    return this.pushToken;
   }
 
   getAvatar() {

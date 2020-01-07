@@ -1,50 +1,7 @@
 /* Class Groups */
 import { getDate } from "../utils/timeSerializer"
+import User from "./user";
 
-class UserGroup {
-  constructor({
-    expiration_date,
-    id_group,
-    login_user,
-    share_position,
-    status,
-    location
-  }) {
-    this.id_group = id_group;
-    this.status = status;
-    this.share_position = share_position;
-    this.login_user = login_user;
-    this.expiration_date = expiration_date;
-    if (location) {
-      this.location = location
-    }
-  }
-
-  getKey() {
-    return this.id_group;
-  }
-
-  getStatus() {
-    return this.status;
-  }
-
-  isSharingPosition() {
-    return this.share_position;
-  }
-
-  getLogin() {
-    return this.login_user;
-  }
-
-  getExpirationDate() {
-    return this.expiration_date;
-  }
-
-  getLocation() {
-    return this.location
-  }
-
-}
 
 class Groups {
   constructor({
@@ -88,11 +45,7 @@ class Groups {
   }
 
   getUsersInGroup() {
-    let list_users = []
-    Object.keys(this.users).map(i => {
-      list_users[i] = new UserGroup(this.users[i])
-    })
-    return list_users;
+    return Object.keys(this.users).map(i => new User(this.users[i]))
   }
 }
 
