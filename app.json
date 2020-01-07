@@ -25,7 +25,7 @@
       "package": "fr.utc.assos.skiutc",
       "permissions": ["CAMERA"],
       "config": {
-        "googleMaps": { "apiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ" }   
+        "googleMaps": { "apiKey": "" }   
      }
     },
     "ios": {
@@ -35,11 +35,11 @@
         "NSCameraUsageDescription": "L'application utilise la caméra pour poster des news en ajoutant une photo"
       },
       "config": {
-        "googleMapsApiKey": "AIzaSyBAi82lkwtQilv4H84Hib-p7b8dnfPE5IQ"
+        "googleMapsApiKey": ""
       }
     },
     "notification": {
-      "icon": "./assets/images/app.png",
+      "icon": "./assets/images/app.png"
     }
   }
 }
