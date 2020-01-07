@@ -7,51 +7,52 @@ import {
    StyleSheet,
    Button,
    TextInput,
+   ActivityIndicator
 } from "react-native";
 import Colors from "../../constants/Colors";
 import ScreenTitle from "../../components/ScreenTitle";
 import { useSelector, useDispatch } from "react-redux";
-import GestureRecognizer from 'react-native-swipe-gestures';
 import { groups as groupsAPI } from "../../api/state";
 import PlusBlock from "../../components/blocks/PlusBlock";
 
-const config = {
-      velocityThreshold: 0.3,
-      directionalOffsetThreshold: 80
-}
 
-const DetailedGroupScreen = ({ showDetail, selectedGroup }) => {
+const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
-  const [fetched, setFetched] = React.useState(false);
-
-  const { groupInfos } = useSelector((state) => ({ groupInfos: groupsAPI.getCurrentFromState(state) }))
+  const { groupInfos, isLoading } = useSelector((state) => ({
+    groupInfos: groupsAPI.getCurrentFromState(state),
+    isLoading: groupsAPI.getCurrentLoadingFromState(state),
+  }))
 
   const dispatch = useDispatch()
 
-  const getGroupInfos = React.useCallback((id) => {
-    dispatch(groupsAPI.retrieve(id));
-    setFetched(true);
-  }, [dispatch, setFetched, fetched]);
+  const getGroupInfos = React.useCallback((id) => dispatch(groupsAPI.retrieve(id)), [dispatch]);
+  const resetCurrent = React.useCallback(() => dispatch(groupsAPI.resetCurrent()), [dispatch]);
 
   React.useEffect(() => {
     getGroupInfos(selectedGroup.getKey());
+
+    return () => resetCurrent();
   }, []);
 
+  if(isLoading || !groupInfos) {
+    return (
+      <View style={styles.container}>
+        <ScreenTitle title="Groupe">
+          <PlusBlock icon="backspace" color={ Colors.white } action={() => setSelectedGroup(null)}/>
+        </ScreenTitle>
+        <ActivityIndicator size="large" color={Colors.primaryBlue}/>
+      </View>
+    )
+  }
   return (
-
-        <GestureRecognizer
-            onSwipeRight={() => showDetail(false)}
-            config={config}
-            style={styles.container}>
-            <View style={styles.container}>
-          <ScreenTitle title="FocusedGroup">
-            <PlusBlock icon="backspace" color={ Colors.white } action={() => showDetail(false)}/>
-          </ScreenTitle>
-          <ScrollView>
-            <Text>groupInfos</Text>
-          </ScrollView>
-          </View>
-        </GestureRecognizer>
+    <View style={styles.container}>
+      <ScreenTitle title={ groupInfos.getName() }>
+        <PlusBlock icon="backspace" color={ Colors.white } action={() => setSelectedGroup(null)}/>
+      </ScreenTitle>
+      <ScrollView>
+        <Text>groupInfos</Text>
+      </ScrollView>
+    </View>
   )
 };
 
