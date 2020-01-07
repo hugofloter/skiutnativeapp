@@ -24,7 +24,7 @@
     "android": {
       "package": "fr.utc.assos.skiutc",
       "permissions": ["CAMERA"],
-      //"googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
