@@ -2,38 +2,52 @@
     "Contacts": [
       {
         "Nom":"Pauline Mandon",
-        "Poste":"President",
-        "Telephone":"+337 12 12 12 12",
-        "Email":"prez@skiutz.gg",
+        "Poste":"Presidente",
+        "Telephone":"+336 34 15 23 72",
+        "Email":"prez@skiutz.fr",
         "Photo":1
       },
       {
         "Nom":"Valentin Metz",
         "Poste":"Vice-President",
-        "Telephone":"+337 12 12 12 12",
-        "Email":"viceprez@skiutc.gg",
+        "Telephone":"+336 06 96 69 91",
+        "Email":"viceprez@skiutc.fr",
         "Photo":2
       },
       {
-        "Nom":"Paul Jullien",
-        "Poste":"Resp de mes couilles",
-        "Telephone":"+337 12 12 12 12",
-        "Email":"pjullien@skiutc.fr",
+        "Nom":"Valère Sellam",
+        "Poste":"Resp Anim",
+        "Telephone":"+336 51 91 35 02",
+        "Email":"valette@skiutc.fr",
         "Photo":3
       },
       {
-        "Nom":"Cogent",
-        "Poste":"Les chiottes",
-        "Telephone":"+337 12 12 12 11",
-        "Email":"wc@skiutc.fr",
+        "Nom":"Julie Leroy",
+        "Poste":"Resp Log",
+        "Telephone":"+336 43 18 27 56",
+        "Email":"log@skiutc.fr",
         "Photo":4
+      },
+      {
+        "Nom":"Camille Florimond",
+        "Poste":"Trésorière",
+        "Telephone":"+336 49 65 74 14",
+        "Email":"latreso@skiutc.fr",
+        "Photo":5
+      },
+      {
+        "Nom":"Clémence Crappe",
+        "Poste":"Vice-Trésorière",
+        "Telephone":"+336 21 61 27 10",
+        "Email":"maman@skiutc.fr",
+        "Photo":6
       },
       {
         "Nom":"Tim",
         "Poste":"Resp After",
-        "Telephone":"+337 12 12 12 12",
-        "Email":"aftercheztim@skiutc.gg",
-        "Photo":5
+        "Telephone":"+337 82 12 84 89",
+        "Email":"aftercheztim@skiutc.fr",
+        "Photo":7
       }
     ],
     "ContactsAutres": [

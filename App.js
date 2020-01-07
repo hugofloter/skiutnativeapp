@@ -76,7 +76,6 @@ async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require('./assets/images/logo.png'),
-      require('./assets/images/robot-prod.png'),
       require('./assets/images/SlopesMap.png'),
       require('./assets/images/urgence.png')
     ]),

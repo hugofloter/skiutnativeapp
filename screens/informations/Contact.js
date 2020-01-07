@@ -1,7 +1,7 @@
 import {Dimensions, Image, Linking, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Colors from "../../constants/Colors";
 import React from 'react';
-import Images from "../../assets/imageIndex";
+import { imageIndex } from "../../assets/imageIndex";
 
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
@@ -11,7 +11,7 @@ export function ContactScreen({contactSelected, showContactScreen}){
   return(
     <View style={styles.container}>
     <View style={styles.header} />
-    <Image style={styles.avatar} source={Images[contactSelected.Photo]}/>
+    <Image style={styles.avatar} source={imageIndex[contactSelected.Photo]}/>
     <View style={styles.body}>
       <View style={styles.bodyContent}>
         <Text style={styles.name}> {contactSelected.Nom}</Text>

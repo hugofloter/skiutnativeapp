@@ -20,7 +20,7 @@ import static_infos from "../../assets/static_infos.json";
 import Colors from "../../constants/Colors";
 import ScreenTitle from "../../components/ScreenTitle";
 import PlusBlock from "../../components/blocks/PlusBlock";
-import Images from '../../assets/imageIndex';
+import { imageIndex } from '../../assets/imageIndex';
 import { ContactScreen } from "./Contact"
 import { PlanningScreen } from "./Planning"
 import { SlopesMapScreen } from "./SlopesMap"
@@ -38,7 +38,7 @@ function AssoContactList({ data, setContactSelected, showContactScreen}) {
      data.map((l, i) => 
         <ListItem 
           key={i}
-          leftAvatar={{ source: Images[l.Photo]}} 
+          leftAvatar={{ source: imageIndex[l.Photo]}}
           title={l.Nom} 
           subtitle={l.Poste} 
           bottomDivider 
@@ -46,7 +46,6 @@ function AssoContactList({ data, setContactSelected, showContactScreen}) {
           onPress={() => {setContactSelected(l); showContactScreen(true)}} />)
    );
 };
-
 
 function AutresContactList({ data }) {
   return (
@@ -71,59 +70,58 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
               style={styles.container}
               contentContainerStyle={styles.contentContainer}
               showsVerticalScrollIndicator={false}>
-
                 <View style={styles.ContactList}>
-                <CollapsibleList
-                          numberOfVisibleItems={1}
-                          wrapperStyle={styles.wrapperCollapsibleList}
-                          buttonContent={
-                            <View style={styles.button}>
-                                      <ListItem 
-                                        leftIcon={<Icon name="expand-more"/>}
-                                        rightIcon={<Icon name="expand-less"/>}
-                                        title="afficher/cacher" 
-                                        titleStyle={{justifyContent: 'center', alignItems: 'center'}}
-                                        bottomDivider/>
-                            </View>
-                          }
-                >
-                
-                <View style={styles.collapsibleItem}>                                      
-                  <ListItem 
-                    leftAvatar={{ source: require("../../assets/images/app.png")}}
-                    title="La Team SKI'UTC"
-                    bottomDivider/>
-                </View>
-                <View style={styles.collapsibleItem}>
-                <AssoContactList data={contactsSkiut} setContactSelected={setContactSelected} showContactScreen={showContactScreen}/>
-                </View>
-                </CollapsibleList>
+                    <CollapsibleList
+                              numberOfVisibleItems={1}
+                              wrapperStyle={styles.wrapperCollapsibleList}
+                              buttonContent={
+                                <View style={styles.button}>
+                                          <ListItem
+                                            leftIcon={<Icon name="expand-more"/>}
+                                            rightIcon={<Icon name="expand-less"/>}
+                                            title="afficher/cacher"
+                                            titleStyle={{justifyContent: 'center', alignItems: 'center'}}
+                                            bottomDivider/>
+                                </View>
+                              }
+                    >
+                        <View style={styles.collapsibleItem}>
+                          <ListItem
+                            leftAvatar={{ source: require("../../assets/images/app.png")}}
+                            title="La Team SKI'UTC"
+                            bottomDivider/>
+                        </View>
+                        <View style={styles.collapsibleItem}>
+                        <AssoContactList data={contactsSkiut} setContactSelected={setContactSelected} showContactScreen={showContactScreen}/>
+                        </View>
+                    </CollapsibleList>
                 </View>
                 <View style={styles.ContactList}>
-                <CollapsibleList
-                          numberOfVisibleItems={1}
-                          wrapperStyle={styles.wrapperCollapsibleList}
-                          buttonContent={
-                            <View style={styles.button}>
-                                      <ListItem 
-                                        leftIcon={<Icon name="expand-more"/>}
-                                        rightIcon={<Icon name="expand-less"/>}
-                                        title="afficher/cacher" 
-                                        titleStyle={{justifyContent: 'center', alignItems: 'center'}}
-                                        bottomDivider/>
-                            </View>
-                          }
-                >
-                <View style={styles.collapsibleItem}>                  
-                    <ListItem
-                        leftAvatar={{ source: require("../../assets/images/urgence.png")}}
-                        title="Autre Contacts, Urgence"
-                        bottomDivider/>
-                </View>
-                <View style={styles.collapsibleItem}>
-                <AutresContactList data={contactsImportants}/>
-                </View>
-                </CollapsibleList>
+                    <CollapsibleList
+                        numberOfVisibleItems={1}
+                        wrapperStyle={styles.wrapperCollapsibleList}
+                        buttonContent={
+                        <View style={styles.button}>
+                            <ListItem
+                                leftIcon={<Icon name="expand-more"/>}
+                                rightIcon={<Icon name="expand-less"/>}
+                                title="afficher/cacher"
+                                containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+                                bottomDivider
+                            />
+                        </View>
+                        }
+                    >
+                        <View style={styles.collapsibleItem}>
+                            <ListItem
+                                leftAvatar={{ source: require("../../assets/images/urgence.png")}}
+                                title="Autre Contacts, Urgence"
+                                bottomDivider/>
+                        </View>
+                        <View style={styles.collapsibleItem}>
+                            <AutresContactList data={contactsImportants}/>
+                        </View>
+                    </CollapsibleList>
                 </View>
                 <Button
                 buttonStyle={styles.customButton}
@@ -165,7 +163,6 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
     clearTimeout(regionTimeout);
     regionTimeout = setTimeout(() => {
       if (index !== index) {
-        index = index;
         const { coordinate } = markers[index];
         map.animateToRegion(
           {
@@ -262,7 +259,7 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
                 {markers.map((marker, index) => (
     <View style={styles.card} key={index}>
       <Image
-        source={Images[marker.image]}
+        source={imageIndex[marker.image]}
         style={styles.cardImage}
         resizeMode="cover"
       />
