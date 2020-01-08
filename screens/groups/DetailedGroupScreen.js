@@ -30,7 +30,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
   const getGroupInfos = React.useCallback((id) => dispatch(groupsAPI.retrieve(id)), [dispatch]);
   const resetCurrent = React.useCallback(() => dispatch(groupsAPI.resetCurrent()), [dispatch]);
-  const addUsers = React.useCallback((id, data) => dispatch(groupsAPI.updateOne(id, data)), [dispatch]);
+  const updateGroup = React.useCallback((id, data) => dispatch(groupsAPI.updateOne(id, data)), [dispatch]);
 
   const [addModal, showAddModal] = React.useState(false);
 
@@ -44,7 +44,11 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
     return (
       <View style={styles.container}>
         <ScreenTitle title="Groupe">
-          <PlusBlock icon="backspace" color={ Colors.white } action={() => setSelectedGroup(null)}/>
+          <PlusBlock
+            icon="backspace"
+            color={ Colors.white }
+            action={() => setSelectedGroup(null)}
+            />
         </ScreenTitle>
         <ActivityIndicator size="large" color={Colors.primaryBlue}/>
       </View>
@@ -53,7 +57,14 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
   return (
     <View style={styles.container}>
       <ScreenTitle title={ groupInfos.getName() }>
-        <PlusBlock icon="backspace" color={ Colors.white } action={() => setSelectedGroup(null)}/>
+        <PlusBlock
+          icon="backspace"
+          color={ Colors.white }
+          action={() => setSelectedGroup(null)}
+          isAdmin={true}
+          adminIcon={ groupInfos.getSharePosition() ? "location-on" : "location-off"}
+          adminAction={() => updateGroup(selectedGroup.getKey(), { 'location_permission': !groupInfos.getSharePosition() })}
+          />
       </ScreenTitle>
       <ScrollView>
         <MembersBlock
@@ -61,6 +72,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
           isOwner={ currentUser && currentUser.getKey() === groupInfos.getOwner() }
           buttonBlock
           onButtonPress={() => showAddModal(true) }
+          onMemberPress={(member) => updateGroup(selectedGroup.getKey(), { 'to_remove': member.getKey()}) }
           />
         <Map users={ groupInfos.getUsersInGroup() }/>
 
@@ -69,7 +81,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
         isVisible={addModal}
         setVisible={showAddModal}
         currentUsers={groupInfos.getUsersInGroup()}
-        onValidate={(logins) => addUsers(selectedGroup.getKey(), { 'list_login': logins })}
+        onValidate={(logins) => updateGroup(selectedGroup.getKey(), { 'list_login': logins })}
         />
     </View>
   )

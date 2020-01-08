@@ -27,12 +27,17 @@ const AutocompleteInput = ({ onSelect, filterList }) => {
 
   const [inputValue, setInputValue] = React.useState(null);
 
+  const handleSelect = React.useCallback((value) => {
+    onSelect(value);
+    setInputValue(null);
+  },[onSelect, setInputValue]);
+
   const autoComplete = React.useCallback((query) => dispatch(usersAPI.list({ parameters: { query }})),[dispatch]);
 
   React.useEffect(() => {
     autoComplete("")
   }, []);
-  
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -50,7 +55,7 @@ const AutocompleteInput = ({ onSelect, filterList }) => {
                 title={`${user.getFirstname()} ${user.getLastname()}`}
                 subtitle={ user.getKey() }
                 bottomDivider
-                onPress={ () => onSelect(user) }
+                onPress={ () => handleSelect(user) }
                 />
           ))
             : null

@@ -23,10 +23,16 @@ const GroupScreen = ({ showEditer, setSelectedGroup }) => {
   }));
 
   const dispatch = useDispatch();
-  const fetchGroups = React.useCallback(() => dispatch(groupsAPI.list()), [dispatch])
+  const fetchGroups = React.useCallback(() => dispatch(groupsAPI.list()), [dispatch]);
+  const clear = React.useCallback(() => dispatch(groupsAPI.reset()), [dispatch]);
+  const deleteGroup = React.useCallback((groupId) => {
+    dispatch(groupsAPI.delete(groupId));
+  }, [dispatch]);
 
   React.useEffect(() => {
     fetchGroups();
+
+    return () => clear();
   }, [])
 
   return (
@@ -46,7 +52,7 @@ const GroupScreen = ({ showEditer, setSelectedGroup }) => {
             />
         }
         >
-        <ListGroupManager list={ groups } setSelectedGroup={ setSelectedGroup }/>
+        <ListGroupManager list={ groups } setSelectedGroup={ setSelectedGroup } onDelete={deleteGroup}/>
       </ScrollView>
     </View>
   )
