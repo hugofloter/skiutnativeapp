@@ -1,5 +1,5 @@
 const iosColor = "#007AFF";
-const tintColor = '#00a4dc';
+const tintColor = '#1A7E96';
 
 export default {
   tintColor,
