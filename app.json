@@ -33,7 +33,8 @@
       "bundleIdentifier": "fr.utc.assos.skiutc",
       "buildNumber": "5",
       "infoPlist": {
-        "NSCameraUsageDescription": "L'application utilise la caméra pour poster des news en ajoutant une photo"
+        "NSCameraUsageDescription": "L'application utilise la caméra pour poster changer son avatar",
+        "NSPhotoLibraryUsageDescription": "L'application utilise la gallerie photo pour poster des news en ajoutant une photo ou pour changer son avatar"
       },
       "config": {
         "googleMapsApiKey": ""

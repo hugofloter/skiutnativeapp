@@ -71,78 +71,66 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
               contentContainerStyle={styles.contentContainer}
               showsVerticalScrollIndicator={false}>
                 <View style={styles.ContactList}>
-                    <CollapsibleList
-                              numberOfVisibleItems={1}
-                              wrapperStyle={styles.wrapperCollapsibleList}
-                              buttonContent={
-                                <View style={styles.button}>
-                                          <ListItem
-                                            leftIcon={<Icon name="expand-more"/>}
-                                            rightIcon={<Icon name="expand-less"/>}
-                                            title="afficher/cacher"
-                                            titleStyle={{justifyContent: 'center', alignItems: 'center'}}
-                                            bottomDivider/>
-                                </View>
-                              }
-                    >
-                        <View style={styles.collapsibleItem}>
-                          <ListItem
-                            leftAvatar={{ source: require("../../assets/images/app.png")}}
-                            title="La Team SKI'UTC"
-                            bottomDivider/>
-                        </View>
-                        <View style={styles.collapsibleItem}>
-                        <AssoContactList data={contactsSkiut} setContactSelected={setContactSelected} showContactScreen={showContactScreen}/>
-                        </View>
-                    </CollapsibleList>
+                  <CollapsibleList numberOfVisibleItems={1} buttonContent={
+                    <View style={styles.button}>
+                      <ListItem leftIcon={<Icon name="expand-more"/>}
+                                rightIcon={<Icon name="expand-less"/>}
+                                title="afficher/cacher"
+                                titleStyle={{justifyContent: 'center', alignItems: 'center'}}
+                                bottomDivider/>
+                    </View>
+                  }>
+                    <View style={styles.collapsibleItem}>
+                      <ListItem leftAvatar={{ source: require("../../assets/images/app.png")}}
+                                title="La Team SKI'UTC"
+                                bottomDivider/>
+                    </View>
+                    <View style={styles.collapsibleItem}>
+                      <AssoContactList data={contactsSkiut} setContactSelected={setContactSelected} showContactScreen={showContactScreen}/>
+                    </View>
+                  </CollapsibleList>
                 </View>
                 <View style={styles.ContactList}>
-                    <CollapsibleList
-                        numberOfVisibleItems={1}
-                        wrapperStyle={styles.wrapperCollapsibleList}
-                        buttonContent={
-                        <View style={styles.button}>
-                            <ListItem
-                                leftIcon={<Icon name="expand-more"/>}
+                  <CollapsibleList numberOfVisibleItems={1} buttonContent={
+                    <View style={styles.button}>
+                      <ListItem leftIcon={<Icon name="expand-more"/>}
                                 rightIcon={<Icon name="expand-less"/>}
                                 title="afficher/cacher"
                                 containerStyle={{justifyContent: 'center', alignItems: 'center'}}
                                 bottomDivider
-                            />
-                        </View>
-                        }
-                    >
-                        <View style={styles.collapsibleItem}>
-                            <ListItem
-                                leftAvatar={{ source: require("../../assets/images/urgence.png")}}
+                      />
+                    </View>
+                  }>
+                    <View style={styles.collapsibleItem}>
+                      <ListItem leftAvatar={{ source: require("../../assets/images/urgence.png")}}
                                 title="Autre Contacts, Urgence"
                                 bottomDivider/>
-                        </View>
-                        <View style={styles.collapsibleItem}>
-                            <AutresContactList data={contactsImportants}/>
-                        </View>
-                    </CollapsibleList>
+                    </View>
+                    <View style={styles.collapsibleItem}>
+                      <AutresContactList data={contactsImportants}/>
+                    </View>
+                  </CollapsibleList>
                 </View>
                 <Button
-                buttonStyle={styles.customButton}
-                title="Le plan des pistes"
-                onPress={() => showSlopesMap(true)}
-                iconRight
-                icon={<Icon name="map" color={ Colors.white } />}
+                    buttonStyle={styles.customButton}
+                    title="Le plan des pistes"
+                    onPress={() => showSlopesMap(true)}
+                    iconRight
+                    icon={<Icon name="map" color={ Colors.white } />}
                 />
                 <Button
-                buttonStyle={styles.customButton}
-                title="Les points d'interet"
-                onPress={() => showPOIMap(true)}
-                iconRight
-                icon={<Icon name="bookmark" color={ Colors.white } />}
+                    buttonStyle={styles.customButton}
+                    title="Les points d'interet"
+                    onPress={() => showPOIMap(true)}
+                    iconRight
+                    icon={<Icon name="bookmark" color={ Colors.white } />}
                 />
                 <Button
-                buttonStyle={styles.customButton}
-                title="Le planning de la semaine"
-                onPress={() => showPlanning(true)}
-                iconRight
-                icon={<Icon name="date-range" color={ Colors.white } />}
+                    buttonStyle={styles.customButton}
+                    title="Le planning de la semaine"
+                    onPress={() => showPlanning(true)}
+                    iconRight
+                    icon={<Icon name="date-range" color={ Colors.white } />}
                 />
             </ScrollView>
         </View>
@@ -150,7 +138,14 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
 }
 
 function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, index=0, animation = new Animated.Value(0), regionTimeout}) {
-  
+
+  const [region, setRegion ] = React.useState({
+                latitude: 44.290264,
+                longitude: 6.568764,
+                latitudeDelta: 0.009,
+                longitudeDelta: 0.009,
+              })
+
   useEffect(() => {
   animation.addListener(({ value }) => {
     let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
@@ -184,7 +179,7 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
     ];
     const scale = animation.interpolate({
       inputRange,
-      outputRange: [1, 2.5, 1],
+      outputRange: [1, 1.5, 0.5],
       extrapolate: "clamp",
     });
     const opacity = animation.interpolate({
@@ -194,23 +189,19 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
     });
     return { scale, opacity };
   });
+
   return(
-    <View style={styles.container}>
+    <View style={styles.POIContainer}>
               <ScreenTitle title="Lieux utiles" logo={false}>
               <PlusBlock icon="backspace" color={Colors.white}
                 action={() => showPOIMap(false)}
               />
               </ScreenTitle>
-      <View style={styles.container}
+      <View style={styles.POIContainer}
             contentContainerStyle={styles.contentContainer}>
           <MapView style={styles.mapStyle} provider="google"
               showsPointsOfInterest = {false}
-              initialRegion={{
-                latitude: 44.290264,
-                longitude: 6.568764,
-                latitudeDelta: 0.009,
-                longitudeDelta: 0.009,
-              }}>
+              initialRegion={region}>
                   {markers.map((marker, index) => 
                     {const scaleStyle = {
                       transform: [
@@ -229,10 +220,10 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
                         longitude: marker.coor.lng
                       }}
                     >
-                    <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                      <Animated.View style={[styles.ring, scaleStyle]} />
-                        <View style={styles.marker} />
-                      </Animated.View>
+                        <Animated.View style={[styles.markerWrap, opacityStyle]}>
+                          <Animated.View style={[styles.ring, scaleStyle]} />
+                            <View style={styles.marker} />
+                        </Animated.View>
                     </MapView.Marker>)
                   })}
           </MapView>
@@ -255,27 +246,23 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
               )}
               style={styles.scrollView}
               contentContainerStyle={styles.endPadding}
-            >
-                {markers.map((marker, index) => (
-    <View style={styles.card} key={index}>
-      <Image
-        source={imageIndex[marker.image]}
-        style={styles.cardImage}
-        resizeMode="cover"
-      />
-      <View style={styles.textContent}>
-        <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-        <Text numberOfLines={1} style={styles.cardDescription}>
-          {marker.subtitle}
-        </Text>
-      </View>
-    </View>
-  ))}
-</Animated.ScrollView>
-
-          <View style={styles.quit}>
-
-              </View>
+          >
+              {markers.map((marker, index) => (
+                <View style={styles.card} key={index}>
+                  <Image
+                    source={imageIndex[marker.image]}
+                    style={styles.cardImage}
+                    resizeMode="cover"
+                  />
+                  <View style={styles.textContent}>
+                    <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+                    <Text numberOfLines={1} style={styles.cardDescription}>
+                      {marker.subtitle}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+          </Animated.ScrollView>
         </View>
     </View>
   )
@@ -324,6 +311,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.defaultBackgroud,
     padding: 5
   },
+  POIContainer: {
+    flex: 1,
+  },
   landscapeMap: {
     height:1749, 
     width:4961, 
@@ -358,9 +348,9 @@ const styles = StyleSheet.create({
   card: {
     padding: 10,
     elevation: 2,
-    backgroundColor: "#FFF",
+    backgroundColor: Colors.white,
     marginHorizontal: 10,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowRadius: 5,
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
@@ -384,32 +374,34 @@ const styles = StyleSheet.create({
   },
   cardDescription: {
     fontSize: 12,
-    color: "#444",
+    color: Colors.darkGrey,
   },
   markerWrap: {
     alignItems: "center",
     justifyContent: "center",
+    minWidth: 70,
+    minHeight: 70,
+    borderRadius: 180
   },
   marker: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgba(130,4,150, 0.9)",
+    width: 10,
+    height: 10,
+    borderRadius: 180,
+    backgroundColor: Colors.poiColor,
   },
   ring: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "rgba(130,4,150, 0.3)",
+    minWidth: 30,
+    minHeight: 30,
+    borderRadius: 180,
+    backgroundColor: Colors.poiCircleColor,
     position: "absolute",
     borderWidth: 1,
-    borderColor: "rgba(130,4,150, 0.5)",
+    borderColor: Colors.poiColor,
   },
   collapsibleItem: {
     borderColor: "black",
   },
   header:{
-    backgroundColor: "#00BFFF",
     height:200,
   },
   avatar: {
@@ -432,37 +424,21 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color: "#696969",
+    color: Colors.grey,
     fontWeight: "600"
   },
   info:{
     fontSize:16,
-    color: "#00BFFF",
     marginTop:10
   },
-  description:{
-    fontSize:16,
-    color: "#696969",
-    marginTop:10,
-    textAlign: 'center'
-  },
-  buttonContainer: {
-    marginTop:10,
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "#00BFFF",
-  },
+
   customButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: 15,
-    padding: 10,
-    borderRadius: 60
+    padding: 12,
+    borderRadius: 30,
+    backgroundColor: Colors.tintColor,
   }
 });

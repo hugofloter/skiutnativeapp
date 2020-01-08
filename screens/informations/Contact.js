@@ -1,11 +1,7 @@
-import {Dimensions, Image, Linking, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import React from 'react';
 import { imageIndex } from "../../assets/imageIndex";
-
-const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export function ContactScreen({contactSelected, showContactScreen}){
   return(
@@ -38,95 +34,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
-  ContactList: {
-    padding:15,
-  },
-  landscapeMap: {
-    height:1749,
-    width:4961,
-    transform: [{ rotate: '90deg'}]
-  },
-  portraitMap: {
-    height:1749,
-    width:4961
-  },
-  mapStyle: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  block: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: 10,
-    padding: 5,
-    backgroundColor: Colors.white,
-    borderRadius: 5,
-  },
-  scrollView: {
-    position: "absolute",
-    bottom: 30,
-    left: 0,
-    right: 0,
-    paddingVertical: 10,
-  },
-  endPadding: {
-    paddingRight: width - CARD_WIDTH,
-  },
-  card: {
-    padding: 10,
-    elevation: 2,
-    backgroundColor: "#FFF",
-    marginHorizontal: 10,
-    shadowColor: "#000",
-    shadowRadius: 5,
-    shadowOpacity: 0.3,
-    shadowOffset: { x: 2, y: -2 },
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    overflow: "hidden",
-  },
-  cardImage: {
-    flex: 3,
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-  },
   textContent: {
     flex: 1,
   },
-  cardtitle: {
-    fontSize: 12,
-    marginTop: 5,
-    fontWeight: "bold",
-  },
-  cardDescription: {
-    fontSize: 12,
-    color: "#444",
-  },
-  markerWrap: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  marker: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgba(130,4,150, 0.9)",
-  },
-  ring: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "rgba(130,4,150, 0.3)",
-    position: "absolute",
-    borderWidth: 1,
-    borderColor: "rgba(130,4,150, 0.5)",
-  },
-  collapsibleItem: {
-    borderColor: "black",
-  },
   header:{
-    backgroundColor: "#00BFFF",
+    backgroundColor: Colors.tintColor,
     height:200,
   },
   avatar: {
@@ -154,7 +66,7 @@ const styles = StyleSheet.create({
   },
   info:{
     fontSize:16,
-    color: "#00BFFF",
+    color: Colors.tintColor,
     marginTop:10
   },
   description:{
@@ -172,10 +84,6 @@ const styles = StyleSheet.create({
     marginBottom:20,
     width:250,
     borderRadius:30,
-    backgroundColor: "#00BFFF",
-  },
-  customButton: {
-    margin: 15,
-    borderRadius: 60
+    backgroundColor: Colors.tintColor,
   }
 });

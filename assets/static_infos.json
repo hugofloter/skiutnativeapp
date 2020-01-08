@@ -70,66 +70,57 @@
     "markers": [
         {
           "coor": {
-            "lat": 44.292037,
+            "lat": 44.2919088,
             "lng": 6.564996
           },
           "title": "La residence",
-          "subtitle": "C la kon dor",
-          "image": 6
-        },
-        {
-          "coor": {
-            "lat": 44.289756, 
-            "lng": 6.569350
-          },
-          "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole",
-          "image": 7
-        },
-        {
-          "coor": {
-            "lat": 44.280000, 
-            "lng": 6.560000
-          },
-          "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole",
+          "subtitle": "C'est le bercail !",
           "image": 8
         },
         {
           "coor": {
-            "lat": 44.279000, 
-            "lng": 6.569000
+            "lat": 44.289741,
+            "lng": 6.569325
           },
-          "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole",
+          "title": "Le JUL's",
+          "subtitle": "Le meilleur bar à bière",
           "image": 9
         },
         {
           "coor": {
-            "lat": 44.291212, 
-            "lng": 6.569800
+            "lat": 44.289341,
+            "lng": 6.569325
           },
-          "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole",
+          "title": "La boite",
+          "subtitle": "Danciiiiing !",
           "image": 10
         },
         {
           "coor": {
-            "lat": 44.245123, 
-            "lng": 6.568888
+            "lat": 44.291201,
+            "lng": 6.569655
           },
-          "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole",
-          "image": 11
+          "title": "L'Igloo",
+          "subtitle": "Un bon bar",
+          "image": 10
         },
         {
           "coor": {
-            "lat": 44.262626, 
-            "lng": 6.580000
+            "lat": 44.2906076,
+            "lng": 6.5689901
           },
-          "title": "Le bar a bieres",
-          "subtitle": "C la kon gnole",
-          "image": 12
+          "title": "La cuisse de cochon",
+          "subtitle": "A manger",
+          "image": 10
+        },
+        {
+          "coor": {
+            "lat": 44.2896782,
+            "lng": 6.5630007
+          },
+          "title": "Le parapente",
+          "subtitle": "After ski, c'est ici !",
+          "image": 10
         }
     ]
   }
