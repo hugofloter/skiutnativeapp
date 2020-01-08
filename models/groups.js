@@ -45,7 +45,10 @@ class Groups {
   }
 
   getUsersInGroup() {
-    return Object.keys(this.users).map(i => new User(this.users[i]))
+    if(this.users){
+      return Object.keys(this.users).map(i => new User(this.users[i]))
+    }
+    return []
   }
 }
 

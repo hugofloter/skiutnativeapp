@@ -6,18 +6,21 @@ import {
    Platform,
    StyleSheet,
    Button,
-   TextInput,
    ActivityIndicator
 } from "react-native";
 import Colors from "../../constants/Colors";
 import ScreenTitle from "../../components/ScreenTitle";
 import { useSelector, useDispatch } from "react-redux";
 import { groups as groupsAPI } from "../../api/state";
+import { getConnectedUser } from "../../api/connect";
 import PlusBlock from "../../components/blocks/PlusBlock";
-
+import Map from "../../components/map/map";
+import MembersBlock from "./membersBlock/membersBlock";
+import AddModal from "./membersBlock/addModal";
 
 const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
+  const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }));
   const { groupInfos, isLoading } = useSelector((state) => ({
     groupInfos: groupsAPI.getCurrentFromState(state),
     isLoading: groupsAPI.getCurrentLoadingFromState(state),
@@ -27,6 +30,9 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
   const getGroupInfos = React.useCallback((id) => dispatch(groupsAPI.retrieve(id)), [dispatch]);
   const resetCurrent = React.useCallback(() => dispatch(groupsAPI.resetCurrent()), [dispatch]);
+  const addUsers = React.useCallback((id, data) => dispatch(groupsAPI.updateOne(id, data)), [dispatch]);
+
+  const [addModal, showAddModal] = React.useState(false);
 
   React.useEffect(() => {
     getGroupInfos(selectedGroup.getKey());
@@ -50,8 +56,21 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
         <PlusBlock icon="backspace" color={ Colors.white } action={() => setSelectedGroup(null)}/>
       </ScreenTitle>
       <ScrollView>
-        <Text>groupInfos</Text>
+        <MembersBlock
+          users={ groupInfos.getUsersInGroup() }
+          isOwner={ currentUser && currentUser.getKey() === groupInfos.getOwner() }
+          buttonBlock
+          onButtonPress={() => showAddModal(true) }
+          />
+        <Map users={ groupInfos.getUsersInGroup() }/>
+
       </ScrollView>
+      <AddModal
+        isVisible={addModal}
+        setVisible={showAddModal}
+        currentUsers={groupInfos.getUsersInGroup()}
+        onValidate={(logins) => addUsers(selectedGroup.getKey(), { 'list_login': logins })}
+        />
     </View>
   )
 };
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
-    paddingTop: 5
+    padding: 5,
   },
 });
 

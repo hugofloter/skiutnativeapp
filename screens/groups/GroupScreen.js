@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
-    paddingTop: 5
+    padding: 5,
   }
 })
