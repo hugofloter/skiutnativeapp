@@ -22,7 +22,7 @@ const ModalPicker = ({ isVisible, setVisible, onValidate }) => {
 
     const result = await Picker.launchCameraAsync({
       allowsEditing: true,
-      quality: 1,
+      quality: 0.5,
       mediaTypes: Picker.MediaTypeOptions.All,
       aspect: [4,4]
     })
