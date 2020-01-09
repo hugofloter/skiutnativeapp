@@ -148,7 +148,8 @@ export default class APIEndpoint {
       index: this.index,
       payload: {
         id: id && String(id),
-        Model: this._Model
+        Model: this._Model,
+        retrieveList: Boolean(options.retrieveList)
       },
       request: {
         url: this._urlScheme.getDetails(id, options),
@@ -163,7 +164,7 @@ export default class APIEndpoint {
       type: REQUEST_UPDATE,
       index: this.index,
       payload: {
-        Model: this._Model
+        Model: this._Model,
       },
       request: {
         url: this._urlScheme.getList(options),
