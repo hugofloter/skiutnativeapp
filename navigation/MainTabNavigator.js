@@ -5,8 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
 import {InfosScreenManager} from '../screens/informations/InformationsScreen';
-import GroupScreen from '../screens/groups/GroupScreen';
-import InformationsScreen from '../screens/informations/InformationsScreen';
+import GroupScreen from '../screens/groups/GroupScreenManager';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 

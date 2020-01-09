@@ -103,6 +103,8 @@ export const locationTask = async () => {
     //configure the Location Manager
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Balanced,
+      timeInterval: 1000,
+      distanceInterval: 30
     })
   }
 
