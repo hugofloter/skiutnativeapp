@@ -32,11 +32,11 @@ const AutocompleteInput = ({ onSelect, filterList }) => {
     setInputValue(null);
   },[onSelect, setInputValue]);
 
-  const autoComplete = React.useCallback((query) => dispatch(usersAPI.list({ parameters: { query }})),[dispatch]);
-
-  React.useEffect(() => {
-    autoComplete("")
-  }, []);
+  const autoComplete = React.useCallback((query) => {
+    if(query && query.length) {
+      dispatch(usersAPI.list({ parameters: { query: encodeURI(query) }}))
+    }
+    },[dispatch]);
 
   return (
     <View style={styles.container}>
