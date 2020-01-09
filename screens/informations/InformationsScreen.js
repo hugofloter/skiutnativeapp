@@ -12,10 +12,7 @@ import {
     Animated,
 } from 'react-native';
 import CollapsibleList from 'react-native-collapsible-list';
-import {
-  ListItem,
-  Overlay
-} from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import static_infos from "../../assets/static_infos.json";
 import Colors from "../../constants/Colors";
 import ScreenTitle from "../../components/ScreenTitle";
@@ -31,7 +28,6 @@ const markerList = static_infos.markers;
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
-
 
 function AssoContactList({ data, setContactSelected, showContactScreen}) {
   return (
@@ -144,7 +140,7 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
                 longitude: 6.568764,
                 latitudeDelta: 0.009,
                 longitudeDelta: 0.009,
-              })
+  });
 
   useEffect(() => {
   animation.addListener(({ value }) => {
@@ -169,7 +165,7 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
         );
       }
     }, 10);
-  })})
+  })});
 
   const interpolations = markers.map((marker, index) => {
     const inputRange = [
@@ -192,78 +188,69 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
 
   return(
     <View style={styles.POIContainer}>
-              <ScreenTitle title="Lieux utiles" logo={false}>
-              <PlusBlock icon="backspace" color={Colors.white}
-                action={() => showPOIMap(false)}
-              />
-              </ScreenTitle>
-      <View style={styles.POIContainer}
-            contentContainerStyle={styles.contentContainer}>
-          <MapView style={styles.mapStyle} provider="google"
-              showsPointsOfInterest = {false}
-              initialRegion={region}>
-                  {markers.map((marker, index) => 
-                    {const scaleStyle = {
-                      transform: [
-                        {
-                          scale: interpolations[index].scale,
-                        },
-                      ],
-                    };
-                    const opacityStyle = {
-                      opacity: interpolations[index].opacity,
-                    };
-                    return(<MapView.Marker
-                      key={index}
-                      coordinate={{
-                        latitude: marker.coor.lat,
-                        longitude: marker.coor.lng
-                      }}
-                    >
-                        <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                          <Animated.View style={[styles.ring, scaleStyle]} />
-                            <View style={styles.marker} />
-                        </Animated.View>
-                    </MapView.Marker>)
-                  })}
-          </MapView>
-          <Animated.ScrollView
-              horizontal
-              scrollEventThrottle={1}
-              showsHorizontalScrollIndicator={false}
-              snapToInterval={CARD_WIDTH}
-              onScroll={Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        x: animation,
-                      },
-                    },
-                  },
-                ],
-                { useNativeDriver: true }
-              )}
-              style={styles.scrollView}
-              contentContainerStyle={styles.endPadding}
-          >
-              {markers.map((marker, index) => (
-                <View style={styles.card} key={index}>
-                  <Image
-                    source={imageIndex[marker.image]}
-                    style={styles.cardImage}
-                    resizeMode="cover"
-                  />
-                  <View style={styles.textContent}>
-                    <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-                    <Text numberOfLines={1} style={styles.cardDescription}>
-                      {marker.subtitle}
-                    </Text>
-                  </View>
-                </View>
-              ))}
-          </Animated.ScrollView>
-        </View>
+      <ScreenTitle title="Lieux utiles" logo={false}>
+        <PlusBlock icon="backspace" color={Colors.white}
+                   action={() => showPOIMap(false)}
+        />
+      </ScreenTitle>
+      <View style={styles.POIContainer} contentContainerStyle={styles.contentContainer}>
+        <MapView style={styles.mapStyle} provider="google" showsPointsOfInterest = {false} initialRegion={region}>
+          {markers.map((marker, index) => {
+            const scaleStyle = {
+              transform: [
+                {
+                   scale: interpolations[index].scale,
+                },
+              ],
+            };
+
+            const opacityStyle = {
+               opacity: interpolations[index].opacity,
+            };
+
+            return (
+              <MapView.Marker key={index} coordinate={{
+                                            latitude: marker.coor.lat,
+                                            longitude: marker.coor.lng
+              }}>
+                <Animated.View style={[styles.markerWrap, opacityStyle]}>
+                  <Animated.View style={[styles.ring, scaleStyle]} />
+                  <View style={styles.marker} />
+                </Animated.View>
+              </MapView.Marker>
+            )
+          })}
+        </MapView>
+        <Animated.ScrollView horizontal scrollEventThrottle={1} showsHorizontalScrollIndicator={false}
+                             snapToInterval={CARD_WIDTH}
+                             onScroll={Animated.event(
+                               [
+                                 {
+                                   nativeEvent: {
+                                     contentOffset: {
+                                       x: animation,
+                                     },
+                                   },
+                                 },
+                               ],
+                              { useNativeDriver: true }
+                             )}
+                             style={styles.scrollView}
+                             contentContainerStyle={styles.endPadding}
+        >
+          {markers.map((marker, index) => (
+            <View style={styles.card} key={index}>
+              <Image source={imageIndex[marker.image]} style={styles.cardImage} resizeMode="cover"/>
+              <View style={styles.textContent}>
+                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {marker.subtitle}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </Animated.ScrollView>
+      </View>
     </View>
   )
 }
@@ -324,8 +311,8 @@ const styles = StyleSheet.create({
     width:4961
   },
   mapStyle: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: width,
+    height: height,
   },
   block: {
     alignItems: 'center',
@@ -431,7 +418,6 @@ const styles = StyleSheet.create({
     fontSize:16,
     marginTop:10
   },
-
   customButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -439,6 +425,6 @@ const styles = StyleSheet.create({
     margin: 15,
     padding: 12,
     borderRadius: 30,
-    backgroundColor: Colors.tintColor,
+    backgroundColor: Colors.primaryBlue,
   }
 });

@@ -6,22 +6,22 @@ import { imageIndex } from "../../assets/imageIndex";
 export function ContactScreen({contactSelected, showContactScreen}){
   return(
     <View style={styles.container}>
-    <View style={styles.header} />
-    <Image style={styles.avatar} source={imageIndex[contactSelected.Photo]}/>
-    <View style={styles.body}>
-      <View style={styles.bodyContent}>
-        <Text style={styles.name}> {contactSelected.Nom}</Text>
-        <Text style={styles.info}> {contactSelected.Poste}</Text>
-        <Text style={styles.description}> {contactSelected.Email}</Text>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => Linking.openURL(`tel:${contactSelected.Telephone}`)}>
-          <Text>Appeler</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => showContactScreen(false)}>
-          <Text>Retour</Text>
-        </TouchableOpacity>
+      <View style={styles.header} />
+      <Image style={styles.avatar} source={imageIndex[contactSelected.Photo]}/>
+      <View style={styles.body}>
+        <View style={styles.bodyContent}>
+          <Text style={styles.name}> {contactSelected.Nom}</Text>
+          <Text style={styles.info}> {contactSelected.Poste}</Text>
+          <Text style={styles.description}> {contactSelected.Email}</Text>
+          <TouchableOpacity style={styles.buttonContainer} onPress={() => Linking.openURL(`tel:${contactSelected.Telephone}`)}>
+            <Text>Appeler</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonContainer} onPress={() => showContactScreen(false)}>
+            <Text>Retour</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-  </View>
-</View>
+    </View>
   )
 }
 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header:{
-    backgroundColor: Colors.tintColor,
+    backgroundColor: Colors.primaryBlue,
     height:200,
   },
   avatar: {
@@ -61,17 +61,17 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:20,
-    color: "#696969",
+    color: Colors.darkGrey,
     fontWeight: "600"
   },
   info:{
     fontSize:16,
-    color: Colors.tintColor,
+    color: Colors.primaryBlue,
     marginTop:10
   },
   description:{
     fontSize:16,
-    color: "#696969",
+    color: Colors.darkGrey,
     marginTop:10,
     textAlign: 'center'
   },
@@ -84,6 +84,6 @@ const styles = StyleSheet.create({
     marginBottom:20,
     width:250,
     borderRadius:30,
-    backgroundColor: Colors.tintColor,
+    backgroundColor: Colors.primaryBlue,
   }
 });
