@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 const Modal = ({ group, setVisible }) => {
   const dispatch = useDispatch();
   const validateInvitation = React.useCallback((id, data) => {
-    dispatch(groupsAPI.updateOne(id, data));
+    dispatch(groupsAPI.updateOne(id, data, {retrieveList: true}));
     setVisible(null);
   }, [dispatch]);
 

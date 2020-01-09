@@ -10,7 +10,8 @@ class Groups {
     owner,
     beer_call,
     user_status,
-    users
+    users,
+    share_position
   }) {
     this.id = id;
     this.name = name;
@@ -18,6 +19,7 @@ class Groups {
     this.beer_call = beer_call;
     this.user_status = user_status || 'V';
     this.users = users;
+    this.sharePosition = share_position;
   }
 
   getKey() {
@@ -49,6 +51,10 @@ class Groups {
       return Object.keys(this.users).map(i => new User(this.users[i]))
     }
     return []
+  }
+
+  getSharePosition() {
+    return Boolean(this.sharePosition);
   }
 }
 

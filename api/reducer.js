@@ -144,8 +144,19 @@ const reduceFunctions = {
       }
     }
 
-    const instance = new payload.Model(data);
+    if (payload.retrieveList) {
+      const instances = Object.entries(data).map(([_, value]) => new payload.Model(value))
+      const nextValues = (payload.append && state.values) ? state.values.concat(instances) : instances;
 
+      return {
+        ...state,
+        empty: nextValues.length === 0,
+        values: nextValues,
+        index: mergeIndex(state.index, instances),
+      };
+    }
+
+    const instance = new payload.Model(data);
     return replaceInstance({
       ...state,
       updating: false
@@ -234,7 +245,6 @@ const reduceFunctions = {
       empty: nextValues.length === 0,
       values: nextValues,
       index: mergeIndex(state.index, instances),
-      current: nextValues,
     };
   },
 
