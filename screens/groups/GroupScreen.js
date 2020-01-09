@@ -52,7 +52,10 @@ const GroupScreen = ({ showEditer, setSelectedGroup }) => {
             />
         }
         >
-        <ListGroupManager list={ groups } setSelectedGroup={ setSelectedGroup } onDelete={deleteGroup}/>
+        {
+          isLoading ? null
+          : <ListGroupManager list={ groups } setSelectedGroup={ setSelectedGroup } onDelete={deleteGroup}/>
+        }
       </ScrollView>
     </View>
   )

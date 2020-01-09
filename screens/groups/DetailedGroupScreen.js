@@ -18,12 +18,13 @@ import Map from "../../components/map/map";
 import MembersBlock from "./membersBlock/membersBlock";
 import AddModal from "./membersBlock/addModal";
 
+const INTERVAL = 60000
+
 const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
   const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }));
-  const { groupInfos, isLoading } = useSelector((state) => ({
+  const { groupInfos } = useSelector((state) => ({
     groupInfos: groupsAPI.getCurrentFromState(state),
-    isLoading: groupsAPI.getCurrentLoadingFromState(state),
   }))
 
   const dispatch = useDispatch()
@@ -36,11 +37,14 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
   React.useEffect(() => {
     getGroupInfos(selectedGroup.getKey());
-
-    return () => resetCurrent();
+    const interval = setInterval(() => { getGroupInfos(selectedGroup.getKey()) }, INTERVAL);
+    return () => {
+      clearInterval(interval)
+      resetCurrent();
+    }
   }, []);
 
-  if(isLoading || !groupInfos) {
+  if(!groupInfos) {
     return (
       <View style={styles.container}>
         <ScreenTitle title="Groupe">
