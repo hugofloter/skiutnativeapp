@@ -27,12 +27,12 @@ const AutocompleteInput = ({ onSelect, filterList }) => {
 
   const [inputValue, setInputValue] = React.useState(null);
 
-  const autoComplete = React.useCallback((query) => dispatch(usersAPI.list({ parameters: { query }})),[dispatch]);
+  const autoComplete = React.useCallback((query) => {
+    if(query && query.length) {
+      dispatch(usersAPI.list({ parameters: { query }}))  
+    }
+    },[dispatch]);
 
-  React.useEffect(() => {
-    autoComplete("")
-  }, []);
-  
   return (
     <View style={styles.container}>
       <TextInput
