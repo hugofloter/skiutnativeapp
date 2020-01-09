@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Overlay, Divider,Button } from "react-native-elements";
-import Avatar from "../../components/avatar";
+import Avatar from "../../components/avatar/avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { getConnectedUser, refreshData } from "../../api/connect";
 import { users as usersAPI } from "../../api/state";
@@ -33,7 +33,7 @@ const AvatarManager = ({}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style = {styles.container} onPress={() => setVisible(true)}>
-        <Avatar user={ currentUser } size="large"/>
+        <Avatar user={ currentUser } size="large" showEditButton/>
       </TouchableOpacity>
       <ModalPicker isVisible={modalVisible} setVisible={setVisible} onValidate={updateAvatar}/>
     </View>
