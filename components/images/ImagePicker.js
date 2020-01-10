@@ -36,7 +36,7 @@ const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
     const result = await Picker.launchImageLibraryAsync({
       mediaTypes: Picker.MediaTypeOptions.All,
       allowsEditing: true,
-      quality: 1,
+      quality: 0.5,
     });
     handleSet(result);
   }
