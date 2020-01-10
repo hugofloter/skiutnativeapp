@@ -2,8 +2,8 @@ import { Platform } from "react-native";
 
 const iosColor = "#007AFF";
 
-const tintColor = Platform.OS === "ios" ? iosColor : "#1A7E96";
-const primaryBlue = Platform.OS === "ios" ? iosColor : "#1A7E96"
+const tintColor =  "#1A7E96";
+const primaryBlue = "#1A7E96"
 
 export default {
   tintColor,
