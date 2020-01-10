@@ -38,6 +38,12 @@ const AutocompleteInput = ({ onSelect, filterList }) => {
     }
     },[dispatch]);
 
+  const clear = React.useCallback(() => dispatch(usersAPI.reset()), [dispatch]);
+
+  React.useEffect(() => {
+    return () => clear();  
+  }, []);
+
   return (
     <View style={styles.container}>
       <TextInput
