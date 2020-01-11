@@ -21,12 +21,12 @@ export const locationPermission = async () => {
   if(permission === false) {
     const perm = await askPermission('LOCATION');
     if(perm) {
-      await storeData('@skiutcapp:localisation', { authorization: true });
+      await storeData('@skiutcapp:localisation', { authorisation: true });
     }
     return perm;
   }
 
-  await storeData('@skiutcapp:localisation', { authorization: true });
+  await storeData('@skiutcapp:localisation', { authorisation: true });
   return true;
 }
 
@@ -36,13 +36,12 @@ export const locationPermission = async () => {
  * @param {function} - onCancel method
  * @returns {function}
  **/
-const _alert = (onAccept, onCancel) => {
+const _alert = () => {
   Alert.alert(
     'Localisation',
-    "Votre localisation est désactivée. Activez la pour une meilleur expérience. Autorisez-vous l'application à accéder à votre ",
+    "Votre localisation est désactivée. Activez la pour une meilleur expérience. L'application envoie votre dernière position connue, vous pouvez désactiver cette fonctionnalité dans les paramètres.",
     [
-      {text: 'Accepter', onPress: onAccept },
-      {text: 'Refuser', onPress: onCancel, type: 'cancel' },
+      {text: 'Ok'},
     ]
   )
 }
@@ -72,26 +71,8 @@ const _serviceAvailable = async () => {
 export const locationServiceHandler = async () => {
   const available = await _serviceAvailable()
 
-  const onAccept = async () => await storeData(LOCATION_STORAGE_NAME, { authorization: true });
-  const onCancel = async () => await deleteStorage(LOCATION_STORAGE_NAME);
-
-
   if(!available) {
-    _alert(onAccept, onCancel)
-  }
-}
-
-/**
- * Method to change the location authorisation
-**/
-export const changeServiceAuthorization = async () => {
-  const { authorisation } = await retrieveStorage(LOCATION_STORAGE_NAME);
-
-  if(authorisation) {
-    await deleteStorage(LOCATION_STORAGE_NAME);
-  }
-  else {
-    await storeData(LOCATION_STORAGE_NAME, { authorisation: true });
+    _alert()
   }
 }
 
@@ -99,14 +80,52 @@ export const changeServiceAuthorization = async () => {
  * Method to start the Location Start
  * this task run in background
  **/
-export const locationTask = async () => {
+const _startLocationBackground = async () => {
     //configure the Location Manager
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      accuracy: Location.Accuracy.Balanced,
-      timeInterval: 1000,
-      distanceInterval: 30
+      accuracy: Location.Accuracy.High,
+      foregroundService: {
+        notificationTitle: "Ski UTC",
+        notificationBody: "L'application est autorisée à partager votre position",
+      }
     })
   }
+
+/**
+ * This Method stop the task
+**/
+export const stopLocationTask = async () => {
+  await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+  await deleteStorage(LOCATION_STORAGE_NAME);
+
+  return false;
+}
+
+/**
+ * This Method start the task
+**/
+export const startLocationTask = async () => {
+
+  await storeData(LOCATION_STORAGE_NAME, { authorisation: true });
+
+  const { authorisation } = await retrieveStorage(LOCATION_STORAGE_NAME);
+  if(authorisation){
+    await _startLocationBackground();
+  }
+
+  return Boolean(authorisation);
+}
+
+/**
+ * This Method start the task only if the authorisation is already stored
+**/
+export const locationAppStart = async () => {
+  const { authorisation } = await retrieveStorage(LOCATION_STORAGE_NAME);
+  if(authorisation){
+    await _startLocationBackground();
+  }
+}
+
 
 /**
  * TaskManager to handle the named LOCATION_TASK_NAME task
@@ -118,8 +137,8 @@ export const locationTaskManager = () => TaskManager.defineTask(LOCATION_TASK_NA
     return;
   }
 
-  const { authorization } = await retrieveStorage(LOCATION_STORAGE_NAME);
-  if(!authorization) {
+  const { authorisation } = await retrieveStorage(LOCATION_STORAGE_NAME);
+  if(!authorisation) {
     return;
   }
 
