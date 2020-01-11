@@ -12,7 +12,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/app.png",
     "splash": {
-      "image": "./assets/images/logo.png",
+      "image": "./assets/images/splashFinal.png",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -28,7 +28,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "splash": {
-        "image": "./assets/images/logo.png",
+        "image": "./assets/images/splashFinal.png",
         "backgroundColor": "#ffffff",
       }
     },
