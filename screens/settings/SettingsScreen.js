@@ -10,6 +10,7 @@ import { retrieveStorage } from "../../utils/asyncStorage";
 
 import Modal from "./modal";
 import ScreenTitle from "../../components/ScreenTitle";
+import Settings from "./settings";
 import Avatar from "./AvatarManager";
 
 const SettingsScreen = () => {
@@ -40,6 +41,7 @@ const SettingsScreen = () => {
           </View>
         </View>
         <Divider style={styles.divider}/>
+        <Settings/>
       </ScrollView>
       <Modal isVisible={ modal } setVisible={ showModal }/>
     </View>

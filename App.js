@@ -15,12 +15,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { NotificationMiddleware } from "./utils/notifications";
 import {
   locationPermission,
-  locationTask,
-  locationTaskManager,
-  locationServiceHandler } from "./utils/location";
+  locationAppStart,
+  locationTaskManager, locationServiceHandler } from "./utils/location";
 
 const store = createStore({});
-//locationTaskManager();
+locationTaskManager();
 
 const ConnectHandler = () => {
   const dispatch = useDispatch()
@@ -46,8 +45,8 @@ export default function App(props) {
   //initialisation phase
   React.useEffect(() => {
     locationPermission();
-    //locationTask();
     locationServiceHandler();
+    locationAppStart();
   }, []);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
