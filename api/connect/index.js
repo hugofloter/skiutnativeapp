@@ -6,7 +6,8 @@ export {
   isPending,
   getConnectedUser,
   relog,
-  clear
+  clear,
+  refreshData
 } from "./actions";
 
 export { default as connectReducer} from "./reducer";

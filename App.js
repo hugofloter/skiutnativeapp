@@ -12,9 +12,14 @@ import AppNavigator from './navigation/AppNavigator';
 import ConnectScreen from "./screens/ConnectScreen";
 import { isLogged, relog } from "./api/connect";
 import { useSelector, useDispatch } from "react-redux";
-import { NotificationMiddleware } from "./utils/notifications"
+import { NotificationMiddleware } from "./utils/notifications";
+import {
+  locationPermission,
+  locationAppStart,
+  locationTaskManager, locationServiceHandler } from "./utils/location";
 
 const store = createStore({});
+locationTaskManager();
 
 const ConnectHandler = () => {
   const dispatch = useDispatch()
@@ -22,7 +27,7 @@ const ConnectHandler = () => {
   const { logged } = useSelector(state => ({ logged: isLogged(state) }))
 
   React.useEffect(() => {
-    relogUser()
+    relogUser();
   }, []);
 
   NotificationMiddleware();
@@ -36,6 +41,13 @@ const ConnectHandler = () => {
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  //initialisation phase
+  React.useEffect(() => {
+    locationPermission();
+    locationServiceHandler();
+    locationAppStart();
+  }, []);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -63,7 +75,6 @@ async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require('./assets/images/logo.png'),
-      require('./assets/images/robot-prod.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

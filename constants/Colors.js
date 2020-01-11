@@ -1,5 +1,9 @@
+import { Platform } from "react-native";
+
 const iosColor = "#007AFF";
-const tintColor = '#00a4dc';
+
+const tintColor =  "#1A7E96";
+const primaryBlue = "#1A7E96"
 
 export default {
   tintColor,
@@ -20,7 +24,7 @@ export default {
   noticeText: '#fff',
   defaultBackgroud: '#eeeeee',
   buttonBackground: '#FFCC66',
-  primaryBlue: "#1A7E96",
+  primaryBlue: primaryBlue,
   errorColor: "#b80204",
   successColor: "#1bcd28"
 };

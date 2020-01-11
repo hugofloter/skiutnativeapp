@@ -1,4 +1,5 @@
-import { fetch_ as fetchAPI, retrieveStorage, deleteStorage } from "./fetch";
+import { fetch_ as fetchAPI } from "./fetch";
+import { retrieveStorage, deleteStorage } from "../../utils/asyncStorage";
 import User from '../../models/user';
 
 export const REQUEST_LOGIN = Symbol('CONNECT.REQUEST_LOGIN');
@@ -70,17 +71,37 @@ export function login(data) {
 export function relog() {
   return (dispatch, getState) => {
     dispatch(requestLogin())
-    retrieveStorage().then(
+    retrieveStorage('@skiutcapp:key').then(
       (data) => {
-        dispatch(successLogin(data))
+        fetchAPI({ data }).then(
+          (response) => {
+            dispatch(successLogin(response))
+          }
+        ).catch((err) => {
+          dispatch(errorLogin(err))
+        })
       }
     ).catch((err) => { dispatch(errorLogin(err))})
   }
 }
 
+export function refreshData() {
+  return (dispatch, getState) => {
+    retrieveStorage('@skiutcapp:key').then(
+      (data) => {
+        fetchAPI({ data }).then(
+          (response) => {
+            dispatch(successLogin(response))
+          }
+        ).catch((err) => err)
+      }
+    ).catch((err) => err)
+  }
+}
+
 export function logout(){
   return async (dispatch) => {
-    await deleteStorage();
+    await deleteStorage('@skiutcapp:key');
     dispatch(clear());
   }
 }
@@ -110,4 +131,3 @@ export function getConnectedUser(state) {
   }
   return null;
 }
-

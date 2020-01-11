@@ -4,140 +4,58 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
-import GroupeScreen from '../screens/GroupeScreen';
+import GroupScreen from '../screens/groups/GroupScreenManager';
 import InformationsScreen from '../screens/InformationsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
 import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
+import { Colors } from "../constants";
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
 
-/**
- * Actualité navigator
- * @type {NavigationContainer}
- */
-const ActualityNavigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-  },
-  config
-);
-
-ActualityNavigator.navigationOptions = {
-  tabBarLabel: 'Actualités',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-notifications${focused ? '' : '-outline'}`
-          : 'md-notifications'
-      }
-    />
-  ),
-};
-
-ActualityNavigator.path = '';
 
 /**
- *
- * Information navigator
- * @type {NavigationContainer}
- */
-const InformationNavigator = createStackNavigator(
+ * Navigator button generator
+ * @param {string} route - the named route of the component
+ * @param {ReactComponent} component - the rendered screen
+ * @param {string} label - the label of the navigation icon
+ * @param {string} iosIcon
+ * @param {string} androidIcon
+ *@returns {function}
+**/
+const createNavigator = (route, component, label, iosIcon, androidIcon) => {
+  const navigator = createStackNavigator(
     {
-        Infos: InformationsScreen,
+      [route]: component,
     },
     config
-);
+  );
 
-InformationNavigator.navigationOptions = {
-    tabBarLabel: 'Informations',
+  navigator.navigationOptions = {
+    tabBarLabel: label,
+    tabBarOptions: {
+      activeTintColor: Colors.primaryBlue,
+    },
     tabBarIcon: ({ focused }) => (
-        <TabBarIcon
-            focused={focused}
-            name={
-                Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
-            }
+      <TabBarIcon
+        focused={focused}
+        name={ Platform.OS === "ios" ? `${iosIcon}` : `${androidIcon}`}
         />
-    ),
-};
+    )
+  }
+  navigator.path = '';
 
-InformationNavigator.path = '';
-
-/**
- *
- * Groupe Navigator
- * @type {NavigationContainer}
- */
-const GroupNavigator = createStackNavigator(
-  {
-    Groupe: GroupeScreen,
-  },
-  config
-);
-
-GroupNavigator.navigationOptions = {
-  tabBarLabel: 'Groupe',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-beer' : 'md-beer'} />
-  ),
-};
-
-GroupNavigator.path = '';
-
-/**
- *
- * Potins Navigator
- * @type {NavigationContainer}
- */
-const PotinNavigator = createStackNavigator(
-  {
-    Potins: PotinsScreenManager,
-  },
-  config
-);
-
-PotinNavigator.navigationOptions = {
-  tabBarLabel: 'Potins',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-chatbubbles' : 'md-chatbubbles'} />
-  ),
-};
-
-PotinNavigator.path = '';
-
-/**
- *
- * Setting Navigator
- * @type {NavigationContainer}
- */
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-  },
-  config
-);
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
-};
-
-SettingsStack.path = '';
+  return navigator;
+}
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack: ActualityNavigator,
-  InformationNavigator,
-  GroupNavigator,
-  PotinNavigator,
-  SettingsStack
+  HomeStack: createNavigator("Home", HomeScreen, "Actualités", "ios-notifications", "md-notifications"),
+  InformationNavigator: createNavigator("Infos", InformationsScreen, "Informations", "ios-information-circle", "md-information-circle"),
+  GroupNavigator: createNavigator("Group", GroupScreen, "Groupes", "ios-beer", "md-beer"),
+  PotinNavigator: createNavigator("Potins", PotinsScreenManager, "Potins", "ios-chatbubbles", "md-chatbubbles"),
+  SettingsStack: createNavigator("Settings", SettingsScreen, "Paramètres", "ios-options", "md-options")
 });
 
 tabNavigator.path = '';

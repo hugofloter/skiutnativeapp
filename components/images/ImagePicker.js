@@ -10,9 +10,18 @@ import {
   Icon
 } from "react-native-elements";
 import * as  Picker from "expo-image-picker";
-import { getPermission } from "../../utils/permissions";
+import { getPermission, askPermission } from "../../utils/permissions";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
+
+const handlePermission = async (permissionType) => {
+  const permission = await getPermission(permissionType);
+
+  if(permission === false) {
+    await askPermission(permissionType);
+    return
+  }
+}
 
 const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   const [image, setImage] = React.useState(null);
@@ -25,17 +34,17 @@ const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   }, [data, setData, param, setImage])
 
   const _pickImage = async () => {
+
+    await handlePermission('CAMERA_ROLL');
+    await handlePermission('CAMERA');
+    
     const result = await Picker.launchImageLibraryAsync({
       mediaTypes: Picker.MediaTypeOptions.All,
       allowsEditing: true,
-      quality: 1,
+      quality: 0.5,
     });
     handleSet(result);
   }
-
-  React.useEffect(() => {
-    getPermission('CAMERA_ROLL');
-  }, []);
 
   if(image && image.uri) {
     return (
