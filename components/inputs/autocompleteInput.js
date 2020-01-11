@@ -47,7 +47,7 @@ const AutocompleteInput = ({ onSelect, filterList }) => {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Cherche tes amis"
+        placeholder="Cherches tes amis"
         value={inputValue}
         style={styles.input}
         onChangeText={ text => {setInputValue(text); autoComplete(text); }}
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.primaryBlue,
     marginBottom: 5,
+    color: Colors.darkGrey
   },
 });
 
