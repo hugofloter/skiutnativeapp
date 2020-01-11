@@ -2,9 +2,21 @@ import React, {useState} from 'react';
 import { Notifications } from 'expo';
 import { useSelector, useDispatch } from "react-redux";
 import {getConnectedUser, isLogged} from "../api/connect";
-import {getPermission} from "./permissions";
+import {getPermission, askPermission} from "./permissions";
 import {users as usersAPI} from "../api/state";
 
+const _effect = async (currentUser, logged, createToken, handleNotifications) => {
+  let permission = await getPermission('NOTIFICATIONS');
+  
+  if(!permission) {
+    permission = await askPermission('NOTIFICATIONS');
+  }
+
+  if(logged && permission && !currentUser.getPushToken()) {
+    registerForPushNotificationsAsync(createToken)
+    Notifications.addListener(handleNotifications)
+  }
+}
 export const NotificationMiddleware = () => {
 
   const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }))
@@ -19,10 +31,7 @@ export const NotificationMiddleware = () => {
   };
 
   React.useEffect(() => {
-    if (logged && getPermission('NOTIFICATIONS') && !currentUser.getPushToken()) {
-      registerForPushNotificationsAsync(createToken)
-      Notifications.addListener(handleNotifications)
-    }
+    _effect(currentUser, logged, createToken, handleNotifications);
   }, [logged])
 };
 
