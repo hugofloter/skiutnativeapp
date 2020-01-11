@@ -19,6 +19,7 @@ const ModalPicker = ({ isVisible, setVisible, onValidate }) => {
 
   const cameraPicker = React.useCallback(async () => {
     await handlePermission('CAMERA');
+    await handlePermission('CAMERA_ROLL');
 
     const result = await Picker.launchCameraAsync({
       allowsEditing: true,
