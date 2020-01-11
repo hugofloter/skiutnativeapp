@@ -10,13 +10,13 @@ import Sizes from "../constants/Sizes";
 
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 
-const ScreenTitle = ({ title, children }) => {
+const ScreenTitle = ({ title, children, logo=true }) => {
   return (
     <View style={ styles.container }>
-        <Image
+        {logo ? <Image
             style={styles.headerLogo}
             source={require("../assets/images/header-logo.png")}
-        />
+        /> : null}
       <Text style = { styles.title }>{ title }</Text>
       { children }
     </View>

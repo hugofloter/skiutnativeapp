@@ -4,8 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
+import {InfosScreenManager} from '../screens/informations/InformationsScreen';
 import GroupScreen from '../screens/groups/GroupScreenManager';
-import InformationsScreen from '../screens/InformationsScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 import {PotinsScreenManager} from '../screens/potins/PotinsScreen';
 import { Colors } from "../constants";
@@ -52,7 +52,7 @@ const createNavigator = (route, component, label, iosIcon, androidIcon) => {
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack: createNavigator("Home", HomeScreen, "Actualités", "ios-notifications", "md-notifications"),
-  InformationNavigator: createNavigator("Infos", InformationsScreen, "Informations", "ios-information-circle", "md-information-circle"),
+  InformationNavigator: createNavigator("Infos", InfosScreenManager, "Informations", "ios-information-circle", "md-information-circle"),
   GroupNavigator: createNavigator("Group", GroupScreen, "Groupes", "ios-beer", "md-beer"),
   PotinNavigator: createNavigator("Potins", PotinsScreenManager, "Potins", "ios-chatbubbles", "md-chatbubbles"),
   SettingsStack: createNavigator("Settings", SettingsScreen, "Paramètres", "ios-options", "md-options")

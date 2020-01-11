@@ -38,7 +38,7 @@ function HomeScreen({ showEditer }) {
   return (
     <View style={styles.container}>
       <ScreenTitle title="Accueil">
-        <PlusBlock icon="create" color={ Colors.white } action={() => showEditer(true)}/>
+        {currentUser.getAdmin() && <PlusBlock icon="create" color={ Colors.white } action={() => showEditer(true)}/>}
       </ScreenTitle>
       <ScrollView
         style={styles.container}

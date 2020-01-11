@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.2",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/app.png",
     "splash": {
@@ -29,12 +29,12 @@
       "googleServicesFile": "./google-services.json",
       "splash": {
         "image": "./assets/images/splashFinal.png",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#ffffff"
       }
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
-      "buildNumber": "5",
+      "buildNumber": "6",
       "infoPlist": {
         "NSCameraUsageDescription": "L'application utilise la caméra pour poster changer son avatar",
         "NSPhotoLibraryUsageDescription": "L'application utilise la gallerie photo pour poster des news en ajoutant une photo ou pour changer son avatar",

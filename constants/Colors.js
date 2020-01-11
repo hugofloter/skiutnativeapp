@@ -26,5 +26,7 @@ export default {
   buttonBackground: '#FFCC66',
   primaryBlue: primaryBlue,
   errorColor: "#b80204",
-  successColor: "#1bcd28"
+  successColor: "#1bcd28",
+  poiColor: "rgba(149,0,184,0.9)",
+  poiCircleColor: "rgba(137,39,150,0.3)"
 };
