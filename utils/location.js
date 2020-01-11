@@ -20,13 +20,8 @@ export const locationPermission = async () => {
 
   if(permission === false) {
     const perm = await askPermission('LOCATION');
-    if(perm) {
-      await storeData('@skiutcapp:localisation', { authorisation: true });
-    }
     return perm;
   }
-
-  await storeData('@skiutcapp:localisation', { authorisation: true });
   return true;
 }
 
