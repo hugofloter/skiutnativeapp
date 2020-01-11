@@ -14,6 +14,15 @@ import { getPermission, askPermission } from "../../utils/permissions";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
 
+const handlePermission = async (permissionType) => {
+  const permission = await getPermission(permissionType);
+
+  if(permission === false) {
+    await askPermission(permissionType);
+    return
+  }
+}
+
 const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   const [image, setImage] = React.useState(null);
 
@@ -26,13 +35,9 @@ const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
 
   const _pickImage = async () => {
 
-    const permission = await getPermission('CAMERA_ROLL');
-
-    if( permission === false ) {
-      await askPermission('CAMERA_ROLL');
-      return;
-    }
-
+    await handlePermission('CAMERA_ROLL');
+    await handlePermission('CAMERA');
+    
     const result = await Picker.launchImageLibraryAsync({
       mediaTypes: Picker.MediaTypeOptions.All,
       allowsEditing: true,

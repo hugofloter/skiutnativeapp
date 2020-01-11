@@ -23,14 +23,28 @@
     ],
     "android": {
       "package": "fr.utc.assos.skiutc",
-      "permissions": ["CAMERA"],
+      "permissions": ["CAMERA", "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA_ROLL", "LOCATION", "NOTIFICATIONS"],
+      "config": {
+        "googleMaps": { "apiKey": "" }
+      },
       "googleServicesFile": "./google-services.json"
     },
     "ios": {
       "bundleIdentifier": "fr.utc.assos.skiutc",
       "buildNumber": "5",
       "infoPlist": {
-        "NSCameraUsageDescription": "L'application utilise la caméra pour poster des news en ajoutant une photo"
+        "NSCameraUsageDescription": "L'application utilise la caméra pour poster changer son avatar",
+        "NSPhotoLibraryUsageDescription": "L'application utilise la gallerie photo pour poster des news en ajoutant une photo ou pour changer son avatar",
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ],
+        "NSLocationAlwaysUsageDescription": "Pour une meilleure expérience, nous vous demandons d'utiliser les permissions de localisation",
+        "NSLocationWhenInUseUsageDescription": "L'application utilise la localisation pour permettre d'envoyer sa position dans son groupe",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "L'application utilise la localisation pour permettre d'envoyer sa position dans son groupe"
+      },
+      "config": {
+        "googleMapsApiKey": ""
       }
     },
     "notification": {

@@ -20,13 +20,13 @@ const AddModal = ({ isVisible, setVisible, onValidate, currentUsers= []}) => {
   const handleValidate = React.useCallback(() => {
     const logins = selectedUsers.map(user => user.getKey() )
     onValidate(logins);
+    setSelectedUsers([]);
     setVisible(false);
   }, [selectedUsers, onValidate]);
 
   const removeFromList = React.useCallback((user) => {
     const newList = selectedUsers.filter(u => u.getKey() !== user.getKey());
     setSelectedUsers(newList);
-
   }, [setSelectedUsers, selectedUsers])
   return (
     <Overlay
