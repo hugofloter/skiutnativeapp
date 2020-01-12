@@ -18,3 +18,12 @@ export const getPermission = async (permission) => {
     default: return false
   }
 };
+
+export const handlePermission = async (permissionType) => {
+  const permission = await getPermission(permissionType);
+
+  if(permission === false) {
+    await askPermission(permissionType);
+    return
+  }
+};

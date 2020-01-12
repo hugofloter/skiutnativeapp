@@ -54,10 +54,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   row: {
-    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text: {
-
+    marginLeft: 10,
+    alignItems: 'center',
+    textAlign: 'center'
   }
 });
 
