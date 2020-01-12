@@ -8,6 +8,7 @@ import { users as usersAPI } from "../../api/state";
 import { avatarImage } from "../../api/image";
 import { Sizes, Colors } from "../../constants";
 import ModalPicker from "../../components/images/modalPicker"
+
 const AvatarManager = ({}) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(state => ({ currentUser: getConnectedUser(state) }));

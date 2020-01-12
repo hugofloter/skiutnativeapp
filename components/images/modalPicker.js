@@ -5,14 +5,15 @@ import { Sizes, Colors } from "../../constants";
 import * as Picker from "expo-image-picker";
 import { getPermission, askPermission } from "../../utils/permissions";
 
-const handlePermission = async (permissionType) => {
+export const handlePermission = async (permissionType) => {
   const permission = await getPermission(permissionType);
 
   if(permission === false) {
     await askPermission(permissionType);
     return
   }
-}
+};
+
 const ModalPicker = ({ isVisible, setVisible, onValidate }) => {
 
   const [image, setImage] = React.useState(null);
