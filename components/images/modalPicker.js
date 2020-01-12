@@ -3,16 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Overlay, Divider,Button,  Avatar } from "react-native-elements";
 import { Sizes, Colors } from "../../constants";
 import * as Picker from "expo-image-picker";
-import { getPermission, askPermission } from "../../utils/permissions";
-
-export const handlePermission = async (permissionType) => {
-  const permission = await getPermission(permissionType);
-
-  if(permission === false) {
-    await askPermission(permissionType);
-    return
-  }
-};
+import { handlePermission } from "../../utils/permissions";
 
 const ModalPicker = ({ isVisible, setVisible, onValidate }) => {
 

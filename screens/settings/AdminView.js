@@ -22,7 +22,7 @@ const AdminView = ({}) => {
         <Text style={styles.textTitle}>Leaderboard actuel</Text>
         {
             top.map(user => {
-                return <Text style={styles.text}>{user.getLogin()} - Niveau {user.getLevel()}</Text>
+                return <Text key={user.getKey()} style={styles.text}>{user.getLogin()} - Niveau {user.getLevel()}</Text>
             })
         }
     </View>

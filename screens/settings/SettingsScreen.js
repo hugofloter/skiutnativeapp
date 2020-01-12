@@ -9,8 +9,8 @@ import Modal from "./modal";
 import ScreenTitle from "../../components/ScreenTitle";
 import Settings from "./settings";
 import Avatar from "./AvatarManager";
-import { handlePermission } from "../../components/images/modalPicker";
-import { qrcode as qrcodeAPI, qrcodeAdmin as qrcodeAdminAPI } from "../../api/state"
+import { handlePermission } from "../../utils/permissions";
+import { qrcode as qrcodeAPI } from "../../api/state"
 import AdminView from "./AdminView"
 
 const SettingsScreen = () => {
