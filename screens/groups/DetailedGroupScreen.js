@@ -5,7 +5,8 @@ import {
    ScrollView,
    Platform,
    StyleSheet,
-   Button,
+   Image,
+   TouchableHighlight,
    ActivityIndicator
 } from "react-native";
 import Colors from "../../constants/Colors";
@@ -17,6 +18,7 @@ import PlusBlock from "../../components/blocks/PlusBlock";
 import Map from "../../components/map/map";
 import MembersBlock from "./membersBlock/membersBlock";
 import AddModal from "./membersBlock/addModal";
+import MessageModal from "./membersBlock/messageModal";
 
 const INTERVAL = 60000
 
@@ -34,6 +36,8 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
   const updateGroup = React.useCallback((id, data) => dispatch(groupsAPI.updateOne(id, data)), [dispatch]);
 
   const [addModal, showAddModal] = React.useState(false);
+  const [messageModal, showMessageModal] = React.useState(false);
+  const [focusedMember, setFocusedMember] = React.useState(null);
 
   React.useEffect(() => {
     getGroupInfos(selectedGroup.getKey());
@@ -76,10 +80,15 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
           isOwner={ currentUser && currentUser.getKey() === groupInfos.getOwner() }
           buttonBlock
           onButtonPress={() => showAddModal(true) }
-          onMemberPress={(member) => updateGroup(selectedGroup.getKey(), { 'to_remove': member.getKey()}) }
+          onMemberPress={(member) => setFocusedMember(member)}
+          onMemberLongPress={(member) => updateGroup(selectedGroup.getKey(), { 'to_remove': member.getKey()}) }
           />
-        <Map users={ groupInfos.getUsersInGroup() }/>
-
+        <Map users={ groupInfos.getUsersInGroup() } focusedMember={ focusedMember }/>
+        <View style={styles.callButton}>
+          <TouchableHighlight onPress={() => {showMessageModal(true)}} underlayColor={Colors.defaultBackgroud}>
+            <Image style={styles.button} source={require('../../assets/images/skieur.png')}/>
+          </TouchableHighlight>
+        </View>
       </ScrollView>
       <AddModal
         isVisible={addModal}
@@ -87,6 +96,11 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
         currentUsers={groupInfos.getUsersInGroup()}
         onValidate={(logins) => updateGroup(selectedGroup.getKey(), { 'list_login': logins })}
         />
+      <MessageModal
+        isVisible={messageModal}
+        setVisible={showMessageModal}
+        onValidate={(data) =>{updateGroup(selectedGroup.getKey(), data)}}
+      />
     </View>
   )
 };
@@ -97,6 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.defaultBackgroud,
     padding: 5,
   },
+  callButton: {
+      marginTop: 30,
+      alignItems: 'center'
+  }
 });
 
 export default DetailedGroupScreen;
