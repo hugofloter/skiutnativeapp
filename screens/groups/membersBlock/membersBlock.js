@@ -10,7 +10,7 @@ import { Divider, Avatar as NativeAvatar } from 'react-native-elements';
 import { Colors, Sizes } from "../../../constants";
 import Avatar from "../../../components/avatar/avatar";
 
-const MembersBlock = ({ users, onButtonPress, onMemberPress, isOwner = false, editButton, buttonBlock=false, ...params }) => {
+const MembersBlock = ({ users, onButtonPress, onMemberPress, onMemberLongPress, isOwner = false, editButton, buttonBlock=false, ...params }) => {
   if(!users || !users.length) {
     return null;
   }
@@ -24,17 +24,17 @@ const MembersBlock = ({ users, onButtonPress, onMemberPress, isOwner = false, ed
         >
         { buttonBlock ? <Button onPress={ onButtonPress } {...params}/> : null }
         {
-          users.map(user =><Member key={ user.getKey() } user={user} isOwner={isOwner} onPress={ onMemberPress } editButton={ editButton } {...params}/>)
+          users.map(user =><Member key={ user.getKey() } user={user} isOwner={isOwner} onPress={ onMemberPress } onLongPress={ onMemberLongPress } editButton={ editButton } {...params}/>)
         }
       </ScrollView>
     </View>
   )
 }
 
-const Member = ({ user, isOwner, onPress, editButton, ...params}) => {
+const Member = ({ user, isOwner, onPress, onLongPress, editButton, ...params}) => {
   const editable = isOwner || Boolean(editButton);
   return (
-    <TouchableOpacity onPress={ editable ? () => onPress(user) : () => {} }>
+    <TouchableOpacity onLongPress={ editable ? () => onLongPress(user) : () => {} } onPress={() => onPress(user)}>
       <View style={styles.memberContainer}>
         <Avatar user={ user } size="medium" showEditButton={ editable } editButton={editButton} {...params}/>
         <Text style={styles.memberText}>{ user.getFirstname() }</Text>

@@ -13,6 +13,8 @@ import * as  Picker from "expo-image-picker";
 import { getPermission, askPermission } from "../../utils/permissions";
 import Colors from "../../constants/Colors";
 import Sizes from "../../constants/Sizes";
+import normalize from 'react-native-normalize';
+
 
 const handlePermission = async (permissionType) => {
   const permission = await getPermission(permissionType);
@@ -49,7 +51,7 @@ const ImagePicker = ({setData=null, data=null, param = 'image'}) => {
   if(image && image.uri) {
     return (
       <View style={styles.container}>
-        <ImageBackground source = {{uri: image.uri}} style={{ height: 150, width: 150}} resizeMode='cover'>
+        <ImageBackground source = {{uri: image.uri}} style={{ height: normalize(110, 'height'), width: normalize(130, 'width')}} >
           <TouchableOpacity onPress = { () => handleSet(null) } style={styles.crossContainer}>
             <Icon name="clear" color={Colors.white}/>
           </TouchableOpacity>

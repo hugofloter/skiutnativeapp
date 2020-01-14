@@ -27,7 +27,7 @@ export function PlanningScreen({ showPlanning, rotated, setRotated}) {
           maxScale={10}
           enableCenterFocus={false}
         >
-          <ImageBackground style={[(rotated) ? styles.landscapeMap : styles.portraitMap]} source={require('../../assets/images/SlopesMap.png')} />
+          <ImageBackground style={[(rotated) ? styles.landscapeMap : styles.portraitMap]} source={require('../../assets/images/planning.png')} />
         </ImageZoom>
       </View>
     </View>

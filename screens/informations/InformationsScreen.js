@@ -2,14 +2,14 @@ import MapView from 'react-native-maps';
 import React, { useEffect } from 'react';
 import { Icon, Button } from "react-native-elements";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    Dimensions,
-    View,
-    Linking,
-    Animated,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Dimensions,
+  View,
+  Linking,
+  Animated, TouchableHighlight,
 } from 'react-native';
 import CollapsibleList from 'react-native-collapsible-list';
 import { ListItem } from 'react-native-elements'
@@ -128,12 +128,15 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                     iconRight
                     icon={<Icon name="date-range" color={ Colors.white } />}
                 />
+                <View style={styles.lydiaButton}>
+                  <Image style={styles.lydiaImage} source={require('../../assets/images/lydia.png')} resizeMode='contain'/>
+                </View>
             </ScrollView>
         </View>
     );
 }
 
-function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, index=0, animation = new Animated.Value(0), regionTimeout}) {
+function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, index=0, animation = new Animated.Value(0), regionTimeout = null}) {
 
   const [region, setRegion ] = React.useState({
                 latitude: 44.290264,
@@ -142,29 +145,35 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
                 longitudeDelta: 0.009,
   });
 
+  const mapRef = React.useRef();
+
+  const [curIndex , setIndex ] = React.useState(0);
+
   useEffect(() => {
-  animation.addListener(({ value }) => {
-    let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-    if (index >= markers.length) {
-      index = markers.length - 1;
-    }
-    if (index <= 0) {
-      index = 0;
-    }
-    clearTimeout(regionTimeout);
-    regionTimeout = setTimeout(() => {
-      if (index !== index) {
-        const { coordinate } = markers[index];
-        map.animateToRegion(
-          {
-            ...coordinate,
-            latitudeDelta: region.latitudeDelta,
-            longitudeDelta: region.longitudeDelta,
-          },
-          350
-        );
+    animation.addListener(({ value }) => {
+      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+      if (index >= markers.length) {
+        index = markers.length - 1;
       }
-    }, 10);
+      if (index <= 0) {
+        index = 0;
+      }
+      clearTimeout(regionTimeout);
+      regionTimeout = setTimeout(() => {
+        if (curIndex !== index) {
+          setIndex(index)
+          const { coor } = markers[index];
+          mapRef.current.animateToRegion(
+            {
+              latitude: coor.lat - 0.002,
+              longitude: coor.lng,
+              latitudeDelta: region.latitudeDelta,
+              longitudeDelta: region.longitudeDelta,
+            },
+            350
+          );
+        }
+      }, 10);
   })});
 
   const interpolations = markers.map((marker, index) => {
@@ -194,7 +203,7 @@ function POIMapScreen({showPOIMap, showSlopesMap, rotated, setRotated, markers, 
         />
       </ScreenTitle>
       <View style={styles.POIContainer} contentContainerStyle={styles.contentContainer}>
-        <MapView style={styles.mapStyle} provider="google" showsPointsOfInterest = {false} initialRegion={region}>
+        <MapView style={styles.mapStyle} provider="google" showsPointsOfInterest = {false} initialRegion={region} ref={mapRef}>
           {markers.map((marker, index) => {
             const scaleStyle = {
               transform: [
@@ -426,5 +435,13 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 30,
     backgroundColor: Colors.primaryBlue,
+  },
+  lydiaButton: {
+    marginTop: 30,
+    alignItems: 'center'
+  },
+  lydiaImage: {
+    height: 100,
+    width: 100
   }
 });

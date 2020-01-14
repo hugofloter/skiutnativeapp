@@ -90,7 +90,7 @@ const SettingsScreen = () => {
         <View>
           <Text>Tu es actuellement au niveau {animation && animation.getLevel()} (sur 9)</Text>
         </View>
-        {currentUser.getAdmin() ? <AdminView /> : null}
+        {currentUser.getAdmin() ? <AdminView onSuccess={onSuccess} /> : null}
         {!scanned && <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject}/>}
         {!scanned && <Button title="Retour" style={styles.button} onPress={() => setScanned(true)} color = { Colors.primaryBlue }/>}
       </ScrollView>

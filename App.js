@@ -76,6 +76,7 @@ async function loadResourcesAsync() {
     Asset.loadAsync([
       require('./assets/images/logo.png'),
       require('./assets/images/SlopesMap.png'),
+      require('./assets/images/planning.png'),
       require('./assets/images/urgence.png'),
       require('./assets/images/app.png'),
       require('./assets/images/popo.jpg'),
@@ -85,6 +86,7 @@ async function loadResourcesAsync() {
       require('./assets/images/camille.jpg'),
       require('./assets/images/clem.jpg'),
       require('./assets/images/tim.jpg'),
+      require('./assets/images/skieur.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

@@ -12,25 +12,38 @@ const _getLocationAsync = async (setInitialRegion) => {
   setInitialRegion(coords);
 }
 
-const Map = ({ users }) => {
+const Map = ({ users, focusedMember }) => {
 
   const [initialRegion, setInitialRegion] = React.useState({ latitude: 0, longitude: 0 });
+
+  const mapRef = React.useRef();
 
   React.useEffect(() => {
     _getLocationAsync(setInitialRegion)
   }, []);
+
+  React.useEffect(() => {
+    if (focusedMember && focusedMember.location) {
+      mapRef.current.animateToRegion(
+            {
+              latitude: focusedMember.location.latitude,
+              longitude: focusedMember.location.longitude
+            }, 350)
+    }
+  }, [focusedMember]);
 
   const locatedUsers = users.filter(user => user.getLocation());
 
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         style={styles.map}
-        region={ {
+        region={{
           ...initialRegion,
           latitudeDelta: 0.005,
           longitudeDelta: 0.005
-        } }
+        }}
         >
         {
           locatedUsers.map(user => (
