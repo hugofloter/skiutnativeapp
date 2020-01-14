@@ -34,7 +34,7 @@ const MessageModal = ({ isVisible, setVisible, onValidate }) => {
                    style = { styles.input } maxLength = {20}
         />
         <TextInput
-            placeholder="Mets plus d'informations ici pour que tes potes saches ce que tu veux"
+            placeholder="Mets plus d'informations ici pour que tes potes sachent ce que tu veux"
             multiline
             numberOfLines={50}
             textAlignVertical="top"

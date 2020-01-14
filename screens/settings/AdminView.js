@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { qrcodeAdmin as qrcodeAdminAPI } from "../../api/state"
 
-const AdminView = ({}) => {
+const AdminView = ({ onSuccess }) => {
 
   const dispatch = useDispatch();
 
@@ -14,8 +14,8 @@ const AdminView = ({}) => {
   const { top } = useSelector(state => ({ top: qrcodeAdminAPI.getValuesFromState(state) }));
 
   React.useEffect(() => {
-      getTopAnimation()
-  },[]);
+    getTopAnimation()
+  },[onSuccess]);
 
   return (
     <View style={styles.container}>
