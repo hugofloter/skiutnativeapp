@@ -2,14 +2,16 @@ import React from "react";
 import {View, Text, StyleSheet, TextInput, ScrollView} from "react-native";
 import { Overlay, Button, Input } from "react-native-elements";
 import { Sizes, Colors } from "../../../constants";
+import { beerCallValid } from "../../../utils/timeSerializer";
 
 /**
  * Modal to send personnalized message to user in group
  * @param {boolean} isVisible - to display the modal
  * @param {function} setVisible - to change the display
+ * @param {String} beerCallDate - To get group informations on last beer call
  * @param {function} onValidate - execute this method on validate
 **/
-const MessageModal = ({ isVisible, setVisible, onValidate }) => {
+const MessageModal = ({ isVisible, setVisible, beerCallDate, onValidate }) => {
 
   const [data, setData] = React.useState({title: '', text: '', beer_call: true});
 
@@ -19,6 +21,7 @@ const MessageModal = ({ isVisible, setVisible, onValidate }) => {
       setVisible(false);
     }
   }, [onValidate, data]);
+
 
   return (
     <Overlay
@@ -45,6 +48,7 @@ const MessageModal = ({ isVisible, setVisible, onValidate }) => {
         <Button
           buttonStyle={styles.button}
           title="Envoyer"
+          disabled={!beerCallValid(beerCallDate)}
           onPress={ handleValidate }
           />
       </View>

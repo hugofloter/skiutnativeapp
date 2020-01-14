@@ -42,6 +42,10 @@ class Groups {
     }
   }
 
+  getNativeBeerCall() {
+    return this.beer_call
+  }
+
   getUserStatus() {
     return this.user_status;
   }

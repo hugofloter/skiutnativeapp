@@ -99,6 +99,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
       <MessageModal
         isVisible={messageModal}
         setVisible={showMessageModal}
+        beerCallDate={selectedGroup.getNativeBeerCall()}
         onValidate={(data) =>{updateGroup(selectedGroup.getKey(), data)}}
       />
     </View>
