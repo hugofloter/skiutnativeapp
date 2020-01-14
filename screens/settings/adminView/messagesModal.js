@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, CheckBox } from "react-native";
-import { Overlay, Button, Divider } from "react-native-elements";
+import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
+import { Overlay, Button, Divider,CheckBox } from "react-native-elements";
 import { Sizes, Colors } from "../../../constants";
 
 /**
@@ -54,32 +54,32 @@ const MessageModal = ({ isVisible, setVisible, onValidate }) => {
           <View style ={ styles.checkbox}>
             <CheckBox
               checkedColor={Colors.primaryBlue}
-              value={data.type === "image"}
-              onChange={() => setData({...data, type:"image"})}
+              checked={data.type === "image"}
+              onPress={() => setData({...data, type: "image"})}
               />
             <Text>Image</Text>
           </View>
           <View style ={ styles.checkbox}>
             <CheckBox
               checkedColor={Colors.primaryBlue}
-              value={data.type === "text"}
-              onChange={() => setData({...data, type:"text"})}
+              checked={data.type === "text"}
+              onPress={() => setData({...data, type: "text"})}
               />
             <Text>Texte</Text>
           </View>
           <View style ={ styles.checkbox}>
             <CheckBox
               checkedColor={Colors.primaryBlue}
-              value={data.type === "new"}
-              onChange={() => setData({...data, type:"new"})}
+              checked={data.type === "new"}
+              onChange={() => setData({...data, type: "new"})}
               />
             <Text>New</Text>
           </View>
           <View style ={ styles.checkbox}>
             <CheckBox
               checkedColor={Colors.primaryBlue}
-              value={data.type === "other"}
-              onChange={() => setData({...data, type:"other"})}
+              checked={data.type === "other"}
+              onPress={() => setData({...data, type: "other"})}
               />
             <Text>Autre</Text>
           </View>
@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   checkbox: {
-    marginHorizontal: 5,
+    alignItems: 'center',
+    paddingBottom: 5
   }
 });
 

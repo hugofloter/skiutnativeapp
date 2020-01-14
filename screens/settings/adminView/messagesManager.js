@@ -50,10 +50,10 @@ const MessageManager = ({ modal, displayModal }) => {
     }
   }, [display, setDisplay]);
 
-  const newMessages = messages.filter(message => message.getType() == 'new')
-  const otherMessages = messages.filter(message => message.getType() == 'other')
-  const textMessages = messages.filter(message => message.getType() == 'text')
-  const imageMessages = messages.filter(message => message.getType() == 'image')
+  const newMessages = messages.filter(message => message.getType() === 'new')
+  const otherMessages = messages.filter(message => message.getType() === 'other')
+  const textMessages = messages.filter(message => message.getType() === 'text')
+  const imageMessages = messages.filter(message => message.getType() === 'image')
 
   return (
     <View>
@@ -68,33 +68,38 @@ const MessageManager = ({ modal, displayModal }) => {
             />
         }>
         <View style={styles.switchContainer}>
-          <Switch
-            trackColor={Colors.primaryBlue}
-            value={Boolean(display.indexOf('text') !== -1)}
-            onChange={() => handleDisplay('text')}
-            />
-          <Text style={styles.switchText}>Texte</Text>
+          <View style={styles.row}>
+            <Switch
+              trackColor={Colors.primaryBlue}
+              value={Boolean(display.indexOf('text') !== -1)}
+              onChange={() => handleDisplay('text')}
+              />
+            <Text style={styles.text}>Texte</Text>
 
-          <Switch
-            trackColor={Colors.primaryBlue}
-            value={Boolean(display.indexOf('image') !== -1)}
-            onChange={() => handleDisplay('image')}
-            />
-          <Text style={styles.switchText}>Images</Text>
+            <Switch
+              trackColor={Colors.primaryBlue}
+              value={Boolean(display.indexOf('image') !== -1)}
+              onChange={() => handleDisplay('image')}
+              />
+            <Text style={styles.text}>Images</Text>
+          </View>
+        </View>
+        <View style={styles.switchContainer}>
+          <View style={styles.row}>
+            <Switch
+              trackColor={Colors.primaryBlue}
+              value={Boolean(display.indexOf('new') !== -1)}
+              onChange={() => handleDisplay('new')}
+              />
+            <Text style={styles.text}>Nouveau</Text>
 
-          <Switch
-            trackColor={Colors.primaryBlue}
-            value={Boolean(display.indexOf('new') !== -1)}
-            onChange={() => handleDisplay('new')}
-            />
-          <Text style={styles.switchText}>Nouveau</Text>
-
-          <Switch
-            trackColor={Colors.primaryBlue}
-            value={Boolean(display.indexOf('other') !== -1)}
-            onChange={() => handleDisplay('other')}
-            />
-          <Text style={styles.switchText}>Autres</Text>
+            <Switch
+              trackColor={Colors.primaryBlue}
+              value={Boolean(display.indexOf('other') !== -1)}
+              onChange={() => handleDisplay('other')}
+              />
+            <Text style={styles.text}>Autres</Text>
+          </View>
         </View>
         <View>
           <List
@@ -176,16 +181,16 @@ const renderRightAction = (progress, onPress) => {
       </Animated.View>
     </View>
   )
-}
+};
 
 const styles = StyleSheet.create({
   title: {
     fontSize: Sizes.h3,
     marginVertical: 10,
   },
-  switchContainer : {
-    flexDirection: 'row',
-    justifyContent: 'center'
+  row : {
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   swipedZone: {
     textAlign: 'center',
@@ -196,6 +201,16 @@ const styles = StyleSheet.create({
   rightAction: {
     backgroundColor: Colors.errorColor
   },
-})
+  text: {
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  switchContainer: {
+    alignItems: 'center',
+    marginBottom: 10
+  }
+});
 
 export default MessageManager;

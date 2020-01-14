@@ -13,7 +13,7 @@ import { beerCallValid } from "../../../utils/timeSerializer";
 **/
 const MessageModal = ({ isVisible, setVisible, beerCallDate, onValidate }) => {
 
-  const [data, setData] = React.useState({title: '', text: '', beer_call: true});
+  const [data, setData] = React.useState({title: '', message: '', beer_call: true});
 
   const handleValidate = React.useCallback(() => {
     if (data && data.title) {
@@ -41,8 +41,8 @@ const MessageModal = ({ isVisible, setVisible, beerCallDate, onValidate }) => {
             multiline
             numberOfLines={50}
             textAlignVertical="top"
-            onChangeText={text => setData({...data, text})}
-            value={data.text}
+            onChangeText={message => setData({...data, message})}
+            value={data.message}
             style={styles.textInput}
         />
         <Button
