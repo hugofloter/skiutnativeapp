@@ -28,7 +28,9 @@ const Map = ({ users, focusedMember }) => {
       mapRef.current.animateToRegion(
             {
               latitude: focusedMember.location.latitude,
-              longitude: focusedMember.location.longitude
+              longitude: focusedMember.location.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005
             }, 350)
     }
   }, [focusedMember]);
