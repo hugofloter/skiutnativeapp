@@ -1,4 +1,4 @@
-import {Dimensions, ImageBackground, StyleSheet, View} from "react-native";
+import {Dimensions, Image, StyleSheet, View, ScrollView} from "react-native";
 import Colors from "../../constants/Colors";
 import React from 'react';
 import ScreenTitle from "../../components/ScreenTitle";
@@ -17,17 +17,17 @@ export function SlopesMapScreen({showPOIMap, showSlopesMap, rotated, setRotated}
                 adminAction={() => setRotated(!rotated)}
         />
       </ScreenTitle>
-      <View style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={styles.mapContainer}>
         <ImageZoom
           cropHeight={height}
           cropWidth={width}
-          imageHeight={1749}
+          imageHeight={rotated ? 4961 : 1749}
           imageWidth={4961}
           minScale={0.1}
-          maxScale={10}
+          maxScale={2}
           enableCenterFocus={false}
         >
-          <ImageBackground style={[(rotated) ? styles.landscapeMap : styles.portraitMap]} source={require('../../assets/images/SlopesMap.png')} />
+          <Image style={[(rotated) ? styles.landscapeMap : styles.portraitMap]} source={require('../../assets/images/SlopesMap.png')} resizeMode='contain'/>
         </ImageZoom>
         </View>
     </View>
@@ -38,12 +38,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
-  },
-  contentContainer: {
-    paddingTop: 30,
+    padding: 5
   },
   ContactList: {
     padding:15,
+  },
+  mapContainer: {
+    flex: 1,
   },
   landscapeMap: {
     height:1749,

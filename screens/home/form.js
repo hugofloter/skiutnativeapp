@@ -16,7 +16,6 @@
  } from "react-native-elements";
 
 import Colors from "../../constants/Colors";
-import Sizes from "../../constants/Sizes";
 import ImagePicker from "../../components/images/ImagePicker";
 import { useDispatch } from "react-redux";
 import { news as newsAPI } from "../../api/state";
@@ -80,7 +79,6 @@ const Form = ({ showEditer }) => {
              checkedColor = { Colors.tintColor }
              />
        </View>
-
      </View>
    )
  }
