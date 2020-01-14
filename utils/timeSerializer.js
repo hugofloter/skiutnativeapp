@@ -1,5 +1,7 @@
 export const getDate = (date) => {
-
+    if (date === null) {
+        return null
+    }
     let inputDate = new Date(date.replace('-','/'));
 
     let todaysDate = new Date();
@@ -12,7 +14,9 @@ export const getDate = (date) => {
 };
 
 export const beerCallValid = (date) => {
-
+    if (date === null) {
+        return true
+    }
     let inputDate = new Date(date.replace('-','/'));
     let todaysDate = new Date();
 

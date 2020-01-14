@@ -108,6 +108,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
     padding: 5,
