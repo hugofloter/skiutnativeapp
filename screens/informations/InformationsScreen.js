@@ -2,14 +2,14 @@ import MapView from 'react-native-maps';
 import React, { useEffect } from 'react';
 import { Icon, Button } from "react-native-elements";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    Dimensions,
-    View,
-    Linking,
-    Animated,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Dimensions,
+  View,
+  Linking,
+  Animated, TouchableHighlight,
 } from 'react-native';
 import CollapsibleList from 'react-native-collapsible-list';
 import { ListItem } from 'react-native-elements'
@@ -128,6 +128,9 @@ function InformationsScreen({showSlopesMap, showPOIMap, setContactSelected, show
                     iconRight
                     icon={<Icon name="date-range" color={ Colors.white } />}
                 />
+                <View style={styles.lydiaButton}>
+                  <Image style={styles.lydiaImage} source={require('../../assets/images/lydia.png')} resizeMode='contain'/>
+                </View>
             </ScrollView>
         </View>
     );
@@ -432,5 +435,13 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 30,
     backgroundColor: Colors.primaryBlue,
+  },
+  lydiaButton: {
+    marginTop: 30,
+    alignItems: 'center'
+  },
+  lydiaImage: {
+    height: 100,
+    width: 100
   }
 });
