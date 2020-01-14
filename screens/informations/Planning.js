@@ -21,8 +21,8 @@ export function PlanningScreen({ showPlanning, rotated, setRotated}) {
         <ImageZoom
           cropHeight={height}
           cropWidth={width}
-          imageHeight={1749}
-          imageWidth={4961}
+          imageHeight={rotated ? 4000 : 2400}
+          imageWidth={4000}
           minScale={0.1}
           maxScale={10}
           enableCenterFocus={false}
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
+    padding: 5
   },
   contentContainer: {
     paddingTop: 30,
@@ -46,12 +47,12 @@ const styles = StyleSheet.create({
     padding:15,
   },
   landscapeMap: {
-    height:1749,
-    width:4961,
+    height:2400,
+    width:4000,
     transform: [{ rotate: '90deg'}]
   },
   portraitMap: {
-    height:1749,
-    width:4961
+    height:2400,
+    width:4000
   }
 });
