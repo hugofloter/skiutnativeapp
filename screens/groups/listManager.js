@@ -12,7 +12,6 @@ import {
 } from "react-native-elements";
 import { Colors, Sizes } from "../../constants";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { RectButton } from 'react-native-gesture-handler';
 import Modal from "./modal";
 
 import {useSelector} from "react-redux";

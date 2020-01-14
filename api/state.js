@@ -7,6 +7,7 @@ import Potin from "../models/potin";
 import News from "../models/news";
 import Groups from "../models/groups";
 import AnimationUser from "../models/animation"
+import Message from "../models/messages";
 import { API_URL } from "../config";
 import { connectReducer } from "./connect/"
 
@@ -45,3 +46,4 @@ export const news = new APIEndpoint(`${API_URL}/news`, News);
 export const groups = new APIEndpoint(`${API_URL}/groups`, Groups);
 export const qrcode = new APIEndpoint(`${API_URL}/animation`, AnimationUser);
 export const qrcodeAdmin = new APIEndpoint(`${API_URL}/animation/admin`, AnimationUser, {name: "adminAnim"});
+export const messages = new APIEndpoint(`${API_URL}/bot_messages`, Message);

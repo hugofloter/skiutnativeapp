@@ -1,6 +1,7 @@
 import React from "react";
+import { Linking } from "expo";
 import {View, ScrollView, Text, Button, Alert, StyleSheet, RefreshControl} from "react-native";
-import { Divider } from "react-native-elements";
+import { Divider, SocialIcon as Icon } from "react-native-elements";
 import { Colors, Sizes } from "../../constants";
 import { getConnectedUser, logout } from "../../api/connect";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,11 +10,11 @@ import Modal from "./modal";
 import ScreenTitle from "../../components/ScreenTitle";
 import Settings from "./settings";
 import Avatar from "./AvatarManager";
+import PlusBlock from "../../components/blocks/PlusBlock";
 import { handlePermission } from "../../utils/permissions";
 import { qrcode as qrcodeAPI } from "../../api/state"
-import AdminView from "./AdminView"
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ showAdmin }) => {
   const [modal, showModal] = React.useState(false);
   const [fetched, setFetched] = React.useState(false);
 
@@ -59,7 +60,9 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScreenTitle title="Paramètres"/>
+      <ScreenTitle title="Paramètres">
+         {user && user.getAdmin() ? <PlusBlock icon="settings-applications" color={ Colors.white} action={() => showAdmin(true)} />: null}
+      </ScreenTitle>
       <ScrollView
         style={ styles.container }
         showsVerticalScrollIndicator={false}
@@ -90,7 +93,8 @@ const SettingsScreen = () => {
         <View>
           <Text>Tu es actuellement au niveau {animation && animation.getLevel()} (sur 9)</Text>
         </View>
-        {currentUser.getAdmin() ? <AdminView onSuccess={onSuccess} /> : null}
+        <Divider style={styles.divider}/>
+        <Button color={Colors.primaryBlue} title="Aller Parler au Bot Messenger" onPress={() => Linking.openURL("fb-messenger://m.me/102684297941128")}/>
         {!scanned && <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject}/>}
         {!scanned && <Button title="Retour" style={styles.button} onPress={() => setScanned(true)} color = { Colors.primaryBlue }/>}
       </ScrollView>
