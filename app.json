@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "SKI'UTC",
+    "slug": "skiutc",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.1.3",
+    "orientation": "portrait",
+    "icon": "./assets/images/app.png",
+    "splash": {
+      "image": "./assets/images/splashFinal.png",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "fr.utc.assos.skiutc",
+      "config": {
+        "googleMaps": { "apiKey": "" }
+      },
+      "googleServicesFile": "./google-services.json",
+      "splash": {
+        "image": "./assets/images/splashFinal.png",
+        "backgroundColor": "#ffffff"
+      },
+      "versionCode": 7
+    },
+    "ios": {
+      "bundleIdentifier": "fr.utc.assos.skiutc",
+      "buildNumber": "11",
+      "infoPlist": {
+        "NSCameraUsageDescription": "L'application utilise la caméra pour poster changer son avatar",
+        "NSPhotoLibraryUsageDescription": "L'application utilise la gallerie photo pour poster des news en ajoutant une photo ou pour changer son avatar",
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ],
+        "NSLocationAlwaysUsageDescription": "Pour une meilleure expérience, nous vous demandons d'utiliser les permissions de localisation",
+        "NSLocationWhenInUseUsageDescription": "L'application utilise la localisation pour permettre d'envoyer sa position dans son groupe",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "L'application utilise la localisation pour permettre d'envoyer sa position dans son groupe"
+      },
+      "config": {
+        "googleMapsApiKey": ""
+      }
+    },
+    "notification": {
+      "icon": "./assets/images/app.png"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+export const imageIndex = {
+    "1": require("./images/popo.jpg"),
+    "2": require("./images/valou.jpg"),
+    "3": require("./images/valere.jpg"),
+    "4": require("./images/julie.jpg"),
+    "5": require("./images/camille.jpg"),
+    "6": require("./images/clem.jpg"),
+    "7": require("./images/tim.jpg"),
+    "8": require("./images/app.png"),
+    "9": require("./images/app.png"),
+    "10": require("./images/app.png"),
+    "11": require("./images/app.png"),
+    "12": require("./images/app.png"),
+    "13": require("./images/app.png"),
+    "14": require("./images/app.png"),
+    "15": require("./images/app.png"),
+    "16": require("./images/app.png"),
+    "17": require("./images/app.png"),
+    "18": require("./images/app.png")
+}

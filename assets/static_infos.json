@@ -1,0 +1,126 @@
+{
+    "Contacts": [
+      {
+        "Nom":"Pauline Mandon",
+        "Poste":"Presidente",
+        "Telephone":"+336 34 15 23 72",
+        "Email":"prez@skiutz.fr",
+        "Photo":1
+      },
+      {
+        "Nom":"Valentin Metz",
+        "Poste":"Vice-President",
+        "Telephone":"+336 06 96 69 91",
+        "Email":"viceprez@skiutc.fr",
+        "Photo":2
+      },
+      {
+        "Nom":"Valère Sellam",
+        "Poste":"Resp Anim",
+        "Telephone":"+336 51 91 35 02",
+        "Email":"valette@skiutc.fr",
+        "Photo":3
+      },
+      {
+        "Nom":"Julie Leroy",
+        "Poste":"Resp Log",
+        "Telephone":"+336 43 18 27 56",
+        "Email":"log@skiutc.fr",
+        "Photo":4
+      },
+      {
+        "Nom":"Camille Florimond",
+        "Poste":"Trésorière",
+        "Telephone":"+336 49 65 74 14",
+        "Email":"latreso@skiutc.fr",
+        "Photo":5
+      },
+      {
+        "Nom":"Clémence Crappe",
+        "Poste":"Vice-Trésorière",
+        "Telephone":"+336 21 61 27 10",
+        "Email":"maman@skiutc.fr",
+        "Photo":6
+      },
+      {
+        "Nom":"Tim",
+        "Poste":"Resp After",
+        "Telephone":"+337 82 12 84 89",
+        "Email":"aftercheztim@skiutc.fr",
+        "Photo":7
+      }
+    ],
+    "ContactsAutres": [
+      {
+        "Nom":"Gendarmerie",
+        "Telephone":"04 92 83 40 20",
+        "Email":null
+      },
+      {
+        "Nom":"Police Municipale",
+        "Telephone":"06 84 31 02 79",
+        "Email":null
+      },
+      {
+        "Nom":"JP - La cauette à bière",
+        "Telephone":null,
+        "Email":"cauetteabieres@orange.fr"
+      }
+    ],
+    "markers": [
+        {
+          "coor": {
+            "lat": 44.2919088,
+            "lng": 6.564996
+          },
+          "title": "La residence",
+          "subtitle": "C'est le bercail !",
+          "image": 8
+        },
+        {
+          "coor": {
+            "lat": 44.289741,
+            "lng": 6.569325
+          },
+          "title": "Le JUL's",
+          "subtitle": "Le meilleur bar à bière",
+          "image": 9
+        },
+        {
+          "coor": {
+            "lat": 44.289341,
+            "lng": 6.569325
+          },
+          "title": "La boite",
+          "subtitle": "Danciiiiing !",
+          "image": 10
+        },
+        {
+          "coor": {
+            "lat": 44.291201,
+            "lng": 6.569655
+          },
+          "title": "L'Igloo x le Snow",
+          "subtitle": "Un bon bar",
+          "image": 10
+        },
+        {
+          "coor": {
+            "lat": 44.2906076,
+            "lng": 6.5689901
+          },
+          "title": "La cuisse de cochon",
+          "subtitle": "A manger",
+          "image": 10
+        },
+        {
+          "coor": {
+            "lat": 44.2896782,
+            "lng": 6.5630007
+          },
+          "title": "Le parapente",
+          "subtitle": "After ski, c'est ici !",
+          "image": 10
+        }
+    ]
+  }
