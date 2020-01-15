@@ -64,7 +64,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
   }
   return (
     <View style={styles.container}>
-      <ScreenTitle title={ groupInfos.getName() }>
+      <ScreenTitle title={ groupInfos.getName() } showsVerticalScrollIndicator={false}>
         <PlusBlock
           icon="backspace"
           color={ Colors.white }
