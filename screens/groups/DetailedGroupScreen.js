@@ -74,7 +74,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
           adminAction={() => updateGroup(selectedGroup.getKey(), { 'location_permission': !groupInfos.getSharePosition() })}
           />
       </ScreenTitle>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <MembersBlock
           users={ groupInfos.getUsersInGroup() }
           isOwner={ currentUser && currentUser.getKey() === groupInfos.getOwner() }
@@ -108,7 +108,7 @@ const DetailedGroupScreen = ({ setSelectedGroup, selectedGroup }) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
     flex: 1,
     backgroundColor: Colors.defaultBackgroud,
     padding: 5,
@@ -116,6 +116,10 @@ const styles = StyleSheet.create({
   callButton: {
       marginTop: 30,
       alignItems: 'center'
+  },
+  titleContainer: {
+      position: 'absolute',
+      top: 0
   }
 });
 
