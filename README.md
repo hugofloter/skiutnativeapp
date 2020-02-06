@@ -1,5 +1,7 @@
-# skiutnativeapp
-Application react native pour Ski Utc
+# Application SKI'UTC 
+Application react native pour l'association SKI'UTC de l'UTC.
 
-
-https://stackoverflow.com/questions/58120990/how-to-resolve-the-error-on-react-native-start
+Liens importants : 
+- Apple Store : https://apps.apple.com/fr/app/skiutc/id1492627886
+- Play Store : https://play.google.com/store/apps/details?id=fr.utc.assos.skiutc
+- repo de l'API Rest de l'application : https://github.com/ski-utc/skiutcserverapp
