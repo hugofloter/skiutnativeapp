@@ -8,11 +8,11 @@ Important Links :
 
 Table of Contents
 =================
-  * [Screens](#envirius)
+  * [Screens](#screens)
 
 
 Screens
 =======
 <div>
-  <img align="right" width="100" height="200" src="./appscreens/iphone8acc.jpg">
+  <img align="right" width="100" height="200" src="appscreens/iphone8acc.jpg">
 </div>
