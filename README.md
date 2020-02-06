@@ -14,11 +14,11 @@ Table of Contents
 Screens
 =======
 <div style="display:flex; flex-direction:row">
-  <img width="100" height="200" src="appscreens/iphone8acc.jpg">
-  <img width="100" height="200" src="appscreens/IMG_3739.PNG">
-  <img width="100" height="200" src="appscreens/IMG_3740.PNG">
-  <img width="100" height="200" src="appscreens/IMG_3741.PNG">
-  <img width="100" height="200" src="appscreens/IMG_3742.PNG">
-  <img width="100" height="200" src="appscreens/IMG_3743.PNG">
-  <img width="100" height="200" src="appscreens/groupsV.jpg">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/iphone8acc.jpg">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/IMG_3739.PNG">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/IMG_3740.PNG">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/IMG_3741.PNG">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/IMG_3742.PNG">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/IMG_3743.PNG">
+  <img style="margin-left: 5px;" width="100" height="200" src="appscreens/groupsV.jpg">
 </div>
