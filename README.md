@@ -9,7 +9,7 @@ Important Links :
 Table of Contents
 =================
   * [Screens](#screens)
-
+  * [Screens](#screens)
 
 Screens
 =======
@@ -22,3 +22,18 @@ Screens
   <img style="margin-left: 5px;" width="100" height="200" src="appscreens/IMG_3743.PNG">
   <img style="margin-left: 5px;" width="100" height="200" src="appscreens/groupsV.jpg">
 </div>
+
+Informations
+======
+
+SKI'UTC is the application of the trip organized by the University of Technology of Compiègne each year. Thanks to this application, you will be able to connect as soon as you participate in the edition of the current year, and take advantage of different modules:
+
+- Home: Consult the information of the day and the following days
+
+- Information: Find the team contacts and the emergency contacts. Also find the piste map or the schedule for the week
+
+- Gossip collected by the team each evening / publish their gossip which will be awaiting validation by a member of the team
+
+- Group: Create groups of friends to launch personalized notifications and see where they are in the station
+
+- Settings: Manage your accounts and your settings, add a profile photo, participate in the QRCode animation for the week or chat directly with the SKI'UTC facebook bot.
