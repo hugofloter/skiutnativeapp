@@ -9,8 +9,10 @@ Important Links :
 Table of Contents
 =================
   * [Screens](#screens)
-  * [Screens](#screens)
-
+  * [Informations](#informations)
+  * [Authors](#authors)
+  * [Licence](#licence)
+  
 Screens
 =======
 <div style="display:flex; flex-direction:row">
@@ -37,3 +39,14 @@ SKI'UTC is the application of the trip organized by the University of Technology
 - Group: Create groups of friends to launch personalized notifications and see where they are in the station
 
 - Settings: Manage your accounts and your settings, add a profile photo, participate in the QRCode animation for the week or chat directly with the SKI'UTC facebook bot.
+
+Authors
+=======
+* **[PAIGNEAU Hugo](https://github.com/hugofloter)** - *Initial work*
+* **[RICHARD Quentin](https://github.com/qprichard)** - *Initial work*
+* **[LEBRE Clément](https://github.com/clebre)** - *Initial work*
+
+Licence
+=======
+
+Cette application est soumise à la licence [Beerware](http://fr.wikipedia.org/wiki/Beerware).
